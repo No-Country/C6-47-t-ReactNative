@@ -7,12 +7,13 @@ const config = require('./config/config')
 const cors = require('cors')
 
 // sequelize
-const { sequelize } = require('./DB/models/index')
+const sequelize  = require('./DB/sequelize')
 
 const app = express()
 
 app.use(express.json())
 app.use(cors({ origin: '*', credentials: true }))
+
 
 sequelize
 	.authenticate()
