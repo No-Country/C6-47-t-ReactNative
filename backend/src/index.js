@@ -1,13 +1,13 @@
-import express from 'express'
+const express = require('express')
 
 // dotenv
-import { config } from './config/config.js'
+const config = require('./config/config')
 
 // cors
-import cors from 'cors'
+const cors = require('cors')
 
 // sequelize
-import { sequelize } from './DB/sequelize.js'
+const { sequelize } = require('./DB/models/index')
 
 const app = express()
 
