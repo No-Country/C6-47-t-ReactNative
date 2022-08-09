@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
    
     static associate(models) {
       Post.hasMany(models.Comment, { foreignKey: 'postId'}) 
-      Post.hasOne(models.MediaContent, {foreignKey:'postId'}) // <- Relacion de post/video-image, falta crear la tabla MediaContent
-      Post.belongsTo(models.User) 
-      Post.belongsToMany(models.Tag, {through:'PostTags'}) // <- Relacion de tabla intermedia PostTags entre el modelo Post y el modelo Tags
+      // Post.hasOne(models.MediaContent, {foreignKey:'postId'}) // <- Relacion de post/video-image, falta crear la tabla MediaContent
+      // Post.belongsTo(models.User) 
+      // Post.belongsToMany(models.Tag, {through:'PostTags'}) // <- Relacion de tabla intermedia PostTags entre el modelo Post y el modelo Tags
     }
   }
   Post.init({

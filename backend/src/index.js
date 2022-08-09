@@ -7,7 +7,7 @@ const config = require('./config/config')
 const cors = require('cors')
 
 // sequelize
-const { sequelize } = require('./DB/models/index')
+const { sequelize } = require('./models/')
 
 // Routes
 const routerPost = require('./Routes/post.route')
@@ -27,6 +27,6 @@ sequelize
 		console.log(`Error connecting to db: ${error}`)
 	})
 
-app.listen(process.env.PORT, () => {
+app.listen(config.PORT, () => {
 	console.log(`Server listening port ${process.env.PORT}`)
 })

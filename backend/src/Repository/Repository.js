@@ -1,4 +1,4 @@
-const { sequelizeErrorParser } = require('../utils/utils')
+const { sequelizeErrorParser } = require('../utils/util')
 class Repository {
 	getAll = async () => {
 		return await this.model.findAll()

@@ -1,6 +1,7 @@
 const Repository = require('./Repository')
-const db = require('../models/')
-const Post = db.models.Post
+const { Post } = require('../models/')
+// console.log(db)
+// const Post = db.models.Post
 
 class PostRepository extends Repository {
 	constructor() {
@@ -9,4 +10,4 @@ class PostRepository extends Repository {
 	}
 }
 
-module.exports = repositoryPost
+module.exports = PostRepository
