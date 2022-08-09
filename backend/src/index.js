@@ -1,13 +1,13 @@
-import express from 'express'
+const express = require('express')
 
 // dotenv
-import { config } from './config/config.js'
+require('dotenv').config();
 
 // cors
-import cors from 'cors'
+const cors = require('cors')
 
 // sequelize
-import { sequelize } from './DB/sequelize.js'
+const { sequelize } = require('./DB/models/index')
 
 const app = express()
 
@@ -23,6 +23,6 @@ sequelize
 		console.log(`Error connecting to db: ${error}`)
 	})
 
-app.listen(config.PORT, () => {
-	console.log(`Server listening port ${config.PORT}`)
+app.listen(process.env.PORT, () => {
+	console.log(`Server listening port ${process.env.PORT}`)
 })
