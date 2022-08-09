@@ -9,10 +9,16 @@ const cors = require('cors')
 // sequelize
 const sequelize  = require('./DB/sequelize')
 
+// Routes
+const routerPost = require('./Routes/post.route')
+
+
+
 const app = express()
 
 app.use(express.json())
 app.use(cors({ origin: '*', credentials: true }))
+app.use(routerPost)
 
 
 sequelize
