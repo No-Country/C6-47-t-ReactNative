@@ -36,7 +36,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
 
     return Promise.all([
-      //Inserto en la tabla Posts una nueva columna llamada userId de tipo foreign key
+      
       queryInterface.removeColumn('Posts', 'userId'),
       queryInterface.removeColumn('Posts', 'mediaContentId'),
     ])
