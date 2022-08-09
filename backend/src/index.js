@@ -7,19 +7,16 @@ const config = require('./config/config')
 const cors = require('cors')
 
 // sequelize
-const sequelize  = require('./DB/sequelize')
+const { sequelize } = require('./DB/models/index')
 
 // Routes
 const routerPost = require('./Routes/post.route')
-
-
 
 const app = express()
 
 app.use(express.json())
 app.use(cors({ origin: '*', credentials: true }))
 app.use(routerPost)
-
 
 sequelize
 	.authenticate()
@@ -30,6 +27,6 @@ sequelize
 		console.log(`Error connecting to db: ${error}`)
 	})
 
-app.listen(config.PORT, () => {
-	console.log(`Server listening port ${config.PORT}`)
+app.listen(process.env.PORT, () => {
+	console.log(`Server listening port ${process.env.PORT}`)
 })

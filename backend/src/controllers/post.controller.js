@@ -1,7 +1,7 @@
 const servicePost = require('../services/post.services')
 
 const getAll = async (req, res) => {
-	const post = await servicePost.getAll()
+	const post = await servicePost.addPost()
     console.log(post)
     res.send('si anda')
 }
