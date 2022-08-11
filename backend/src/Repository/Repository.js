@@ -1,7 +1,7 @@
 const { sequelizeErrorParser } = require('../utils/util')
 class Repository {
 	getAll = async () => {
-		return await this.model.findAll()
+		return await this.model.findAll({ where: { deletedAt: null }, attributes: ['id', 'userId', 'title', 'content'], raw: true })
 	}
 
 	getById = async (id) => {
