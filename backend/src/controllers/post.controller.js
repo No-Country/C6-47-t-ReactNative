@@ -1,17 +1,14 @@
 const servicePost = require('../services/post.services')
 
 const getAll = async (req, res) => {
-	const post = await servicePost.getAll()
-    console.log(post)
-    res.send('si anda')
+	res.json(await servicePost.getAll())
 }
 
-const getById = async (req, res) => {
-	const post = await servicePost.getAll()
-}
+const getById = async (req, res) => {}
 
 const addPost = async (req, res) => {
-	const post = await servicePost.getAll()
+	const newPost = req.body.post
+	return await servicePost.addPost(newPost)
 }
 
 const editPost = async (req, res) => {

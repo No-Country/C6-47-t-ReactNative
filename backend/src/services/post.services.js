@@ -1,25 +1,25 @@
-const repositories = require('../Repository')
+const PostRepo = require('../Repository/PostRepo')
 
-const Post = new repositories.repositoryPost()
+const Post = new PostRepo()
 
 const getAll = async () => {
 	return await Post.getAll()
 }
 
-const getById = async () => {
-	return await Post.getById()
+const getById = async (id) => {
+	return await Post.getById(id)
 }
 
-const addPost = async () => {
-	return await Post.addPost()
+const addPost = async (object) => {
+	return await Post.createObject(object)
 }
 
-const editPost = async () => {
-	return await Post.editPost()
+const editPost = async (object) => {
+	return await Post.updateObject(object)
 }
 
-const deletePost = async () => {
-	return await Post.deletePost()
+const deletePost = async (id) => {
+	return await Post.deleteById(id)
 }
 
 module.exports = {
