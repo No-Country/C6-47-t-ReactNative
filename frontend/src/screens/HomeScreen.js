@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
-import { Text, View, TouchableOpacity, Image } from 'react-native'
+
+import { Image, Text, TouchableOpacity, View } from 'react-native'
+import tw, { useAppColorScheme, useDeviceContext } from 'twrnc'
+
 import React from 'react'
-import tw, { useDeviceContext, useAppColorScheme } from 'twrnc'
 import { useSelector } from 'react-redux'
+
 // import PostsList from '../features/posts/PostsList'
 
 const HomeScreen = () => {
