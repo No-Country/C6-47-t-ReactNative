@@ -1,7 +1,7 @@
+import * as React from 'react'
 import { View, Text } from 'react-native'
-import React from 'react'
 
-import tw from 'twrnc'
+// import tw from 'twrnc'
 
 const UsersList = () => {
   return (
