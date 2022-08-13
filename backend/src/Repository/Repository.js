@@ -5,7 +5,12 @@ class Repository {
 	}
 
 	getById = async (id) => {
-		return await this.model.findByPk(id)
+		try{
+			return await this.model.findByPk(id)
+		}catch(err){
+			return { error: sequelizeErrorParser(err) }
+		}
+		
 	}
 
 	createObject = async (object) => {
