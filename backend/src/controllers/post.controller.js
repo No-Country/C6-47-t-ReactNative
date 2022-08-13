@@ -5,8 +5,8 @@ const getAll = async (req, res) => {
 }
 
 const getById = async (req, res) => {
-	const res = await servicePost.getById(req.params.id)
-	res.error ? res.status(400).json(res) : res.json(res)
+	const resp = await servicePost.getById(req.params.id)
+	res.status(resp.statusCode).json(resp.resp? resp.resp: {error:resp.error})
 }
 
 const addPost = async (req, res) => {
