@@ -5,12 +5,11 @@ class Repository {
 	}
 
 	getById = async (id) => {
-		try{
+		try {
 			return await this.model.findByPk(id)
-		}catch(err){
+		} catch (err) {
 			return { error: sequelizeErrorParser(err) }
 		}
-		
 	}
 
 	createObject = async (object) => {
@@ -21,9 +20,10 @@ class Repository {
 		}
 	}
 
-	updateObject = async (object) => {
+	updateObject = async (object, id) => {
 		try {
-			return await this.model.update(object, { where: { id: object.id } })
+			const updated = await this.model.update(object, { where: { id: id } })
+			return updated
 		} catch (err) {
 			return { error: sequelizeErrorParser(err) }
 		}

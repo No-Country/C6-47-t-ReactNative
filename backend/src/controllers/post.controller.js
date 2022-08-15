@@ -17,11 +17,13 @@ const addPost = async (req, res) => {
 }
 
 const editPost = async (req, res) => {
-	const post = await servicePost.getAll()
+	const resp = await servicePost.editPost(req.body, req.params.id)
+	res.status(resp.statusCode).json(resp.resp ? { message: resp.resp } : { error: resp.error })
 }
 
 const deletePost = async (req, res) => {
-	const post = await servicePost.getAll()
+	const resp = await servicePost.deletePost(req.params.id)
+	res.status(resp.statusCode).json(resp.resp ? { message: resp.resp } : { error: resp.error })
 }
 
 module.exports = {
