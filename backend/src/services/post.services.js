@@ -7,7 +7,9 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-	return await Post.getById(id)
+	const resp = await Post.getById(id)
+	if(!resp) return { statusCode:404,error:'Post not found.'}
+	else return { statusCode:200,resp:resp}
 }
 
 const addPost = async (object) => {
