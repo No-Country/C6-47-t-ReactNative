@@ -8,7 +8,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
 	const resp = await Post.getById(id)
-	if (resp == 0) return { statusCode: 404, error: 'Post not found.' }
+	if (!resp) return { statusCode: 404, error: 'Post not found.' }
 	else return { statusCode: 200, resp: resp }
 }
 
