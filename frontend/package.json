@@ -15,6 +15,8 @@
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
     "@reduxjs/toolkit": "^1.8.3",
+    "@rneui/base": "^4.0.0-rc.6",
+    "@rneui/themed": "^4.0.0-rc.6",
     "expo": "~45.0.0",
     "expo-cli": "^4.3.0",
     "expo-linear-gradient": "^11.4.0",

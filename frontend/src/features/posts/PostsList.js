@@ -72,27 +72,27 @@ const PostsList = () => {
 
   return (
     <View style={tw`flex-1 items-center`}>
-      <View style={tw`flex-1 items-center justify-center z-50`}>
-        {posts
-          .map((post, index) => {
-            const isFirst = index === 0
-            const dragHandlers = isFirst ? panResponder.panHandlers : {}
+      {/* <View style={tw`flex-1 items-center justify-center z-50`}> */}
+      {posts
+        .map((post, index) => {
+          const isFirst = index === 0
+          const dragHandlers = isFirst ? panResponder.panHandlers : {}
 
-            return (
-              <PostCard
-                key={post.postId}
-                post={post}
-                isFirst={isFirst}
-                swipe={swipe}
-                tiltSign={tiltSign}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...dragHandlers}
-              />
-            )
-          })
-          .reverse()}
-        <Footer handleChoice={handleChoice} />
-      </View>
+          return (
+            <PostCard
+              key={post.postId}
+              post={post}
+              isFirst={isFirst}
+              swipe={swipe}
+              tiltSign={tiltSign}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...dragHandlers}
+            />
+          )
+        })
+        .reverse()}
+      <Footer handleChoice={handleChoice} />
+      {/* </View> */}
     </View>
   )
 }

@@ -56,7 +56,7 @@ const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
   return (
     <Animated.View
       style={[
-        tw`absolute top-8 z-50 bg-lime-300 h-100 rounded-t-${CARD.BORDER_RADIUS}`,
+        tw`absolute top-20 z-50 bg-lime-300 h-100 rounded-${CARD.BORDER_RADIUS}`,
         isFirst && animatedCardStyle
       ]}
       // eslint-disable-next-line react/jsx-props-no-spreading
@@ -77,7 +77,7 @@ const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
           style={tw`absolute top-0 left-0 right-0 bottom-0 h-${CARD.HEIGHT} rounded-t-${CARD.BORDER_RADIUS}`}
         />
       </View>
-      <Text>Este es otro texto</Text>
+      <Text style={tw`mx-2`}>Este es otro texto</Text>
 
       {isFirst && renderChoice()}
     </Animated.View>
