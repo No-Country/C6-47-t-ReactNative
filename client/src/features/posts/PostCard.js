@@ -5,9 +5,17 @@ import { LinearGradient } from 'expo-linear-gradient'
 import tw from 'twrnc'
 import Choice from '../../components/Choice'
 import { CARD, ACTION_OFFSET } from '../../utils/constants'
+import Footer from '../../components/Footer'
 
 // eslint-disable-next-line prettier/prettier
-const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
+const PostCard = ({
+  post,
+  isFirst,
+  swipe,
+  tiltSign,
+  handleChoice,
+  ...rest
+}) => {
   const rotate = Animated.multiply(swipe.x, tiltSign).interpolate({
     inputRange: [-ACTION_OFFSET, 0, ACTION_OFFSET],
     outputRange: ['8deg', '0deg', '-8deg']
@@ -56,13 +64,13 @@ const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
   return (
     <Animated.View
       style={[
-        tw`absolute top-20 z-50 bg-lime-300 h-100 rounded-${CARD.BORDER_RADIUS}`,
+        tw`absolute top-8 bg-white h-120 rounded-${CARD.BORDER_RADIUS} w-${CARD.WIDTH}`,
         isFirst && animatedCardStyle
       ]}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
-      <View>
+      <View style={tw``}>
         <Image
           source={{ uri: post.image }}
           style={tw` w-${CARD.WIDTH} h-${CARD.HEIGHT} rounded-t-${CARD.BORDER_RADIUS}`}
@@ -77,8 +85,18 @@ const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
           style={tw`absolute top-0 left-0 right-0 bottom-0 h-${CARD.HEIGHT} rounded-t-${CARD.BORDER_RADIUS}`}
         />
       </View>
-      <Text style={tw`mx-2`}>Este es otro texto</Text>
-
+      <View style={tw`px-2 bg-white rounded-t-2xl mt-2`}>
+        <Text>{post.body}</Text>
+        <Text style={tw`mt-2`}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. In arcu
+          cursus euismod quis viverra nibh cras. Nullam vehicula ipsum a arcu
+          cursus vitae congue mauris rhoncus.
+        </Text>
+      </View>
+      <View style={tw`w-full absolute bottom-1 items-center`}>
+        <Footer handleChoice={handleChoice} />
+      </View>
       {isFirst && renderChoice()}
     </Animated.View>
   )

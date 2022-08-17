@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { CARD, ACTION_OFFSET } from '../../utils/constants'
 import PostCard from './PostCard'
-import Footer from '../../components/Footer'
+// import Footer from '../../components/Footer'
 
 const PostsList = () => {
   const postsArray = useSelector((state) => state.posts.posts)
@@ -71,28 +71,29 @@ const PostsList = () => {
   )
 
   return (
-    <View style={tw`flex-1 items-center`}>
-      {/* <View style={tw`flex-1 items-center justify-center z-50`}> */}
-      {posts
-        .map((post, index) => {
-          const isFirst = index === 0
-          const dragHandlers = isFirst ? panResponder.panHandlers : {}
+    <View style={tw`flex-1 items-center bg-red-300`}>
+      <View style={tw`flex-1 items-center justify-center z-50 bg-teal-400 `}>
+        {posts
+          .map((post, index) => {
+            const isFirst = index === 0
+            const dragHandlers = isFirst ? panResponder.panHandlers : {}
 
-          return (
-            <PostCard
-              key={post.postId}
-              post={post}
-              isFirst={isFirst}
-              swipe={swipe}
-              tiltSign={tiltSign}
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...dragHandlers}
-            />
-          )
-        })
-        .reverse()}
-      <Footer handleChoice={handleChoice} />
-      {/* </View> */}
+            return (
+              <PostCard
+                key={post.postId}
+                post={post}
+                isFirst={isFirst}
+                swipe={swipe}
+                tiltSign={tiltSign}
+                handleChoice={handleChoice}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...dragHandlers}
+              />
+            )
+          })
+          .reverse()}
+        {/* <Footer handleChoice={handleChoice} /> */}
+      </View>
     </View>
   )
 }
