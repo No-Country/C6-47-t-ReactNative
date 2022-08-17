@@ -5,6 +5,7 @@ class Repository {
       where: { deletedAt: null },
       attributes: ["id", "userId", "title", "content"],
       raw: true,
+      order: [["id", "DESC"]],
     });
   };
 
