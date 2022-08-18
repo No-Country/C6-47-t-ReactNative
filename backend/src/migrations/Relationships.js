@@ -34,6 +34,17 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       }),
+      queryInterface.addColumn("Users", "roleId", {
+        type: Sequelize.INTEGER,
+        defaultValue: 2,
+        allowNull: false,
+        references: {
+          model: "Roles",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
     ]);
   },
 
