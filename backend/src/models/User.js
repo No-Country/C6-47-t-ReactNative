@@ -10,12 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Post, { foreignKey: "id" });
+      User.belongsTo(models.Roles, { foreignKey: "roleId" });
     }
   }
   User.init(
     {
       username: DataTypes.STRING,
-      password_hash: DataTypes.STRING,
+      password: DataTypes.STRING,
       birth_date: DataTypes.STRING,
       // postId: DataTypes.INTEGER,
       // tagsId: DataTypes.INTEGER,

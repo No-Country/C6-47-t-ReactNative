@@ -3,7 +3,9 @@ class Repository {
   getAll = async () => {
     return await this.model.findAll({
       where: { deletedAt: null },
-      attributes: ["id", "userId", "title", "content"],
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "deletedAt", "password"],
+      },
       raw: true,
       order: [["id", "DESC"]],
     });
@@ -11,7 +13,11 @@ class Repository {
 
   getById = async (id) => {
     try {
-      return await this.model.findByPk(id);
+      return await this.model.findByPk(id, {
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt", "password"],
+        },
+      });
     } catch (err) {
       return { error: sequelizeErrorParser(err) };
     }
@@ -27,7 +33,9 @@ class Repository {
 
   updateObject = async (object, id) => {
     try {
-      const updated = await this.model.update(object, { where: { id: id } });
+      const updated = await this.model.update(object, {
+        where: { id: id },
+      });
       return updated;
     } catch (err) {
       return { error: sequelizeErrorParser(err) };

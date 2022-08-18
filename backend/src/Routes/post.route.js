@@ -1,18 +1,31 @@
 const { Router } = require("express");
 const controller = require("../controllers/post.controller");
-const { validatorAddPost } = require("../middleware/validatorPost");
+const middlewares = require("../middleware/");
 
 const routerPost = Router();
 
 routerPost
   .route("/post")
-  .post(validatorAddPost, controller.addPost)
+  .post(
+    [
+      middlewares.validatorPost.validatorAddPost,
+      middlewares.auth.verifyToken,
+      middlewares.auth.isAdmin,
+    ],
+    controller.addPost
+  )
   .get(controller.getAll);
 
 routerPost
   .route("/post/:id")
   .get(controller.getById)
-  .put(controller.editPost)
-  .delete(controller.deletePost);
+  .put(
+    [middlewares.auth.verifyToken, middlewares.auth.isAdmin],
+    controller.editPost
+  )
+  .delete(
+    [middlewares.auth.verifyToken, middlewares.auth.isAdmin],
+    controller.deletePost
+  );
 
 module.exports = routerPost;
