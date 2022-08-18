@@ -1,48 +1,51 @@
-// eslint-disable-next-line no-unused-vars
-import { Image, Modal, Text, View } from 'react-native'
+import { Image, ScrollView, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { fetchPosts, fetchPostsById } from '../features/posts/postsSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-import React from 'react'
+import PostCard from '../features/posts/PostCard'
 import tw from 'twrnc'
-import { useSelector } from 'react-redux'
 
 const DetailScreen = () => {
-  const posts = useSelector((state) => state.posts.posts)
+  const dispatch = useDispatch()
+  const posts = useSelector((state) => state.posts)
   const users = useSelector((state) => state.users.users)
-
-  // eslint-disable-next-line no-console
-  console.log(users[0].name)
+  
+  useEffect(() => {
+    dispatch(fetchPosts()); // Este es el dispatch que hago para traer todos los posts
+    dispatch(fetchPostsById(1)); // Este es el dispatch que hago para traer un post especifico
+  }, [])
 
   return (
-    <View style={tw`dark:bg-black flex h-full mx-1 my-20`}>
-      <View
-        key={posts[0].postId}
-        style={tw`flex flex-col items-center justify-center `}
-      >
-        <Text style={tw`dark:text-white text-3xl`}>
-          Detail of {posts[0].title}
-        </Text>
-        <Image source={{ uri: posts[0].img }} style={tw`h-80 w-85 my-5`} />
-        <Text
-          style={tw`dark:text-white text-lg bg-slate-50 px-5 py-3 w-85 h-45 rounded-lg`}
-        >
-          {posts[0].body}
-        </Text>
-        <Text
-          style={tw`dark:text-white text-lg bg-slate-50 px-5 py-3 w-85 h-15 rounded-lg border-2 border-slate-200`}
-        >
-          Comment N° 1
-        </Text>
-        <Text
-          style={tw`dark:text-white text-lg bg-slate-50 px-5 py-3 w-85 h-15 rounded-lg border-2 border-slate-200`}
-        >
-          Comment N° 2
-        </Text>
-        <Text style={tw`dark:text-white py-3 text-2xl`}>
-          Created by {users[0].name}
-        </Text>
+    <ScrollView style={tw`bg-white`}>
+      <View style={tw`dark:bg-black bg-white flex h-full mx-1 my-20`}>
+        {posts.loading && <Text>Loading...</Text>}
+        {!posts.loading && posts.error ? <Text>Error: Post no encontrado. Razon: {posts.error}</Text> : null}
+        {!posts.loading && posts.post 
+        ? //text-xl	
+          <View key={posts.post.id} style={tw`dark:bg-black bg-white  `}>
+            <Text style={tw`dark:bg-black text-xl	`}>Titulo: {posts.post.title}</Text>
+            <Text>ID: {posts.post.id}</Text>
+            <Text>User ID: {posts.post.userId}</Text>
+            <Text>Contenido: {posts.post.content}</Text>
+          </View>
+        : null}
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
 export default DetailScreen
+/*
+const posts = useSelector((state) => state.posts)
+
+{!posts.loading && posts.posts.length 
+        ? posts.posts.map((post) => (
+          <View key={post.id}>
+            <Text>Titulo: {post.title}</Text>
+            <Text>ID: {post.id}</Text>
+            <Text>User ID: {post.userId}</Text>
+            <Text>Contenido: {post.content}</Text>
+          </View>
+        )) : null}
+ */

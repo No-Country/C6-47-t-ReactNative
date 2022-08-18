@@ -1,13 +1,14 @@
-import { View, Animated, PanResponder } from 'react-native'
+import { ACTION_OFFSET, CARD } from '../../utils/constants'
+import { Animated, PanResponder, View } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import tw from 'twrnc'
-import { CARD, ACTION_OFFSET } from '../../utils/constants'
-import PostCard from './PostCard'
+
 import Footer from '../../components/Footer'
+import PostCard from './PostCard'
+import tw from 'twrnc'
+import { useSelector } from 'react-redux'
 
 const PostsList = () => {
-  const postsArray = useSelector((state) => state.posts.posts)
+  const postsArray = useSelector((state) => state.posts)
 
   const swipe = useRef(new Animated.ValueXY()).current
   const tiltSign = useRef(new Animated.Value(1)).current
@@ -73,8 +74,8 @@ const PostsList = () => {
   return (
     <View style={tw`flex-1 items-center`}>
       {/* <View style={tw`flex-1 items-center justify-center z-50`}> */}
-      {posts
-        .map((post, index) => {
+      {posts &&
+        posts.posts.map((post, index) => {
           const isFirst = index === 0
           const dragHandlers = isFirst ? panResponder.panHandlers : {}
 

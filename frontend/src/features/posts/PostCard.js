@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import { Text, View, Image, Animated } from 'react-native'
+
+import { ACTION_OFFSET, CARD } from '../../utils/constants'
+import { Animated, Image, Text, View } from 'react-native'
 import React, { useCallback } from 'react'
+
+import Choice from '../../components/Choice'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from 'twrnc'
-import Choice from '../../components/Choice'
-import { CARD, ACTION_OFFSET } from '../../utils/constants'
 
 // eslint-disable-next-line prettier/prettier
 const PostCard = ({ post, isFirst, swipe, tiltSign, ...rest }) => {
