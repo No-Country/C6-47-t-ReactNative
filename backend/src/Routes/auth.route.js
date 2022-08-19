@@ -3,9 +3,12 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
+const middlewares = require("../middleware/");
+
 const routerAuth = Router();
 
-routerAuth.post("/register", async (req, res, next) => {
+routerAuth.post("/register", 
+middlewares.validatorRegister.validatorNewRegister, async (req, res, next) => {
   passport.authenticate(
     "register",
     { session: false },
