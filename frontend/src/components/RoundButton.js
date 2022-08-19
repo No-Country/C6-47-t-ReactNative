@@ -29,7 +29,7 @@ const RoundButton = ({ name, size, color, onPress }) => {
     >
       <Animated.View
         style={[
-          tw`w-12 h-12 bg-white rounded-full items-center justify-center`,
+          tw`w-8 h-8 rounded-full items-center justify-center`,
           { transform: [{ scale }] }
         ]}
       >

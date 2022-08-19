@@ -1,4 +1,6 @@
-import { createAsyncThunk, createSlice, } from '@reduxjs/toolkit'
+/* eslint-disable no-param-reassign */
+/* eslint-disable prefer-template */
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import axios from 'axios'
 
@@ -11,7 +13,11 @@ const initialState = {
       title: 'Post 1',
       body: 'This is the body of post 1',
       image: 'https://picsum.photos/200',
-      comments: ['This is the comment n° 1','This is the comment n° 2','This is the comment n° 3']
+      comments: [
+        'This is the comment n° 1',
+        'This is the comment n° 2',
+        'This is the comment n° 3'
+      ]
     },
     {
       postId: 2,
@@ -19,18 +25,24 @@ const initialState = {
       title: 'Post 2',
       body: 'This is the body of post 2',
       image: 'https://picsum.photos/202',
-      comments: ['This is the comment n° 1','This is the comment n° 2','This is the comment n° 3']
+      comments: [
+        'This is the comment n° 1',
+        'This is the comment n° 2',
+        'This is the comment n° 3'
+      ]
     }
   ],
   post: null,
-  error: '',
+  error: ''
 }
 
-export const fetchPosts = createAsyncThunk('post/fetchPosts', 
-  async (payload, {rejectWithValue }) => {
+export const fetchPosts = createAsyncThunk(
+  'post/fetchPosts',
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:8080/post')
-      .then(res => res.data)
+      const response = await axios
+        .get('http://localhost:8080/post')
+        .then((res) => res.data)
       return response // Return a value synchronously using Async-await
     } catch (err) {
       if (!err.response) {
@@ -41,11 +53,13 @@ export const fetchPosts = createAsyncThunk('post/fetchPosts',
   }
 )
 
-export const fetchPostsById = createAsyncThunk('post/fetchPostsById', 
-  async (payload, {rejectWithValue }) => {
+export const fetchPostsById = createAsyncThunk(
+  'post/fetchPostsById',
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:8080/post/' + payload)
-      .then(res => res.data)
+      const response = await axios
+        .get('http://localhost:8080/post/' + payload)
+        .then((res) => res.data)
       return response // Return a value synchronously using Async-await
     } catch (err) {
       if (!err.response) {
@@ -55,44 +69,42 @@ export const fetchPostsById = createAsyncThunk('post/fetchPostsById',
     }
   }
 )
-
-
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {},
-  extraReducers: 
-  (builder) => {
+  extraReducers: (builder) => {
     builder.addCase(fetchPostsById.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchPostsById.fulfilled, (state,action) => {
-      state.loading = false;
-      state.post = action.payload;
-      state.error = '';
-    });
-    builder.addCase(fetchPostsById.rejected, (state,action) => {
-      state.loading = false;
-      state.posts = [];
-      state.error = action.error.message;
-    });
+      state.loading = true
+    })
+    builder.addCase(fetchPostsById.fulfilled, (state, action) => {
+      state.loading = false
+      state.post = action.payload
+      state.error = ''
+    })
+    builder.addCase(fetchPostsById.rejected, (state, action) => {
+      state.loading = false
+      // state.posts = []
+      state.error = action.error.message
+    })
 
     builder.addCase(fetchPosts.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchPosts.fulfilled, (state,action) => {
-      state.loading = false;
-      state.posts = action.payload;
-      state.error = '';
-    });
-    builder.addCase(fetchPosts.rejected, (state,action) => {
-      state.loading = false;
-      state.posts = [];
-      state.error = action.error.message;
-    });
-    
-  }  
+      state.loading = true
+    })
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+      state.loading = false
+      // state.posts = action.payload
+      // state.posts = state.posts.concat(action.payload)
+      Array.prototype.push.apply(state.posts, action.payload)
+      state.error = ''
+    })
+    builder.addCase(fetchPosts.rejected, (state, action) => {
+      state.loading = false
+      // state.posts = []
+      state.error = action.error.message
+    })
+  }
 })
 
 // export const {} = postsSlice.actions
