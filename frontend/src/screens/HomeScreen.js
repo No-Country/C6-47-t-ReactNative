@@ -13,7 +13,7 @@ const HomeScreen = () => {
   //  ....................// ...................
 
   return (
-    <View style={tw`flex-1 items-center`}>
+    <View style={tw`flex-1 items-center bg-lime-200 -z-50`}>
       <PostsList />
     </View>
   )

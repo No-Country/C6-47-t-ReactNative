@@ -8,17 +8,18 @@ import { COLORS } from '../utils/constants'
 const Footer = ({ handleChoice }) => {
   return (
     <View
-      style={tw`absolute bottom-4 flex-row w-1/3 justify-between items-center`}
+      // style={tw`absolute bottom-4 flex-row w-1/3 justify-between items-center`}
+      style={tw` flex-row w-1/5 justify-between items-center`}
     >
       <RoundButton
         name="times"
-        size={30}
+        size={25}
         color={COLORS.nope}
         onPress={() => handleChoice(-1)}
       />
       <RoundButton
-        name="heart"
-        size={30}
+        name="check"
+        size={25}
         color={COLORS.like}
         onPress={() => handleChoice(1)}
       />
