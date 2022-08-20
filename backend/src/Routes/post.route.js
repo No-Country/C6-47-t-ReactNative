@@ -8,9 +8,9 @@ routerPost
   .route("/post")
   .post(
     [
-      middlewares.validatorPost.validatorAddPost,
       middlewares.auth.verifyToken,
       middlewares.auth.isAdmin,
+      middlewares.validators.validatorAddPost,
     ],
     controller.addPost
   )

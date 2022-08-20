@@ -1,5 +1,4 @@
 const auth = require("./auth");
-const validatorPost = require("./validatorPost");
-const validatorRegister = require("./validatorRegister");
+const validators = require("./validators");
 
-module.exports = { auth, validatorPost, validatorRegister };
+module.exports = { auth, validators };

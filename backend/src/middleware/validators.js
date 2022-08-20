@@ -1,6 +1,28 @@
 const { check } = require("express-validator");
 const { validateResult } = require("../utils/validateResult");
 
+const validatorAuth = [
+  check("username")
+    .exists()
+    .withMessage("Username field required.")
+    .isLength({ min: 4 })
+    .withMessage("Username must be at least 5 chars long.")
+    .not()
+    .isEmpty()
+    .withMessage("Username cannot be empty."),
+  check("password")
+    .exists()
+    .withMessage("Password field required.")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 chars long.")
+    .not()
+    .isEmpty()
+    .withMessage("Password cannot be empty."),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
 const validatorAddPost = [
   check("userId")
     .exists()
@@ -26,4 +48,4 @@ const validatorAddPost = [
   },
 ];
 
-module.exports = { validatorAddPost };
+module.exports = { validatorAuth, validatorAddPost };
