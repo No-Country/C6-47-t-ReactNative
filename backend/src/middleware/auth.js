@@ -25,4 +25,7 @@ passport.use(
 const isAdmin = services.auth.isAdmin;
 const verifyToken = services.auth.verifyToken;
 
-module.exports = { isAdmin, verifyToken };
+const verifyRefreshToken = services.auth.verifyRefreshToken;
+
+
+module.exports = { isAdmin, verifyToken, verifyRefreshToken };
