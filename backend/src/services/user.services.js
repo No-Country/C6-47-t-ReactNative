@@ -9,7 +9,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const resp = await User.getById(id);
   if (!resp) return { statusCode: 404, error: "User not found." };
-  else return { statusCode: 200, resp: resp };
+  else return { statusCode: 200, user: resp.dataValues };
 };
 
 const registerUser = async (user) => {
@@ -36,6 +36,12 @@ const deleteUser = async (id) => {
   else return { statusCode: 200, resp: "User deleted." };
 };
 
+const findOneAndUpdate = async (user, Filter) => {
+  const resp = await User.findOneAndUpdate(user, Filter);
+  if (resp == 0) return { statusCode: 404, error: "User not found." };
+  else return { statusCode: 200, resp: resp };
+};
+
 module.exports = {
   getAll,
   getById,
@@ -43,4 +49,5 @@ module.exports = {
   findByUsername,
   editUser,
   deleteUser,
+  findOneAndUpdate,
 };

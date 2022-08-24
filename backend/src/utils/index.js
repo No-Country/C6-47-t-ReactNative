@@ -1,5 +1,4 @@
 const validateResult = require("./validateResult");
-const getTokens = require("./getTokens");
-const bcrypt = require("./bcrypt");
+const jwtTokens = require("./jwtTokens");
 
-module.exports = { validateResult, getTokens, bcrypt };
+module.exports = { validateResult, jwtTokens };

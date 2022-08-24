@@ -12,6 +12,18 @@ routerAuth.post(
 
 routerAuth.post("/login", controllers.auth.login);
 
+routerAuth.post(
+  "/logout",
+  middlewares.auth.verifyToken,
+  controllers.auth.logout
+);
+
+routerAuth.post(
+  "/refresh",
+  middlewares.auth.verifyRefreshToken,
+  controllers.auth.refresh
+);
+
 // routerAuth.get(
 //   "/profile",
 //   passport.authenticate("jwt", { session: false }),

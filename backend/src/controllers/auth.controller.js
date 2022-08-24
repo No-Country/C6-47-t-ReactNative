@@ -1,5 +1,6 @@
 const passport = require("passport");
 const utils = require("../utils");
+const services = require("../services");
 
 const register = async (req, res, next) => {
   passport.authenticate(
@@ -33,9 +34,14 @@ const login = async (req, res, next) => {
           roleId: user.roleId,
         };
 
-        const tokens = await utils.getTokens(body);
+        const tokens = await utils.jwtTokens.getTokens(body);
 
-        return res.json(tokens);
+        await utils.jwtTokens.updateRefreshTokenHash(
+          user.id,
+          tokens.refresh_token
+        );
+
+        return res.json({ message: info.message, tokens });
       });
     } catch (error) {
       return next(error);
@@ -43,4 +49,31 @@ const login = async (req, res, next) => {
   })(req, res, next);
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const resp = await services.auth.logout(id);
+    res
+      .status(resp.statusCode)
+      .json(
+        resp.resp ? { message: "Logout Successfully." } : { error: resp.error }
+      );
+  } catch (error) {
+    return error;
+  }
+};
+
+const refresh = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const refresh_token = req.token;
+
+    const resp = await services.auth.refresh(userId, refresh_token);
+
+    res.status(resp.statusCode).json(resp.resp);
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { register, login, logout, refresh };

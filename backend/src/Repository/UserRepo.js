@@ -26,6 +26,14 @@ class UserRepository extends Repository {
       return { error: sequelizeErrorParser(error) };
     }
   };
+
+  findOneAndUpdate = async (object, Filter) => {
+    try {
+      return await this.model.update(object, { where: Filter });
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
 }
 
 module.exports = UserRepository;

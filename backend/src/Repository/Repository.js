@@ -34,7 +34,7 @@ class Repository {
   updateObject = async (object, id) => {
     try {
       const updated = await this.model.update(object, {
-        where: { id: id },
+        where: { id },
       });
       return updated;
     } catch (err) {

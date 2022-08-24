@@ -9,7 +9,7 @@ const getAll = async () => {
 const getById = async (id) => {
   const resp = await Roles.getById(id);
   if (!resp) return { statusCode: 404, error: "Role not found." };
-  else return { statusCode: 200, resp: resp };
+  else return { statusCode: 200, roles: resp.dataValues };
 };
 
 const createRole = async (role) => {
