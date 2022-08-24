@@ -1,24 +1,26 @@
-const bcrypt = require("bcryptjs");
 const serviceUser = require("./user.services");
 const serviceRole = require("./roles.services");
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
+const utils = require("../utils");
 
-const register = async (username, password, done) => {
+const register = async (req, username, password, done) => {
   try {
-    const salt = await bcrypt.genSalt(10);
-    const passwordHashed = await bcrypt.hash(password, salt);
+    const { email } = req.body;
+
+    const passwordHashed = await utils.bcrypt.hashData(password);
 
     const userRegistered = await serviceUser.registerUser({
       username: username,
-      password: passwordHashed,
+      password_hash: passwordHashed,
+      email,
     });
 
     if (userRegistered.error)
       return done(null, false, { message: userRegistered.error });
     else return done(null, userRegistered);
   } catch (error) {
-    document(error);
+    done(error);
   }
 };
 
@@ -28,8 +30,10 @@ const login = async (username, password, done) => {
     if (resp.error) return done(null, false, { messagE: "User not found." });
 
     const user = resp.resp.dataValues;
-
-    const validate = await bcrypt.compare(password, user.password);
+    const validate = await utils.bcrypt.compareData(
+      password,
+      user.password_hash
+    );
     if (!validate) return done(null, false, { message: "Wrong password" });
 
     return done(null, user, { message: "Login Successfully." });

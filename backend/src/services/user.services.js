@@ -1,6 +1,6 @@
-const UserRepo = require("../Repository/UserRepo");
+const repositories = require("../Repository");
 
-const User = new UserRepo();
+const User = new repositories.user();
 
 const getAll = async () => {
   return await User.getAll();

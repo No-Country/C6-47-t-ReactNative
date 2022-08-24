@@ -1,4 +1,10 @@
 const express = require("express");
+const https = require("https");
+const fs = require("fs");
+const optionsHTTPS = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
 
 // dotenv
 const config = require("./config/config");
@@ -10,9 +16,7 @@ const cors = require("cors");
 const { sequelize } = require("./models/");
 
 // Routes
-const routerPost = require("./Routes/post.route");
-const routerUser = require("./Routes/user.route");
-const routerAuth = require("./Routes/auth.route");
+const routers = require("./Routes");
 
 const app = express();
 
@@ -21,9 +25,7 @@ require("./utils/initialSetup");
 require("./middleware/auth");
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: true }));
-app.use(routerPost);
-app.use(routerUser);
-app.use(routerAuth);
+app.use([routers.auth, routers.post, routers.user]);
 
 sequelize
   .authenticate()
@@ -34,6 +36,8 @@ sequelize
     console.log(`Error connecting to db: ${error}`);
   });
 
-app.listen(config.PORT, () => {
+const httpsServer = https.createServer(optionsHTTPS, app);
+
+httpsServer.listen(config.PORT, () => {
   console.log(`Server listening port ${process.env.PORT}`);
 });
