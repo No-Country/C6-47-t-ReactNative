@@ -31,6 +31,18 @@ const initialState = {
         'This is the comment n° 2',
         'This is the comment n° 3'
       ]
+    },
+    {
+      postId: 3,
+      userId: 4,
+      title: 'Post 3',
+      body: 'This is the body of post 3',
+      image: 'https://picsum.photos/202',
+      comments: [
+        'This is the comment n° 1',
+        'This is the comment n° 2',
+        'This is the comment n° 3'
+      ]
     }
   ],
   post: {},
@@ -42,8 +54,8 @@ export const fetchPosts = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios
-        .get('http://localhost:8080/post')
-        .then(res => {return res.data})
+        .get('https://localhost:8080/post')
+        .then(res => console.log(res.data))
       
       return response // Return a value synchronously using Async-await
     } catch (err) {
@@ -59,8 +71,8 @@ export const fetchPostsById = createAsyncThunk(
   'post/fetchPostsById',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:8080/post/' + payload)
-        .then((res) => res.data)
+      const response = await axios.get('https://localhost:8080/post/' + payload)
+        .then((res) => console.log(res.data))
       return response // Return a value synchronously using Async-await
     } catch (err) {
       
