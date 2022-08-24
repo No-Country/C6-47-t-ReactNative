@@ -1,6 +1,6 @@
-const RolesRepository = require("../Repository/RolesRepo");
+const repositories = require("../Repository");
 
-const Roles = new RolesRepository();
+const Roles = new repositories.roles();
 
 const getAll = async () => {
   return await Roles.getAll();

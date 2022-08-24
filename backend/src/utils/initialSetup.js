@@ -6,11 +6,19 @@ const createRoles = async () => {
 
   if (count > 0) return;
 
-  const values = await Promise.all([
-    Roles.create({ role: "user" }),
-    Roles.create({ role: "guess" }),
-    Roles.create({ role: "admin" }),
-  ]);
+  let values = [];
+
+  const user = await Roles.create({ role: "user" });
+  values.push(user);
+
+  const admin = await Roles.create({ role: "admin" });
+  values.push(admin);
+
+  // const values = await Promise.all([
+  //   Roles.create({ role: "user" }),
+  //   Roles.create({ role: "guess" }),
+  //   Roles.create({ role: "admin" }),
+  // ]);
   console.log(values);
 };
 
@@ -20,12 +28,12 @@ const createUser = async () => {
   if (count > 0) return;
 
   const passwordHashed = await bcrypt.hash("123", 10);
-  console.log(passwordHashed);
   const values = await Promise.all([
     User.create({
       username: "yache",
-      password: passwordHashed,
-      roleId: 3,
+      password_hash: passwordHashed,
+      email: "juli@yache.com",
+      roleId: 2,
     }),
   ]);
   console.log(values);
