@@ -10,6 +10,7 @@ module.exports = (api) => {
       '@babel/plugin-transform-regenerator',
       '@babel/plugin-transform-async-to-generator',
       '@babel/plugin-transform-runtime',
+      'react-native-paper/babel',
       [
         '@babel/plugin-transform-spread',
         {

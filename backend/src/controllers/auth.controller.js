@@ -1,6 +1,8 @@
 const passport = require("passport");
 const utils = require("../utils");
+
 const services = require("../services");
+
 
 const register = async (req, res, next) => {
   passport.authenticate(
@@ -42,12 +44,14 @@ const login = async (req, res, next) => {
         );
 
         return res.json({ message: info.message, tokens });
+
       });
     } catch (error) {
       return next(error);
     }
   })(req, res, next);
 };
+
 
 const logout = async (req, res) => {
   try {
@@ -77,3 +81,4 @@ const refresh = async (req, res) => {
 };
 
 module.exports = { register, login, logout, refresh };
+

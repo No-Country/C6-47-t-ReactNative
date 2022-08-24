@@ -1,14 +1,18 @@
-import * as React from 'react'
-// import { Text, View } from 'react-native'
+import * as React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import Login from './src/screens/Login/Login';
+import { theme } from './App.style';
+import Register from './src/screens/Register/Register';
+import AppNavigator from './src/app.navigator';
 import { Provider } from 'react-redux'
 import store from './src/store/store'
-import NavigatorBottomTabs from './src/components/NavigatorBottomTabs'
 
 export default function App() {
   return (
-    // Add Redux provider to the app
     <Provider store={store}>
-      <NavigatorBottomTabs />
+      <PaperProvider theme={theme}>
+        <AppNavigator />
+      </PaperProvider>
     </Provider>
   )
 }
