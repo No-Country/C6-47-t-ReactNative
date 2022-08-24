@@ -10,12 +10,27 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
-      password: {
+      email: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
       },
-      birth_date: {
+      password_hash: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      // birth_date: {
+      //   type: Sequelize.STRING,
+      // },
+      refresh_token_hash: {
+        type: Sequelize.STRING(64),
+        allowNull: true,
       },
       // postId: {
       // 	type: Sequelize.INTEGER,

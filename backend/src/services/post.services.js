@@ -1,6 +1,6 @@
-const PostRepo = require("../Repository/PostRepo");
+const repositories = require("../Repository");
 
-const Post = new PostRepo();
+const Post = new repositories.post();
 
 const getAll = async () => {
   return await Post.getAll();

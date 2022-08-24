@@ -1,5 +1,5 @@
 const { check } = require("express-validator");
-const { validateResult } = require("../utils/validateResult");
+const utils = require("../utils");
 
 const validatorAuth = [
   check("username")
@@ -18,8 +18,13 @@ const validatorAuth = [
     .not()
     .isEmpty()
     .withMessage("Password cannot be empty."),
+  check("email")
+    .exists()
+    .withMessage("Email field required.")
+    .isEmail()
+    .withMessage("It should be an email."),
   (req, res, next) => {
-    validateResult(req, res, next);
+    utils.validateResult(req, res, next);
   },
 ];
 
@@ -44,7 +49,7 @@ const validatorAddPost = [
     .isEmpty()
     .withMessage("Content cannot be empty"),
   (req, res, next) => {
-    validateResult(req, res, next);
+    utils.validateResult(req, res, next);
   },
 ];
 

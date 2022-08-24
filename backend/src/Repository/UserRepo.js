@@ -13,7 +13,12 @@ class UserRepository extends Repository {
       return await this.model.findOne({
         where: { username: username },
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt"],
+          exclude: [
+            "createdAt",
+            "updatedAt",
+            "deletedAt",
+            "refresh_token_hash",
+          ],
         },
         include: Roles,
       });

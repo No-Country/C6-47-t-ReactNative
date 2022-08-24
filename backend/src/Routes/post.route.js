@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const controller = require("../controllers/post.controller");
+const controllers = require("../controllers");
 const middlewares = require("../middleware/");
 
 const routerPost = Router();
@@ -12,20 +12,20 @@ routerPost
       middlewares.auth.isAdmin,
       middlewares.validators.validatorAddPost,
     ],
-    controller.addPost
+    controllers.post.addPost
   )
-  .get(controller.getAll);
+  .get(controllers.post.getAll);
 
 routerPost
   .route("/post/:id")
-  .get(controller.getById)
+  .get(controllers.post.getById)
   .put(
     [middlewares.auth.verifyToken, middlewares.auth.isAdmin],
-    controller.editPost
+    controllers.post.editPost
   )
   .delete(
     [middlewares.auth.verifyToken, middlewares.auth.isAdmin],
-    controller.deletePost
+    controllers.post.deletePost
   );
 
 module.exports = routerPost;

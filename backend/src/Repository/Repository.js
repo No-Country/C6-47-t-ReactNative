@@ -4,7 +4,7 @@ class Repository {
     return await this.model.findAll({
       where: { deletedAt: null },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "deletedAt", "password"],
+        exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
       },
       raw: true,
       order: [["id", "DESC"]],
@@ -15,7 +15,7 @@ class Repository {
     try {
       return await this.model.findByPk(id, {
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt", "password"],
+          exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
         },
       });
     } catch (err) {
