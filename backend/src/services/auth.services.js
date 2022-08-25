@@ -6,14 +6,11 @@ const utils = require("../utils");
 
 const sequelize = require("sequelize");
 
-
 const register = async (req, username, password, done) => {
   try {
     const { email } = req.body;
 
-
     const passwordHashed = await utils.jwtTokens.hashData(password);
-
 
     const userRegistered = await serviceUser.registerUser({
       username: username,
@@ -37,7 +34,6 @@ const login = async (username, password, done) => {
     const user = resp.resp.dataValues;
 
     const validate = await utils.jwtTokens.compareData(
-
       password,
       user.password_hash
     );
