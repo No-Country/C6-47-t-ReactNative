@@ -6,6 +6,10 @@ const getAll = async () => {
   return await Post.getAll();
 };
 
+const getObjects = async (page, size) => {
+  return await Post.getObjects(page, size);
+};
+
 const getById = async (id) => {
   const resp = await Post.getById(id);
   if (!resp) return { statusCode: 404, error: "Post not found." };
@@ -34,4 +38,5 @@ module.exports = {
   addPost,
   editPost,
   deletePost,
+  getObjects
 };

@@ -14,7 +14,8 @@ routerPost
     ],
     controllers.post.addPost
   )
-  .get(controllers.post.getAll);
+  //edit testing getObjects
+  .get(controllers.post.getObjects);
 
 routerPost
   .route("/post/:id")
