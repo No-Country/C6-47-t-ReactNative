@@ -54,9 +54,9 @@ export const fetchPosts = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios
-        .get('https://localhost:8080/post')
-        .then(res => console.log(res.data))
-      
+        .get('https://localhost:8080/post') // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
+        .then((res) => console.log(res.data))
+
       return response // Return a value synchronously using Async-await
     } catch (err) {
       if (!err.response) {
@@ -71,11 +71,11 @@ export const fetchPostsById = createAsyncThunk(
   'post/fetchPostsById',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get('https://localhost:8080/post/' + payload)
+      const response = await axios
+        .get('https://localhost:8080/post/' + payload)
         .then((res) => console.log(res.data))
       return response // Return a value synchronously using Async-await
     } catch (err) {
-      
       if (!err.response) {
         throw err
       }
