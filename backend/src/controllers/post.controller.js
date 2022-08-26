@@ -5,6 +5,25 @@ const getAll = async (req, res) => {
   res.json(await services.post.getAll());
 };
 
+const getObjects = async (req, res) => {
+  //Example url GET = https://localhost:8080/post?page=0&size=1
+  //Testear con query parameters: "page" y "size"
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const sizeAsNumber = Number.parseInt(req.query.size);
+
+  let page = 0;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0 ){
+    page = pageAsNumber;
+  }
+
+  let size = 5;
+  if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 ){
+    size = sizeAsNumber;
+  }
+
+  res.json(await services.post.getObjects(page, size));
+};
+
 const getById = async (req, res) => {
   // Example url GET = http://localhost:8080/post/:id <- idPost
   const resp = await services.post.getById(req.params.id);
@@ -43,4 +62,5 @@ module.exports = {
   addPost,
   editPost,
   deletePost,
+  getObjects
 };
