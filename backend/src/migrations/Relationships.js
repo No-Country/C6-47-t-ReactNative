@@ -36,7 +36,7 @@ module.exports = {
       }),
       queryInterface.addColumn("Users", "roleId", {
         type: Sequelize.INTEGER,
-        defaultValue: 2,
+        defaultValue: 1,
         allowNull: false,
         references: {
           model: "Roles",
