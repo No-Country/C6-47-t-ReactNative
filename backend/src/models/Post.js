@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Post.hasMany(models.Comment, { foreignKey: "postId" });
       Post.hasOne(models.MediaContent, { foreignKey: "postId" }); // <- Relacion de post/video-image, falta crear la tabla MediaContent
       Post.belongsTo(models.User, { foreignKey: "id" });
+      Post.belongsToMany(models.Tags, { through: "tagId" });
       // Post.belongsTo(models.MediaContent, { through: 'postId' })
       // Post.belongsTo(models.User, { foreignKey: 'userId' })
       // Post.belongsToMany(models.Tag, {through:'PostTags'}) // <- Relacion de tabla intermedia PostTags entre el modelo Post y el modelo Tags
@@ -22,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       content: DataTypes.STRING,
       likes: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
+      tagId: DataTypes.INTEGER,
       // mediaContentId: DataTypes.INTEGER,
       // commentId: DataTypes.INTEGER,
     },

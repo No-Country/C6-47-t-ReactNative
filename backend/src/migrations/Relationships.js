@@ -14,6 +14,16 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       }),
+      queryInterface.addColumn("Posts", "tagId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Tags",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
       queryInterface.addColumn("MediaContents", "postId", {
         type: Sequelize.INTEGER,
         allowNull: false,

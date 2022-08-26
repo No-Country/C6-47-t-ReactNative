@@ -87,7 +87,7 @@ export default function Login({ navigation }) {
               onChangeText={(text) => handleEmailInput(text)}
               label="Email"
               // keyboardType="email-address"
-              keyboardType="text"
+              keyboardType="default"
               value={email}
             />
             {emailError ? <Text>Error: {emailError}</Text> : null}

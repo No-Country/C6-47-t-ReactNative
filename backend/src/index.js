@@ -24,7 +24,7 @@ require("./utils/initialSetup");
 
 require("./middleware/auth");
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:19006", credentials: true }));
+app.use(cors({ credentials: true }));
 app.use([routers.auth, routers.post, routers.user]);
 
 sequelize
@@ -36,12 +36,12 @@ sequelize
     console.log(`Error connecting to db: ${error}`);
   });
 
-app.listen(config.HTTPPORT, () => {
-  console.log(`Server HTTP listening port ${config.HTTPPORT}`);
+app.listen(config.PORT || 8080, () => {
+  console.log(`Server listening port ${config.HTTPPORT}`);
 });
 
-const httpsServer = https.createServer(optionsHTTPS, app);
+// const httpsServer = https.createServer(optionsHTTPS, app);
 
-httpsServer.listen(config.HTTPSPORT, () => {
-  console.log(`Server HTTPS listening port ${config.HTTPSPORT}`);
-});
+// httpsServer.listen(config.HTTPSPORT, () => {
+//   console.log(`Server HTTPS listening port ${config.HTTPSPORT}`);
+// });
