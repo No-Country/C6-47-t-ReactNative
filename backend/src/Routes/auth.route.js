@@ -24,6 +24,7 @@ routerAuth.post(
   controllers.auth.refresh
 );
 
+// routerAuth.get("/tag", controllers.post.getByTag);
 
 // routerAuth.get(
 //   "/profile",

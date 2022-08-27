@@ -12,12 +12,12 @@ const getObjects = async (req, res) => {
   const sizeAsNumber = Number.parseInt(req.query.size);
 
   let page = 0;
-  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0 ){
+  if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
     page = pageAsNumber;
   }
 
   let size = 5;
-  if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 ){
+  if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0) {
     size = sizeAsNumber;
   }
 
@@ -56,11 +56,16 @@ const deletePost = async (req, res) => {
     .json(resp.resp ? { message: resp.resp } : { error: resp.error });
 };
 
+const getByTag = async (req, res) => {
+  res.json(await services.post.getByTag("javascript"));
+};
+
 module.exports = {
   getAll,
   getById,
   addPost,
   editPost,
   deletePost,
-  getObjects
+  getObjects,
+  getByTag,
 };

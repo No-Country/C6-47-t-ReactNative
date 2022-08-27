@@ -14,6 +14,9 @@ module.exports = {
       content: {
         type: Sequelize.TEXT,
       },
+      mediaURL: {
+        type: Sequelize.STRING,
+      },
       likes: {
         type: Sequelize.INTEGER,
       },

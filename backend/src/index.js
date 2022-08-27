@@ -37,11 +37,11 @@ sequelize
   });
 
 app.listen(config.PORT || 8080, () => {
-  console.log(`Server listening port ${config.HTTPPORT}`);
+  console.log(`Server HTTP listening port ${config.HTTPPORT}`);
 });
 
-// const httpsServer = https.createServer(optionsHTTPS, app);
+const httpsServer = https.createServer(optionsHTTPS, app);
 
-// httpsServer.listen(config.HTTPSPORT, () => {
-//   console.log(`Server HTTPS listening port ${config.HTTPSPORT}`);
-// });
+httpsServer.listen(config.HTTPSPORT, () => {
+  console.log(`Server HTTPS listening port ${config.HTTPSPORT}`);
+});

@@ -32,11 +32,17 @@ const deletePost = async (id) => {
   else return { statusCode: 200, resp: "Post deleted." };
 };
 
+const getByTag = async (tag) => {
+  const resp = await Post.getByTag(tag);
+  return resp;
+};
+
 module.exports = {
   getAll,
   getById,
   addPost,
   editPost,
   deletePost,
-  getObjects
+  getObjects,
+  getByTag,
 };
