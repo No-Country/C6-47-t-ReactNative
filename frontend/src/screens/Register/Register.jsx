@@ -92,9 +92,9 @@ export default function Register({ navigation }) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={registerStyle.safeArea}>
       <ScrollView>
-        <HeaderComponent title="Register" />
+        <HeaderComponent title="Register" navigation={navigation} />
         <View style={registerStyle.content}>
           <TextInput label="Name" />
           <TextInput

@@ -4,10 +4,10 @@ import { homeStyle } from './home.style'
 import { FAB, Searchbar, Title } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPosts, fetchPostsById } from '../../features/posts/postsSlice'
-
 import { CardComponent } from '../../components/card/card.component'
+import { HeaderComponent } from '../../components/header/header.component'
 
-export default function Home() {
+export default function Home({ navigation }) {
   const dispatch = useDispatch()
   const posts = useSelector((state) => state.posts.posts)
   const users = useSelector((state) => state.users.users)
@@ -19,11 +19,15 @@ export default function Home() {
     //dispatch(fetchPostsById(100)) // Este es el dispatch que hago para traer un post especifico
   }, [])
 
+  const navigateHome = () => {
+    navigation.navigate('Create')
+  }
+
   return (
     <SafeAreaView style={homeStyle.content}>
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={homeStyle.view}>
-          <Title>Home Screen</Title>
+          <HeaderComponent navigation={navigation} title="Home" />
           <Searchbar
             style={homeStyle.searchBar}
             placeholder="Search"
@@ -45,7 +49,7 @@ export default function Home() {
             ))}
         </ScrollView>
       </View>
-      <FAB style={homeStyle.fab} icon="plus" />
+      <FAB style={homeStyle.fab} icon="plus" onPress={navigateHome} />
     </SafeAreaView>
   )
 }

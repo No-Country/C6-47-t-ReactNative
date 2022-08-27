@@ -17,7 +17,6 @@ export const CardComponent = ({body,comments,image,postId,title,userId}) => {
         </Card.Content>
         <Card.Cover source={{ uri: image }} style={cardStyle.image}/>
         <Text style={cardStyle.bottomLine}>Creado por el usuario con el userID {userId}</Text>
-      
       </Card>
     </View>
   )

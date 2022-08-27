@@ -3,11 +3,9 @@ import { StyleSheet } from 'react-native'
 export const homeStyle = StyleSheet.create({
   content: {
     display: 'flex',
-    paddingTop: '5%',
+    paddingTop: 24,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: '#010A26'
-    
   },
   fab: {
     position: 'absolute',
@@ -18,8 +16,6 @@ export const homeStyle = StyleSheet.create({
   view: {
     display: 'flex',
     alignItems:'center',
-    padding: 5,
-    backgroundColor: '#010A26'
   }
 })
 
