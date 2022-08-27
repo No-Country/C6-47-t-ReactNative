@@ -5,7 +5,7 @@ export const cardStyle = StyleSheet.create({
         marginVertical: 20
     },
     view: {
-        paddingTop: '1rem',
+        paddingTop: 10,
         width:'80%',        
         background: 'url("https://images.unsplash.com/photo-1574007557239-acf6863bc375?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80")',
         shadowColor: "#fff",

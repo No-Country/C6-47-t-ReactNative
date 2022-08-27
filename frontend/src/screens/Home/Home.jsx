@@ -16,34 +16,35 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchPosts()) // Este es el dispatch que hago para traer todos los posts
-    dispatch(fetchPostsById(1)) // Este es el dispatch que hago para traer un post especifico
+    //dispatch(fetchPostsById(100)) // Este es el dispatch que hago para traer un post especifico
   }, [])
 
   return (
     <SafeAreaView style={homeStyle.content}>
-      <ScrollView contentContainerStyle={homeStyle.view}>
-        <Title>Home Screen</Title>
-        <Searchbar
-          style={homeStyle.searchBar}
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-        {posts &&
-          posts.map((post) => (
-            <CardComponent
-              key={post.postId}
-              body={post.body}
-              comments={post.comments}
-              image={post.image}
-              postId={post.postId}
-              title={post.title}
-              userId={post.userId}
-              style={homeStyle.card}
-            />
-          ))}
-      </ScrollView>
-
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={homeStyle.view}>
+          <Title>Home Screen</Title>
+          <Searchbar
+            style={homeStyle.searchBar}
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
+          {posts &&
+            posts.map((post) => (
+              <CardComponent
+                key={post.postId}
+                body={post.body}
+                comments={post.comments}
+                image={post.image}
+                postId={post.postId}
+                title={post.title}
+                userId={post.userId}
+                style={homeStyle.card}
+              />
+            ))}
+        </ScrollView>
+      </View>
       <FAB style={homeStyle.fab} icon="plus" />
     </SafeAreaView>
   )
