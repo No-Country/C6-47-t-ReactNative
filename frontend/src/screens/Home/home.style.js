@@ -5,7 +5,6 @@ export const homeStyle = StyleSheet.create({
     display: 'flex',
     paddingTop: '5%',
     flexDirection: 'row',
-    flex: 1,
     flexWrap: 'wrap',
     backgroundColor: '#010A26'
     
@@ -19,10 +18,8 @@ export const homeStyle = StyleSheet.create({
   view: {
     display: 'flex',
     alignItems:'center',
-    flex: 1,
     padding: 5,
     backgroundColor: '#010A26'
-
   }
 })
 

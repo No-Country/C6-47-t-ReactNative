@@ -52,19 +52,27 @@ export default function Login({ navigation }) {
     try {
       if (!emailError && !passError && email && password) {
         setLoginError('')
+        
         axios
           .post(
-            'http://localhost:8080/login',
+            'http://186.182.43.178:8080/login',
             { username: email, password }, // TODO <<-- Cambiar campo de email a username
+           
             {
-              withCredentials: true
+              withCredentials: true,
             }
           )
           .then((res) => {
+            console.log('entre al res')
             console.log(res.data.tokens) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
             navigation.navigate('Home')
           })
-          .catch((err) => console.log(err))
+          .catch((err) => {
+            //console.log(err.response.data.messagE)
+            setLoginError(err.response.data.messagE);
+          })
+          //navigation.navigate('Home')
+
       } else {
         setLoginError('Ingrese email y contraseña por favor.')
       }
