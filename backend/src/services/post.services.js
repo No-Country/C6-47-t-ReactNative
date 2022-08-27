@@ -6,8 +6,8 @@ const getAll = async () => {
   return await Post.getAll();
 };
 
-const getObjects = async (page, size) => {
-  return await Post.getObjects(page, size);
+const getObjects = async (page, size, word) => {
+  return await Post.getObjects(page, size, word);
 };
 
 const getById = async (id) => {
