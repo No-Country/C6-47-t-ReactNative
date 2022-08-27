@@ -14,7 +14,6 @@ routerPost
     ],
     controllers.post.addPost
   )
-  //edit testing getObjects
   .get(controllers.post.getObjects);
 
 routerPost

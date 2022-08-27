@@ -3,25 +3,32 @@ const services = require("../services");
 const getAll = async (req, res) => {
   // Example url GET = http://localhost:8080/post
   res.json(await services.post.getAll());
-};
+  };
 
 const getObjects = async (req, res) => {
-  //Example url GET = https://localhost:8080/post?page=0&size=1
-  //Testear con query parameters: "page" y "size"
+  //Example url GET = http://localhost:8080/post?size=1&page=0&filter=example
+  //Testear con query parameters: "page", "size", "filter" (OPCIONALES)
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
-
+  
   let page = 0;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
     page = pageAsNumber;
-  }
+  };
 
   let size = 5;
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0) {
     size = sizeAsNumber;
-  }
+  };
 
-  res.json(await services.post.getObjects(page, size));
+  const queryFilter = req.query.filter;
+  
+  let word = queryFilter;
+  if(!queryFilter){
+    word = " ";
+  };
+  
+  res.json(await services.post.getObjects(page, size, word));
 };
 
 const getById = async (req, res) => {

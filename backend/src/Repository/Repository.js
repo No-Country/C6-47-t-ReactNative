@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const { sequelizeErrorParser } = require("../utils/util");
 class Repository {
   getAll = async () => {
@@ -11,10 +13,16 @@ class Repository {
     });
   };
 
-  getObjects = async (page, size) => {
+  getObjects = async (page, size, word) => {
     try {
       return await this.model.findAndCountAll({
-        where: { deletedAt: null },
+        where: { deletedAt: null, 
+          title: {
+            [Op.or]: {
+              [Op.like]: "%" + word + "%"
+            }
+          }
+        },
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
         },
