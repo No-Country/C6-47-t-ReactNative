@@ -63,8 +63,8 @@ export default function Login({ navigation }) {
             }
           )
           .then((res) => {
-            console.log('entre al res')
-            console.log(res.data.tokens) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
+            //console.log('entre al res')
+            //console.log(res.data.tokens) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
             navigation.navigate('Home')
           })
           .catch((err) => {
