@@ -1,7 +1,8 @@
 const { sequelizeErrorParser } = require("../utils/util");
+const { Likes } = require("../models");
 class Repository {
   getAll = async () => {
-      return await this.model.findAll({
+    return await this.model.findAll({
       where: { deletedAt: null },
       attributes: {
         exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
@@ -21,9 +22,9 @@ class Repository {
         raw: true,
         order: [["id", "DESC"]],
         limit: size,
-        offset: page * size
+        offset: page * size,
       });
-    } catch (err){
+    } catch (err) {
       return { error: sequelizeErrorParser(err) };
     }
   };

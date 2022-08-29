@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Post, { foreignKey: "id" });
       User.belongsTo(models.Roles, { foreignKey: "roleId" });
+      // User.belongsToMany(models.Post, {
+      //   through: { model: models.Likes, unique: false },
+      //   as: "postsLiked",
+      //   foreignKey: "userId",
+      // });
     }
   }
   User.init(
