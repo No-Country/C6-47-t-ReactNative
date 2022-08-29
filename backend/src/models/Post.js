@@ -10,8 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Post.hasMany(models.Comment, { foreignKey: "postId" });
       // Post.hasOne(models.MediaContent, { foreignKey: "postId" }); // <- Relacion de post/video-image, falta crear la tabla MediaContent
-      Post.belongsTo(models.User, { foreignKey: "id" });
-      Post.belongsTo(models.Tags, { foreignKey: "id" });
+      Post.belongsTo(models.User, { as: "user", foreignKey: "userId" });
+      Post.belongsTo(models.Tags, { as: "tag", foreignKey: "tagId" });
+      // Post.hasMany(models.Likes, { as: "postLikes", foreignKey: "postId" });
+      // Post.belongsToMany(models.User, {
+      //   through: { model: models.Likes, unique: false },
+      //   as: "usersLiked",
+      //   foreignKey: "postId",
+      // });
       // Post.belongsTo(models.MediaContent, { through: 'postId' })
       // Post.belongsTo(models.User, { foreignKey: 'userId' })
       // Post.belongsToMany(models.Tag, {through:'PostTags'}) // <- Relacion de tabla intermedia PostTags entre el modelo Post y el modelo Tags

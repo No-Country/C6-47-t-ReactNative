@@ -6,7 +6,7 @@ const validatorAuth = [
     .exists()
     .withMessage("Username field required.")
     .isLength({ min: 4 })
-    .withMessage("Username must be at least 5 chars long.")
+    .withMessage("Username must be at least 4 chars long.")
     .not()
     .isEmpty()
     .withMessage("Username cannot be empty."),
