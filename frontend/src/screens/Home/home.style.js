@@ -3,21 +3,19 @@ import { StyleSheet } from 'react-native'
 export const homeStyle = StyleSheet.create({
   content: {
     display: 'flex',
-    flex: 1,
-    paddingTop: '5%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 24,
     flexDirection: 'row',
-    backgroundColor: '#fff'
+    flexWrap: 'wrap',
   },
   fab: {
     position: 'absolute',
+    margin: 16,
     right: 0,
     bottom: 0,
-    margin: 16
   },
-  card: {
-    display: 'none'
+  view: {
+    display: 'flex',
+    alignItems:'center',
   }
 })
 

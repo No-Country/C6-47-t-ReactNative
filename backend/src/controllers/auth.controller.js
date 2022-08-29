@@ -3,7 +3,6 @@ const utils = require("../utils");
 
 const services = require("../services");
 
-
 const register = async (req, res, next) => {
   passport.authenticate(
     "register",
@@ -23,6 +22,7 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
     try {
+      console.log(user);
       if (!user) {
         // const error = new Error("new Error");
         return res.status(404).json(info);
@@ -44,14 +44,12 @@ const login = async (req, res, next) => {
         );
 
         return res.json({ message: info.message, tokens });
-
       });
     } catch (error) {
       return next(error);
     }
   })(req, res, next);
 };
-
 
 const logout = async (req, res) => {
   try {
@@ -81,4 +79,3 @@ const refresh = async (req, res) => {
 };
 
 module.exports = { register, login, logout, refresh };
-

@@ -14,11 +14,11 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       }),
-      queryInterface.addColumn("MediaContents", "postId", {
+      queryInterface.addColumn("Posts", "tagId", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Posts",
+          model: "Tags",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -36,10 +36,30 @@ module.exports = {
       }),
       queryInterface.addColumn("Users", "roleId", {
         type: Sequelize.INTEGER,
-        defaultValue: 2,
+        defaultValue: 1,
         allowNull: false,
         references: {
           model: "Roles",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
+      queryInterface.addColumn("Likes", "userId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
+      queryInterface.addColumn("Likes", "postId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Posts",
           key: "id",
         },
         onUpdate: "CASCADE",

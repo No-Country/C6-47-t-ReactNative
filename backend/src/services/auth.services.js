@@ -29,7 +29,7 @@ const register = async (req, username, password, done) => {
 const login = async (username, password, done) => {
   try {
     const resp = await serviceUser.findByUsername(username);
-    if (resp.error) return done(null, false, { messagE: "User not found." });
+    if (resp.error) return done(null, false, { message: "User not found." });
 
     const user = resp.resp.dataValues;
 
@@ -75,8 +75,13 @@ const refresh = async (id, refresh_token) => {
 
     const tokens = await utils.jwtTokens.getTokens(user);
     const filter = { id: user.id };
+    const refresh_token_hash = await utils.jwtTokens.hashData(
+      tokens.refresh_token
+    );
     await serviceUser.findOneAndUpdate(
-      { refresh_token_hash: tokens.refresh_token },
+      {
+        refresh_token_hash,
+      },
       filter
     );
     return { statusCode: 200, resp: tokens };
@@ -108,7 +113,7 @@ const verifyToken = async (req, res, next) => {
 
 const verifyRefreshToken = async (req, res, next) => {
   try {
-    const token = req.headers["x-access-token"];
+    const token = req.headers["x-refresh-token"];
 
     if (!token) return res.status(403).json({ error: "No token provided." });
     req.token = token;

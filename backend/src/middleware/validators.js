@@ -6,7 +6,7 @@ const validatorAuth = [
     .exists()
     .withMessage("Username field required.")
     .isLength({ min: 4 })
-    .withMessage("Username must be at least 5 chars long.")
+    .withMessage("Username must be at least 4 chars long.")
     .not()
     .isEmpty()
     .withMessage("Username cannot be empty."),
@@ -48,6 +48,16 @@ const validatorAddPost = [
     .not()
     .isEmpty()
     .withMessage("Content cannot be empty"),
+  check("tagId")
+    .exists()
+    .withMessage("Value tagId required.")
+    .isNumeric()
+    .withMessage("tagId must be numeric."),
+  check("mediaURL")
+    .exists()
+    .withMessage("Media URL required.")
+    .isString()
+    .withMessage("Media URL should be a string."),
   (req, res, next) => {
     utils.validateResult(req, res, next);
   },

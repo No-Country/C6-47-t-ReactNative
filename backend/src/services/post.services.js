@@ -6,6 +6,10 @@ const getAll = async () => {
   return await Post.getAll();
 };
 
+const getObjects = async (page, size, word) => {
+  return await Post.getObjects(page, size, word);
+};
+
 const getById = async (id) => {
   const resp = await Post.getById(id);
   if (!resp) return { statusCode: 404, error: "Post not found." };
@@ -28,10 +32,17 @@ const deletePost = async (id) => {
   else return { statusCode: 200, resp: "Post deleted." };
 };
 
+const getByTag = async (tag) => {
+  const resp = await Post.getByTag(tag);
+  return resp;
+};
+
 module.exports = {
   getAll,
   getById,
   addPost,
   editPost,
   deletePost,
+  getObjects,
+  getByTag,
 };

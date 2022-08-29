@@ -17,7 +17,10 @@ passport.use(
 passport.use(
   "login",
   new localStrategy(
-    { usernameField: "username", passwordField: "password" },
+    {
+      usernameField: "username",
+      passwordField: "password",
+    },
     services.auth.login
   )
 );
@@ -26,6 +29,5 @@ const isAdmin = services.auth.isAdmin;
 const verifyToken = services.auth.verifyToken;
 
 const verifyRefreshToken = services.auth.verifyRefreshToken;
-
 
 module.exports = { isAdmin, verifyToken, verifyRefreshToken };

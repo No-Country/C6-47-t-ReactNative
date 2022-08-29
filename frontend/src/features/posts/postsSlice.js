@@ -54,9 +54,9 @@ export const fetchPosts = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios
-        .get('https://localhost:8080/post')
-        .then(res => console.log(res.data))
-      
+        .get('http://186.182.43.178:8080/post') // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
+        .then((res) => res.data)
+
       return response // Return a value synchronously using Async-await
     } catch (err) {
       if (!err.response) {
@@ -71,11 +71,11 @@ export const fetchPostsById = createAsyncThunk(
   'post/fetchPostsById',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get('https://localhost:8080/post/' + payload)
+      const response = await axios
+        .get('http://186.182.43.178:8080/post/' + payload)
         .then((res) => console.log(res.data))
       return response // Return a value synchronously using Async-await
     } catch (err) {
-      
       if (!err.response) {
         throw err
       }
@@ -95,8 +95,6 @@ const postsSlice = createSlice({
     })
 
     builder.addCase(fetchPostsById.fulfilled, (state, action) => {
-      console.log('fulfilled')
-      //console.log(action.payload)
       state.loading = false
       state.post = {
         ...state,
@@ -107,29 +105,24 @@ const postsSlice = createSlice({
     builder.addCase(fetchPostsById.rejected, (state, action) => {
       console.log('rejected')
       state.loading = false
-      //state.posts = []
+      state.posts = []
       state.error = action.error
     })
 
-    // builder.addCase(fetchPosts.pending, (state) => {
-    //   state.loading = true
-    // })
-    // builder.addCase(fetchPosts.fulfilled, (state, action) => {
-    //   state.loading = false
-    //   state.posts = action.payload
-    //   state.posts = state.posts.concat(action.payload)
-    //   Array.prototype.push.apply(state.posts, action.payload)
-    //   state.error = ''
-    // })
-    // builder.addCase(fetchPosts.rejected, (state, action) => {
-    //   state.loading = false
-    //   state.posts = []
-    //   state.error = action.error.message
-    // })
+    builder.addCase(fetchPosts.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+      state.loading = false
+      state.posts = action.payload.rows
+      state.error = ''
+    })
+    builder.addCase(fetchPosts.rejected, (state, action) => {
+      state.loading = false
+      state.posts = []
+      state.error = action.error.message
+    })
   }
 })
 
-// export const {} = postsSlice.actions
 export default postsSlice.reducer
-
-// Redux action types:

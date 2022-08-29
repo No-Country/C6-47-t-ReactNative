@@ -1,5 +1,4 @@
 const repositories = require("../Repository");
-
 const Roles = new repositories.roles();
 
 const getAll = async () => {
@@ -13,11 +12,11 @@ const getById = async (id) => {
 };
 
 const createRole = async (role) => {
-  return await Roles.createObject(user);
+  return await Roles.createObject(role);
 };
 
 const editRole = async (role, id) => {
-  const resp = await Roles.updateObject(user, id);
+  const resp = await Roles.updateObject(role, id);
   if (resp == 0) return { statusCode: 404, error: "Role not found." };
   else return { statusCode: 200, resp: "Role updated." };
 };
