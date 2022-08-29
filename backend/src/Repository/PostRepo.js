@@ -24,6 +24,14 @@ class PostRepository extends Repository {
       return { error: sequelizeErrorParser(error) };
     }
   };
+
+  getWithLikes = async (id) => {
+    try {
+      // const likes = await
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
 }
 
 module.exports = PostRepository;
