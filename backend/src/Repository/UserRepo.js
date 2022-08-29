@@ -18,9 +18,15 @@ class UserRepository extends Repository {
             "updatedAt",
             "deletedAt",
             "refresh_token_hash",
+            "roleId",
           ],
         },
-        include: Roles,
+        include: [
+          {
+            model: Roles,
+            as: "Role",
+          },
+        ],
       });
     } catch (error) {
       return { error: sequelizeErrorParser(error) };

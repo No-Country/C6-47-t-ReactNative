@@ -45,6 +45,26 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       }),
+      queryInterface.addColumn("Likes", "userId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
+      queryInterface.addColumn("Likes", "postId", {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      }),
     ]);
   },
 

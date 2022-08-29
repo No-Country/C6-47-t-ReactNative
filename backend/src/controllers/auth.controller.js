@@ -22,6 +22,7 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
     try {
+      console.log(user);
       if (!user) {
         // const error = new Error("new Error");
         return res.status(404).json(info);
