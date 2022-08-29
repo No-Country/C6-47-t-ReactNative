@@ -75,8 +75,13 @@ const refresh = async (id, refresh_token) => {
 
     const tokens = await utils.jwtTokens.getTokens(user);
     const filter = { id: user.id };
+    const refresh_token_hash = await utils.jwtTokens.hashData(
+      tokens.refresh_token
+    );
     await serviceUser.findOneAndUpdate(
-      { refresh_token_hash: tokens.refresh_token },
+      {
+        refresh_token_hash,
+      },
       filter
     );
     return { statusCode: 200, resp: tokens };
