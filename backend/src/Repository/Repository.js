@@ -1,5 +1,5 @@
 const { sequelizeErrorParser } = require("../utils/util");
-const { Likes } = require("../models");
+
 class Repository {
   getAll = async () => {
     return await this.model.findAll({
