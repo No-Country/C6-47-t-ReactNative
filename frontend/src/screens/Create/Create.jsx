@@ -4,8 +4,12 @@ import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 export default function Create({ navigation }) {
+  const access_token = useSelector((state) => state.user.access_token);
+  const refresh_token = useSelector((state) => state.user.refresh_token);
+
   const [title, setTitle] = useState('Post de ejemplo')
   const [content, setContent] = useState('Contenido de ejemplo')
   const [tagId, setTagId] = useState('1')
@@ -21,7 +25,10 @@ export default function Create({ navigation }) {
           .post(
             'http://186.182.43.178:8080/post',
             { userId, title, content, tagId, mediaURL },
-            { withCredentials: true }
+            { 
+              withCredentials: true,
+              headers: { "x-access-token": access_token }
+            }
           )
           .then((res) => {
             console.log(res.data)

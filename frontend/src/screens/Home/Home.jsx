@@ -9,11 +9,12 @@ import { HeaderComponent } from '../../components/header/header.component'
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch()
+
   const posts = useSelector((state) => state.posts.posts)
   const users = useSelector((state) => state.users.users)
   const [searchQuery, setSearchQuery] = React.useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
-
+  
   useEffect(() => {
     dispatch(fetchPosts()) // Este es el dispatch que hago para traer todos los posts
     //dispatch(fetchPostsById(100)) // Este es el dispatch que hago para traer un post especifico

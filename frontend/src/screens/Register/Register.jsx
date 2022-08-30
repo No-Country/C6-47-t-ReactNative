@@ -77,7 +77,7 @@ export default function Register({ navigation }) {
           .post(
             'http://localhost:8080/register',
             { username, email, password },
-            { withCredentials: true }
+            { withCredentials: true },
           )
           .then((res) => {
             console.log(res.data)
