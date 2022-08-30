@@ -4,6 +4,8 @@ import axios from 'axios'
 import { Alert, SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
+import { useDispatch, useSelector } from 'react-redux'
+import { add_access_token, add_refresh_token } from '../../features/user/userSlice'
 
 export function validateEmail(email) {
   let emailError = ''
@@ -30,6 +32,11 @@ export function validatePass(pass) {
 }
 
 export default function Login({ navigation }) {
+  const access_token = useSelector((state) => state.user.access_token);
+  const refresh_token = useSelector((state) => state.user.refresh_token);
+
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -57,19 +64,26 @@ export default function Login({ navigation }) {
           .post(
             'http://186.182.43.178:8080/login',
             { username: email, password }, // TODO <<-- Cambiar campo de email a username
-           
             {
               withCredentials: true,
             }
           )
           .then((res) => {
-            //console.log('entre al res')
-            //console.log(res.data.tokens) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
+            //console.log(res)
+            //console.log(res.data.tokens.access_token)
+            //console.log(res.data.tokens.refresh_token)
+            dispatch(add_access_token(res.data.tokens.access_token));
+            dispatch(add_refresh_token(res.data.tokens.refresh_token));
+            //access_token = res.data.tokens.access_token;
+            //refresh_token = res.data.tokens.refresh_token;
+
+            //console.log(access_token)
+            //console.log(refresh_token) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
             navigation.navigate('Home')
           })
           .catch((err) => {
-            //console.log(err.response.data.messagE)
-            setLoginError(err.response.data.messagE);
+            console.log(err.response.data)
+            setLoginError(err.response.data);
           })
           //navigation.navigate('Home')
 
