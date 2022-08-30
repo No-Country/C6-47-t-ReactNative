@@ -1,5 +1,5 @@
 const Repository = require("./Repository");
-const { Likes, Post } = require("../models/");
+const { Likes, Post, User } = require("../models/");
 const { sequelizeErrorParser } = require("../utils/util");
 
 class LikesRepository extends Repository {
@@ -16,24 +16,56 @@ class LikesRepository extends Repository {
         },
         raw: true,
       });
-      const checkLiked = await this.model.findOne({
-        where: { userId, postId },
-      });
-      if (checkLiked == null) {
-        const incrementLikes = await Post.update(
-          { likes: post.likes + 1 },
-          { where: { id: postId } }
-        );
-
-        const createLike = await this.createObject({
-          liked: true,
-          userId,
-          postId,
+      if (post != null) {
+        const checkLiked = await this.model.findOne({
+          where: { userId, postId },
         });
-        return { message: "Post liked Successfully." };
-      } else {
-        return { error: "User already liked this post." };
+        if (checkLiked == null) {
+          const incrementLikes = await Post.update(
+            { likes: post.likes + 1 },
+            { where: { id: postId } }
+          );
+
+          const createLike = await this.createObject({
+            liked: true,
+            userId,
+            postId,
+          });
+          return { message: "Post liked Successfully." };
+        } else {
+          return { error: "User already liked this post." };
+        }
       }
+      return { error: "Post not found." };
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
+
+  dislikePost = async (userId, postId) => {
+    try {
+      // TODO
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
+
+  userLikes = async (userId) => {
+    try {
+      const likes = await this.model.findAll({
+        where: { userId },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: Post,
+            as: "post",
+            attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+          },
+        ],
+      });
+      return await likes;
     } catch (error) {
       return { error: sequelizeErrorParser(error) };
     }
