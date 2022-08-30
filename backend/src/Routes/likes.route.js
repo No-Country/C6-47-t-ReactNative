@@ -8,4 +8,6 @@ routerLikes
   .route("/likes/:postId")
   .post(middlewares.auth.verifyToken, controllers.likes.likePost);
 
+routerLikes.route("/likes/user/:userId").get(controllers.likes.userLikes);
+
 module.exports = routerLikes;

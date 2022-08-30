@@ -6,4 +6,8 @@ const likePost = async (userId, postId) => {
   return await Likes.likePost(userId, postId);
 };
 
-module.exports = { likePost };
+const userLikes = async (userId) => {
+  return await Likes.userLikes(userId);
+};
+
+module.exports = { likePost, userLikes };

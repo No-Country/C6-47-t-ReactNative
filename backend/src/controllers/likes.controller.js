@@ -6,4 +6,9 @@ const likePost = async (req, res) => {
   res.json(await services.likes.likePost(userId, postId));
 };
 
-module.exports = { likePost };
+const userLikes = async (req, res) => {
+  const { userId } = req.params;
+  res.json(await services.likes.userLikes(userId));
+};
+
+module.exports = { likePost, userLikes };

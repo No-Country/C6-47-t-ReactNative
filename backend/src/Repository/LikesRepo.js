@@ -1,5 +1,5 @@
 const Repository = require("./Repository");
-const { Likes, Post } = require("../models/");
+const { Likes, Post, User } = require("../models/");
 const { sequelizeErrorParser } = require("../utils/util");
 
 class LikesRepository extends Repository {
@@ -34,6 +34,27 @@ class LikesRepository extends Repository {
       } else {
         return { error: "User already liked this post." };
       }
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
+
+  userLikes = async (userId) => {
+    try {
+      const likes = await this.model.findAll({
+        where: { userId },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: [
+          {
+            model: Post,
+            as: "post",
+            attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+          },
+        ],
+      });
+      return await likes;
     } catch (error) {
       return { error: sequelizeErrorParser(error) };
     }
