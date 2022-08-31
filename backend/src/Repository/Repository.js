@@ -12,17 +12,18 @@ class Repository {
     });
   };
 
-  getObjects = async (page, size) => {
+  getObjects = async (page, size, include) => {
     try {
       return await this.model.findAndCountAll({
         where: { deletedAt: null },
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
         },
-        raw: true,
+        // raw: true,
         order: [["id", "DESC"]],
         limit: size,
         offset: page * size,
+        include: include,
       });
     } catch (err) {
       return { error: sequelizeErrorParser(err) };

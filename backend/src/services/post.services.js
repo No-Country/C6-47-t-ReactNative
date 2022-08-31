@@ -1,4 +1,5 @@
 const repositories = require("../Repository");
+const { User } = require("../models");
 
 const Post = new repositories.post();
 
@@ -6,8 +7,9 @@ const getAll = async () => {
   return await Post.getAll();
 };
 
-const getObjects = async (page, size, word) => {
-  return await Post.getObjects(page, size, word);
+const getObjects = async (page, size) => {
+  const include = { model: User, as: "user" };
+  return await Post.getObjects(page, size, include);
 };
 
 const getById = async (id) => {
