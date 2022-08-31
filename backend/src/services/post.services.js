@@ -1,5 +1,5 @@
 const repositories = require("../Repository");
-const { User } = require("../models");
+const { User, Roles, Tags } = require("../models");
 
 const Post = new repositories.post();
 
@@ -8,8 +8,39 @@ const getAll = async () => {
 };
 
 const getObjects = async (page, size) => {
-  const include = { model: User, as: "user" };
-  return await Post.getObjects(page, size, include);
+  const include = [
+    {
+      model: User,
+      as: "user",
+      attributes: {
+        exclude: [
+          "password_hash",
+          "refresh_token_hash",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+          "roleId",
+          "tagId",
+        ],
+      },
+      include: {
+        model: Roles,
+        as: "role",
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
+        },
+      },
+    },
+    {
+      model: Tags,
+      as: "tag",
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "deletedAt"],
+      },
+    },
+  ];
+  const exclude = ["createdAt", "updatedAt", "deletedAt", "userId"];
+  return await Post.getObjects(page, size, exclude, include);
 };
 
 const getById = async (id) => {
