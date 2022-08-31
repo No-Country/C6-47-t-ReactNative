@@ -7,44 +7,7 @@ import axios from 'axios'
 
 const initialState = {
   loading: false,
-  posts: [
-    {
-      postId: 1,
-      userId: 2,
-      title: 'Post 1',
-      body: 'This is the body of post 1',
-      image: 'https://picsum.photos/200',
-      comments: [
-        'This is the comment n° 1',
-        'This is the comment n° 2',
-        'This is the comment n° 3'
-      ]
-    },
-    {
-      postId: 2,
-      userId: 3,
-      title: 'Post 2',
-      body: 'This is the body of post 2',
-      image: 'https://picsum.photos/202',
-      comments: [
-        'This is the comment n° 1',
-        'This is the comment n° 2',
-        'This is the comment n° 3'
-      ]
-    },
-    {
-      postId: 3,
-      userId: 4,
-      title: 'Post 3',
-      body: 'This is the body of post 3',
-      image: 'https://picsum.photos/202',
-      comments: [
-        'This is the comment n° 1',
-        'This is the comment n° 2',
-        'This is the comment n° 3'
-      ]
-    }
-  ],
+  posts: [],
   post: {},
   error: ''
 }
@@ -70,10 +33,11 @@ export const fetchPosts = createAsyncThunk(
 export const fetchPostsById = createAsyncThunk(
   'post/fetchPostsById',
   async (payload, { rejectWithValue }) => {
+    //console.log('my payload: ',payload)
     try {
       const response = await axios
         .get('http://186.182.43.178:8080/post/' + payload)
-        .then((res) => console.log(res.data))
+        .then((res) => res.data)
       return response // Return a value synchronously using Async-await
     } catch (err) {
       if (!err.response) {
@@ -95,17 +59,16 @@ const postsSlice = createSlice({
     })
 
     builder.addCase(fetchPostsById.fulfilled, (state, action) => {
+      //console.log(action.payload)
       state.loading = false
-      state.post = {
-        ...state,
-        post: action.payload
-      }
+      state.post = action.payload
       state.error = ''
     })
+    
     builder.addCase(fetchPostsById.rejected, (state, action) => {
-      console.log('rejected')
+      //console.log('rejected')
       state.loading = false
-      state.posts = []
+      state.post = {}
       state.error = action.error
     })
 

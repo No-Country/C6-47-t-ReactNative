@@ -82,8 +82,8 @@ export default function Login({ navigation }) {
             navigation.navigate('Home')
           })
           .catch((err) => {
-            console.log(err.response.data)
-            setLoginError(err.response.data);
+            //console.log(err.response.data)
+            setLoginError(err.response.data.message);
           })
           //navigation.navigate('Home')
 
