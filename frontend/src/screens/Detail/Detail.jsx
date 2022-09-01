@@ -5,19 +5,20 @@ import { HeaderComponent } from '../../components/header/header.component'
 import { FAB, Text } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchPostsById } from '../../features/posts/postsSlice'
+import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Detail({ route, navigation }) {
   const { id } = route.params
 
   const post = useSelector((state) => state.posts.post)
-  //console.log('post:',post)
+  const loading = useSelector((state) => state.posts.loading)
+
   const dispatch = useDispatch()
 
   // const [searchQuery, setSearchQuery] = React.useState('')
   // const onChangeSearch = (query) => setSearchQuery(query)
 
   useEffect(() => {
-    //dispatch(fetchPosts()) // Este es el dispatch que hago para traer todos los posts
     dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
   }, [])
 
@@ -30,17 +31,20 @@ export default function Detail({ route, navigation }) {
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={detailStyle.view}>
           <HeaderComponent navigation={navigation} title="Detail" />
-          {post && (
-            <View>
-              <Text>title: {post.title}</Text>
-              <Text>id: {post.id}</Text>
-              <Text>content: {post.content}</Text>
-              <Text>likes: {post.likes}</Text>
-              <Text>mediaURL: {post.mediaURL}</Text>
-              <Text>tagId: {post.tagId}</Text>
-              <Text>userId: {post.userId}</Text>
-            </View>
-          )}
+          { loading 
+          ? <LoaderComponent />
+          : post && (
+              <View>
+                <Text>title: {post.title}</Text>
+                <Text>id: {post.id}</Text>
+                <Text>content: {post.content}</Text>
+                <Text>likes: {post.likes}</Text>
+                <Text>mediaURL: {post.mediaURL}</Text>
+                <Text>tagId: {post.tagId}</Text>
+                <Text>userId: {post.userId}</Text>
+              </View>
+            )
+          }
         </ScrollView>
       </View>
       <FAB style={detailStyle.fab} icon="plus" onPress={navigateHome} />

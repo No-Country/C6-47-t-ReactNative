@@ -3,15 +3,17 @@ import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
 import { FAB, Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPosts } from '../../features/posts/postsSlice'
+import { clearPost, fetchPosts } from '../../features/posts/postsSlice'
 import { CardComponent } from '../../components/card/card.component'
 import { HeaderComponent } from '../../components/header/header.component'
+import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch()
 
   const posts = useSelector((state) => state.posts.posts)
-  const users = useSelector((state) => state.users.users)
+  const loading = useSelector((state) => state.posts.loading)
+
   const [searchQuery, setSearchQuery] = React.useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
 
@@ -21,6 +23,7 @@ export default function Home({ navigation }) {
   }, [])
 
   const navigateHome = () => {
+    dispatch(clearPost());
     navigation.navigate('Create')
   }
 
@@ -35,7 +38,9 @@ export default function Home({ navigation }) {
           value={searchQuery}
         />
         <ScrollView contentContainerStyle={homeStyle.view}>
-          {posts &&
+          { loading
+          ? <LoaderComponent />
+          : posts &&
             posts.map((post) => (
               <CardComponent
                 key={post.id}
@@ -44,7 +49,7 @@ export default function Home({ navigation }) {
                 image={post.mediaURL}
                 postId={post.id}
                 title={post.title}
-                userId={post.userId}
+                user={post.user}
                 style={homeStyle.card}
               />
             ))}
