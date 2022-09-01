@@ -81,6 +81,13 @@ const getById = async (id) => {
         exclude: ["createdAt", "updatedAt", "deletedAt"],
       },
     },
+    {
+      model: Comment,
+      as: "comments",
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "deletedAt", "postId", "userId"],
+      },
+    },
   ];
   const exclude = ["createdAt", "updatedAt", "deletedAt", "userId", "tagId"];
   const resp = await Post.getById(id, include, exclude);
