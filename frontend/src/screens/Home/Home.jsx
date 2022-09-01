@@ -9,24 +9,25 @@ import { HeaderComponent } from '../../components/header/header.component'
 import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Home({ navigation }) {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const posts = useSelector((state) => state.posts.posts)
   const postCount = useSelector((state) => state.posts.postCount)
   const loading = useSelector((state) => state.posts.loading)
-  const [currentPage, setCurrentPage] = useState(0)
+  const currentPage = useSelector((state) => state.posts.currentPage)
+  // const [currentPage, setCurrentPage] = useState(0)
 
   const [searchQuery, setSearchQuery] = React.useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
 
-  useEffect(() => {
-    dispatch(fetchPosts(currentPage)) // Este es el dispatch que hago para traer todos los posts
-  }, [currentPage])
+  // useEffect(() => {
+  //   dispatch(fetchPosts(currentPage)) // Este es el dispatch que hago para traer todos los posts
+  // }, [currentPage])
 
   const navigateHome = () => {
     navigation.navigate('Create')
   }
-  
+
   return (
     <SafeAreaView style={homeStyle.content}>
       <View style={{ flex: 1 }}>

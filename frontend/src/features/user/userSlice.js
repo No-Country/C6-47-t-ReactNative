@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  access_token: 'axia', 
-  refresh_token: 'gnume'
+  access_token: '',
+  refresh_token: ''
 }
 
 const userSlice = createSlice({
@@ -21,7 +21,6 @@ const userSlice = createSlice({
         refresh_token: action.payload
       }
     }
-
   }
 })
 

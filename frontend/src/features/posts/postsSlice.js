@@ -3,12 +3,12 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import axios from 'axios'
-
 const initialState = {
   loading: false,
   posts: [],
   post: {},
+  postId: null,
+  currentPage: 0,
   postCount: 0,
   error: ''
 }
@@ -16,59 +16,64 @@ const initialState = {
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',
   async (payload, { rejectWithValue }) => {
-    console.log('mi payload: ',payload)
-    try {
-      const response = await axios
-        .get(`http://186.182.43.178:8080/post?page=${payload}`) // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
-        .then((res) => res.data)
-
-      return response // Return a value synchronously using Async-await
-    } catch (err) {
-      if (!err.response) {
-        throw err
-      }
-      return rejectWithValue(err.response)
-    }
+    // console.log('mi payload: ', payload)
+    if (payload) return payload
+    return rejectWithValue(payload)
+    // try {
+    //   const response = await api
+    //     .get(`/post?page=${payload}`) // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
+    //     .then((res) => res.data)
+    //   return response // Return a value synchronously using Async-await
+    // } catch (err) {
+    //   if (!err.response) {
+    //     throw err
+    //   }
+    //   return rejectWithValue(err.response)
+    // }
   }
 )
 
 export const fetchPostsById = createAsyncThunk(
   'post/fetchPostsById',
   async (payload, { rejectWithValue }) => {
+    if (payload) return payload
+    return rejectWithValue(payload)
     //console.log('my payload: ',payload)
-    try {
-      const response = await axios
-        .get('http://186.182.43.178:8080/post/' + payload)
-        .then((res) => res.data)
-      return response // Return a value synchronously using Async-await
-    } catch (err) {
-      if (!err.response) {
-        throw err
-      }
-      return rejectWithValue(err.response)
-    }
+    // try {
+    //   const response = await api.get('/post/' + payload).then((res) => res.data)
+    //   return response // Return a value synchronously using Async-await
+    // } catch (err) {
+    //   if (!err.response) {
+    //     throw err
+    //   }
+    //   return rejectWithValue(err.response)
+    // }
   }
 )
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    add_postId(state, action) {
+      return {
+        ...state,
+        postId: action.payload
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPostsById.pending, (state) => {
-      console.log('loading')
       state.loading = true
     })
 
     builder.addCase(fetchPostsById.fulfilled, (state, action) => {
-      //console.log(action.payload)
       state.loading = false
       state.post = action.payload
       state.error = ''
     })
-    
+
     builder.addCase(fetchPostsById.rejected, (state, action) => {
-      //console.log('rejected')
       state.loading = false
       state.post = {}
       state.error = action.error
@@ -90,5 +95,5 @@ const postsSlice = createSlice({
     })
   }
 })
-
+export const { add_postId } = postsSlice.actions
 export default postsSlice.reducer

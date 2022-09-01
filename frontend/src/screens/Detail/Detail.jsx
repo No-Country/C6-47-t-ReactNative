@@ -13,14 +13,14 @@ export default function Detail({ route, navigation }) {
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   // const [searchQuery, setSearchQuery] = React.useState('')
   // const onChangeSearch = (query) => setSearchQuery(query)
 
-  useEffect(() => {
-    dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
+  // }, [])
 
   const navigateHome = () => {
     navigation.navigate('Create')
@@ -37,7 +37,9 @@ export default function Detail({ route, navigation }) {
             post && (
               <View style={detailStyle.postView}>
                 <Text style={detailStyle.title}>{post.title}</Text>
-                <Text style={detailStyle.tagId}>Lista de tags: {post.tagId}</Text>
+                <Text style={detailStyle.tagId}>
+                  Lista de tags: {post.tagId}
+                </Text>
                 <Image
                   style={detailStyle.image}
                   source={{
@@ -46,7 +48,8 @@ export default function Detail({ route, navigation }) {
                 />
                 <Text style={detailStyle.content}>{post.content}</Text>
                 <Text style={detailStyle.createdBy}>
-                  Created by <Text style={detailStyle.username}>{user.username}</Text>
+                  Created by{' '}
+                  <Text style={detailStyle.username}>{user.username}</Text>
                 </Text>
                 <Text style={detailStyle.likes}>likes: {post.likes}</Text>
               </View>
