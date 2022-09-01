@@ -10,7 +10,7 @@ export const CardComponent = ({
   image,
   postId,
   title,
-  userId
+  user
 }) => {
   
   function ellipsify(str) {
@@ -37,22 +37,10 @@ export const CardComponent = ({
             </Paragraph>
           </Card.Content>
           <Text style={cardStyle.bottomLine}>
-            Creado por el usuario con el userID {userId}
+            Creado por <Text style={{fontWeight: 'bold', color: 'red' }}>{user.username}</Text>
           </Text>
         </Card>
       </Link>
     </View>
   )
 }
-
-/*
- <Card.Actions>
-    <Button>Cancel</Button>
-    <Button>Ok</Button>
-  </Card.Actions>
-*/
-/*
- comments.map((comment, index) => (
-                  <Text key={index}>{comment}</Text>
-                ))
- */

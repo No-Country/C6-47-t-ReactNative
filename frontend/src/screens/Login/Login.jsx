@@ -69,20 +69,14 @@ export default function Login({ navigation }) {
             }
           )
           .then((res) => {
-            //console.log(res)
-            //console.log(res.data.tokens.access_token)
-            //console.log(res.data.tokens.refresh_token)
+            // Almacenamos los tokens en el slice tokens
             dispatch(add_access_token(res.data.tokens.access_token));
             dispatch(add_refresh_token(res.data.tokens.refresh_token));
-            //access_token = res.data.tokens.access_token;
-            //refresh_token = res.data.tokens.refresh_token;
-
-            //console.log(access_token)
-            //console.log(refresh_token) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
+            // Luego de guardalos navega a "Home"
             navigation.navigate('Home')
           })
           .catch((err) => {
-            //console.log(err.response.data)
+            //console.log(err.response.data.message)
             setLoginError(err.response.data.message);
           })
           //navigation.navigate('Home')

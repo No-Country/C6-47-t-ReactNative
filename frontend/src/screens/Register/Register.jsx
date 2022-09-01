@@ -4,54 +4,23 @@ import { useState } from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
+import handleCheckPass from '../../utils/validators/validateCheckPass'
+import validateEmail from '../../utils/validators/validateEmail'
+import validatePass from '../../utils/validators/validatePass'
+import validatePhone from '../../utils/validators/validatePhone'
 import { registerStyle } from './register.style'
-
-export function validateEmail(email) {
-  let emailError = ''
-
-  if (!email) {
-    emailError = 'El email es necesario'
-  } else if (!/\S+@\S+\.\S+/.test(email)) {
-    emailError = 'Email invalido'
-  }
-
-  return emailError
-}
-
-export function validatePass(pass) {
-  let passError = ''
-
-  if (!pass) {
-    passError = 'El password es necesario'
-  } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
-    passError =
-      'El password es invalido. La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. NO puede tener otros símbolos.'
-  }
-
-  return passError
-}
-
-export function handleCheckPass(original, pass) {
-  let passCheckError = ''
-
-  if (original !== pass) {
-    passCheckError = 'Los passwords no coinciden'
-  } else {
-    console.log('matchean. Original: ', original, ' pass: ', pass)
-  }
-
-  return passCheckError
-}
 
 export default function Register({ navigation }) {
   const [username, setUSername] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [checkPass, setCheckPass] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passError, setPassError] = useState('')
   const [passCheckError, setPassCheckError] = useState('')
   const [loginError, setLoginError] = useState('')
+  const [phoneError, setPhoneError] = useState('')
 
   const handleEmailInput = function (e) {
     setEmailError(validateEmail(e))
@@ -61,6 +30,11 @@ export default function Register({ navigation }) {
   const handlePassInput = function (e) {
     setPassError(validatePass(e))
     setPassword(e)
+  }
+
+  const handlePhoneInput = function (e) {
+    setPhoneError(validatePhone(e))
+    setPhone(e)
   }
 
   const handleCheckPassInput = function (original, pass) {
@@ -117,7 +91,6 @@ export default function Register({ navigation }) {
             }
           />
           {passError ? <Text>Error: {passError}</Text> : null}
-          {/* <TextInput label='Password' secureTextEntry={true} right={<TextInput.Icon name='eye-off-outline' color={registerStyle.icon.color} />} /> */}
           <TextInput
             onChangeText={(text) => handleCheckPassInput(password, text)}
             label="Confirm password"
@@ -131,7 +104,13 @@ export default function Register({ navigation }) {
             }
           />
           {passCheckError ? <Text>Error: {passCheckError}</Text> : null}
-          <TextInput label="Phone number" keyboardType="phone-pad" />
+          <TextInput
+            onChangeText={(text) => handlePhoneInput(text)}
+            label="Phone number"
+            keyboardType="phone-pad"
+            value={phone}
+          />
+          {phoneError ? <Text>Error: {phoneError}</Text> : null}
           <Button
             onPress={register}
             mode="contained"

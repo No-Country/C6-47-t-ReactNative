@@ -14,6 +14,6 @@ export const cardStyle = StyleSheet.create({
   },
   bottomLine: {
     textAlign: 'right',
-    padding: 10    
+    padding: 10,    
   }
 })
