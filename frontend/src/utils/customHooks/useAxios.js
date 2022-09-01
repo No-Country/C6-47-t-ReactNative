@@ -4,7 +4,8 @@ import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   add_access_token,
-  add_refresh_token
+  add_refresh_token,
+  fetchTokens
 } from '../../features/user/userSlice'
 
 const baseURL = 'http://localhost:8080'
@@ -42,8 +43,9 @@ export const useAxios = () => {
         }
       )
 
-      dispatch(add_access_token(res.data.access_token))
-      dispatch(add_refresh_token(res.data.refresh_token))
+      dispatch(fetchTokens(res.data))
+      // dispatch(add_access_token(res.data.access_token))
+      // dispatch(add_refresh_token(res.data.refresh_token))
 
       req.headers['x-access-token'] = res.data.access_token
     }

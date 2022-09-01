@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAxios } from '../customHooks/useAxios'
-import { fetchPosts, fetchPostsById } from '../../features/posts/postsSlice'
+import {
+  fetchPosts,
+  fetchPostsById,
+  setLoading
+} from '../../features/posts/postsSlice'
 
 function FetchFunctions({ children }) {
   const dispatch = useDispatch()

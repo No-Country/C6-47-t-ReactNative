@@ -7,9 +7,11 @@ import { loginStyle } from './login.style'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   add_access_token,
-  add_refresh_token
+  add_refresh_token,
+  fetchTokens
 } from '../../features/user/userSlice'
 import { useAxios } from '../../utils/customHooks/useAxios'
+import { setLoading } from '../../features/posts/postsSlice'
 
 export function validateEmail(email) {
   let emailError = ''
@@ -70,8 +72,9 @@ export default function Login({ navigation }) {
         .post('/login', { username: email, password })
         .then((res) => {
           // Almacenamos los tokens en el slice tokens
-          dispatch(add_access_token(res.data.tokens.access_token))
-          dispatch(add_refresh_token(res.data.tokens.refresh_token))
+          dispatch(fetchTokens(res.data.tokens))
+          // dispatch(add_access_token(res.data.tokens.access_token))
+          // dispatch(add_refresh_token(res.data.tokens.refresh_token))
           // Luego de guardalos navega a "Home"
           navigation.navigate('Home')
         })

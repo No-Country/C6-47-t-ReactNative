@@ -12,7 +12,9 @@ export default function Detail({ route, navigation }) {
 
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
+  const loadingTokens = useSelector((state) => state.user.loadingTokens)
 
+  console.log(loading || loadingTokens)
   // const dispatch = useDispatch()
 
   // const [searchQuery, setSearchQuery] = React.useState('')
@@ -31,7 +33,7 @@ export default function Detail({ route, navigation }) {
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={detailStyle.view}>
           <HeaderComponent navigation={navigation} title="Detail" />
-          {loading ? (
+          {loading || loadingTokens ? (
             <LoaderComponent />
           ) : (
             post && (
