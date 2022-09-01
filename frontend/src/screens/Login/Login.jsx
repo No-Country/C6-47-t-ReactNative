@@ -37,8 +37,8 @@ export default function Login({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('ezegeek@gmail.com')
+  const [password, setPassword] = useState('H3adsh0t')
 
   const [emailError, setEmailError] = useState('')
   const [passError, setPassError] = useState('')

@@ -23,7 +23,7 @@ export const CardComponent = ({
 
   return (
     <View style={cardStyle.view}>
-      <Link to={{ screen: 'Detail', params: { id: postId } }}>
+      <Link to={{ screen: 'Detail', params: { id: postId, user: user } }}>
         <Card style={cardStyle.card}>
           <Card.Title title={title} subtitle={'Post ID: ' + postId} />
           <Card.Cover source={{ uri: image }} style={cardStyle.image} />

@@ -9,15 +9,17 @@ const initialState = {
   loading: false,
   posts: [],
   post: {},
+  postCount: 0,
   error: ''
 }
 
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',
   async (payload, { rejectWithValue }) => {
+    console.log('mi payload: ',payload)
     try {
       const response = await axios
-        .get('http://186.182.43.178:8080/post') // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
+        .get(`http://186.182.43.178:8080/post?page=${payload}`) // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
         .then((res) => res.data)
 
       return response // Return a value synchronously using Async-await
@@ -78,6 +80,7 @@ const postsSlice = createSlice({
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.loading = false
       state.posts = action.payload.rows
+      state.postCount = action.payload.count
       state.error = ''
     })
     builder.addCase(fetchPosts.rejected, (state, action) => {
