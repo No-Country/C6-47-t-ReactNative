@@ -2,7 +2,7 @@ export default function handleCheckPass(original, pass) {
   let passCheckError = ''
 
   if (original !== pass) {
-    passCheckError = 'Los passwords no coinciden'
+    passCheckError = 'Passwords dont match'
   }
 
   return passCheckError

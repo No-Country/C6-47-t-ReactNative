@@ -15,5 +15,15 @@ export const cardStyle = StyleSheet.create({
   bottomLine: {
     textAlign: 'right',
     padding: 10,    
+  },
+  button: {
+    width: '40%',
+    borderRadius: 10,
+    backgroundColor: '#ffff8d',
+    marginTop: 10
+  },
+  buttonText: {
+    color: '#010A26',
+    fontSize: 10
   }
 })

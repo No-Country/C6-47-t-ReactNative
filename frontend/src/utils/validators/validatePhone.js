@@ -2,9 +2,9 @@ export default function validatePhone(phone) {
   let phoneError = ''
 
   if (!phone) {
-    phoneError = 'El numero es necesario'
+    phoneError = ''
   } else if (!/^[0-9 -+]+$/.test(phone)) {
-    phoneError = 'Numero invalido'
+    phoneError = 'Invalid phone number'
   }
 
   return phoneError
