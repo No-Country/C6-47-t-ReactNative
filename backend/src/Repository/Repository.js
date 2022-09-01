@@ -30,12 +30,14 @@ class Repository {
     }
   };
 
-  getById = async (id) => {
+  getById = async (id, include, exclude) => {
     try {
       return await this.model.findByPk(id, {
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
+          exclude: exclude,
+          // ["createdAt", "updatedAt", "deletedAt", "password_hash"]
         },
+        include: include,
       });
     } catch (err) {
       return { error: sequelizeErrorParser(err) };

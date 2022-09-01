@@ -7,7 +7,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const resp = await User.getById(id);
+  const include = [];
+  const exclude = ["createdAt", "updatedAt", "deletedAt", "password_hash"];
+  const resp = await User.getById(id, include, exclude);
   if (!resp) return { statusCode: 404, error: "User not found." };
   else return { statusCode: 200, user: resp.dataValues };
 };
