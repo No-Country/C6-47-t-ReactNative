@@ -16,5 +16,28 @@ export const detailStyle = StyleSheet.create({
   view: {
     display: 'flex',
     alignItems:'center',
+  },
+  title: {
+    fontSize: 20
+  },
+  postView: {
+    marginTop: 20,
+    width: '80%'
+  },
+  image: {
+    marginTop: 20,
+    width: '100%',
+    height: 200
+  },
+  likes: {
+    alignSelf: 'flex-end'
+  },
+  createdBy: {
+    marginVertical: 8,
+    alignSelf: 'flex-end'
+  },
+  username: {
+    fontWeight: 'bold',
+    color: '#010A26'
   }
 })
