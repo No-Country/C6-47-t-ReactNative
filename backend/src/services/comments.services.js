@@ -11,4 +11,8 @@ const commentPost = async (content, userId, postId) => {
   return { statusCode, message };
 };
 
-module.exports = { commentPost };
+const userCommentsByPostId = async (userId, postId) => {
+  return await Comment.userCommentsByPostId(userId, postId);
+};
+
+module.exports = { commentPost, userCommentsByPostId };

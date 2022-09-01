@@ -35,6 +35,20 @@ class CommentsRepository extends Repository {
       return { message: sequelizeErrorParser(error), statusCode: 500 };
     }
   };
+
+  userCommentsByPostId = async (userId, postId) => {
+    try {
+      const comments = await this.model.findAll({
+        where: { userId, postId },
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userId", "postId"],
+        },
+      });
+      return comments;
+    } catch (error) {
+      return { message: sequelizeErrorParser(error), statusCode: 500 };
+    }
+  };
 }
 
 module.exports = CommentsRepository;
