@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Card, Title, Paragraph, Text } from 'react-native-paper'
+import { Card, Title, Paragraph, Text, Button } from 'react-native-paper'
 import { cardStyle } from './card.style'
 import { Link } from '@react-navigation/native'
 
@@ -9,6 +9,7 @@ export const CardComponent = ({
   comments,
   image,
   postId,
+  tag,
   title,
   user
 }) => {
@@ -28,6 +29,7 @@ export const CardComponent = ({
           <Card.Title title={title} subtitle={'Post ID: ' + postId} />
           <Card.Cover source={{ uri: image }} style={cardStyle.image} />
           <Card.Content style={cardStyle.content}>
+            <Button style={cardStyle.button}><Text style={cardStyle.buttonText}>{tag.name}</Text></Button>
             <Text style={cardStyle.body}>{ellipsify(body)}</Text>
             <Paragraph style={cardStyle.paragraph}></Paragraph>
             <Paragraph style={cardStyle.paragraph}>

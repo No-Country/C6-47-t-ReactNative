@@ -1,31 +1,20 @@
 import * as React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
-import { Alert, SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
 import { useDispatch, useSelector } from 'react-redux'
 import { add_access_token, add_refresh_token } from '../../features/user/userSlice'
-
-export function validateEmail(email) {
-  let emailError = ''
-
-  if (!email) {
-    emailError = 'El email es necesario'
-  } else if (!/\S+@\S+\.\S+/.test(email)) {
-    emailError = 'Email invalido'
-  }
-
-  return emailError
-}
+import validateEmail from '../../utils/validators/validateEmail'
 
 export function validatePass(pass) {
   let passError = ''
-
+  
   if (!pass) {
-    passError = 'El password es necesario'
+    passError = ''
   } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
-    passError = 'El password es invalido.'
+    passError = 'Invalid password'
   }
 
   return passError
@@ -82,10 +71,10 @@ export default function Login({ navigation }) {
           //navigation.navigate('Home')
 
       } else {
-        setLoginError('Ingrese email y contraseña por favor.')
+        setLoginError('Please provide email and password to login')
       }
     } catch (error) {
-      setLoginError('Error inesperado')
+      setLoginError('Unexpected error. Contact the administrator')
     }
   }
 
@@ -124,7 +113,7 @@ export default function Login({ navigation }) {
             >
               Login
             </Button>
-            {loginError ? <Text>Error: {loginError}</Text> : null}
+            { loginError ? <Text>Error: {loginError}</Text> : null}
             <Button onPress={navigateRegister} style={loginStyle.cardButton}>
               Register
             </Button>

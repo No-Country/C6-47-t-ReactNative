@@ -54,7 +54,9 @@ export default function Home({ navigation }) {
                 postId={post.id}
                 title={post.title}
                 user={post.user}
+                tag={post.tag}
                 style={homeStyle.card}
+                likesCount={post.likesCount}
               />
             ))
           )}
