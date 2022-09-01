@@ -63,4 +63,20 @@ const validatorAddPost = [
   },
 ];
 
-module.exports = { validatorAuth, validatorAddPost };
+const validatorComment = [
+  check("content")
+    .exists()
+    .withMessage("Value content is required.")
+    .isString()
+    .withMessage("Value content must be string.")
+    .isLength({ min: 1, max: 50 })
+    .withMessage("Content must be at least 1 character and max 50 chars.")
+    .not()
+    .isEmpty()
+    .withMessage("Content cannot be empty."),
+  (req, res, next) => {
+    utils.validateResult(req, res, next);
+  },
+];
+
+module.exports = { validatorAuth, validatorAddPost, validatorComment };

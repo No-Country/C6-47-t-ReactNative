@@ -12,7 +12,12 @@ class Repository {
     });
   };
 
-  getObjects = async (page, size, exclude, include) => {
+  getObjects = async (
+    page = 0,
+    size = 5,
+    exclude = ["createdAt", "updatedAt", "deletedAt"],
+    include
+  ) => {
     try {
       return await this.model.findAndCountAll({
         where: { deletedAt: null },
@@ -20,7 +25,7 @@ class Repository {
           exclude: exclude,
         },
         // raw: true,
-        order: [["id", "DESC"]],
+        // order: [["id", "DESC"]],
         limit: size,
         offset: page * size,
         include: include,

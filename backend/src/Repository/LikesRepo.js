@@ -12,17 +12,17 @@ class LikesRepository extends Repository {
     try {
       const post = await Post.findByPk(postId, {
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
         },
         raw: true,
       });
       if (post != null) {
-        const checkLiked = await this.model.findOne({
+        const findLike = await this.model.findOne({
           where: { userId, postId },
         });
-        if (checkLiked == null) {
+        if (findLike == null) {
           const incrementLikes = await Post.update(
-            { likes: post.likes + 1 },
+            { likesCount: post.likesCount + 1 },
             { where: { id: postId } }
           );
 
@@ -31,22 +31,48 @@ class LikesRepository extends Repository {
             userId,
             postId,
           });
-          return { message: "Post liked Successfully." };
+          return { message: "Post liked Successfully.", statusCode: 200 };
         } else {
-          return { error: "User already liked this post." };
+          return { message: "User already liked this post.", statusCode: 401 };
         }
       }
-      return { error: "Post not found." };
+      return { message: "Post not found.", statusCode: 404 };
     } catch (error) {
-      return { error: sequelizeErrorParser(error) };
+      return { message: sequelizeErrorParser(error), statusCode: 500 };
     }
   };
 
   dislikePost = async (userId, postId) => {
     try {
-      // TODO
+      const post = await Post.findByPk(postId, {
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "deletedAt"],
+        },
+        raw: true,
+      });
+      if (post != null) {
+        const findLike = await this.model.findOne({
+          where: { userId, postId },
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "deletedAt"],
+          },
+          raw: true,
+        });
+        if (findLike) {
+          const decrementLikes = await Post.update(
+            { likesCount: post.likesCount + -1 },
+            { where: { id: postId } }
+          );
+
+          const deleteLike = await this.deleteById(findLike.id);
+          return { message: "Post disliked Successfully.", statusCode: 200 };
+        } else {
+          return { message: "User has no like in this post.", statusCode: 401 };
+        }
+      }
+      return { message: "Post not found.", statusCode: 404 };
     } catch (error) {
-      return { error: sequelizeErrorParser(error) };
+      return { message: sequelizeErrorParser(error), statusCode: 500 };
     }
   };
 
@@ -55,7 +81,7 @@ class LikesRepository extends Repository {
       const likes = await this.model.findAll({
         where: { userId },
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: ["createdAt", "updatedAt", "userId", "postId"],
         },
         include: [
           {
@@ -66,6 +92,21 @@ class LikesRepository extends Repository {
         ],
       });
       return await likes;
+    } catch (error) {
+      return { error: sequelizeErrorParser(error) };
+    }
+  };
+
+  userLikeByPostId = async (userId, postId) => {
+    try {
+      const likedPost = await this.model.findOne({
+        where: { userId, postId },
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "userId", "postId"],
+        },
+      });
+      if (likedPost !== null) return { liked: true };
+      return { liked: false };
     } catch (error) {
       return { error: sequelizeErrorParser(error) };
     }

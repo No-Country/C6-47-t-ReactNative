@@ -1,5 +1,5 @@
 const repositories = require("../Repository");
-const { User, Roles, Tags } = require("../models");
+const { User, Roles, Tags, Comment } = require("../models");
 
 const Post = new repositories.post();
 
@@ -38,8 +38,12 @@ const getObjects = async (page, size) => {
         exclude: ["createdAt", "updatedAt", "deletedAt"],
       },
     },
+    {
+      model: Comment,
+      as: "comments",
+    },
   ];
-  const exclude = ["createdAt", "updatedAt", "deletedAt", "userId"];
+  const exclude = ["createdAt", "updatedAt", "deletedAt", "userId", "tagId"];
   return await Post.getObjects(page, size, exclude, include);
 };
 

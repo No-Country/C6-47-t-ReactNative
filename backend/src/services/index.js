@@ -4,5 +4,6 @@ const roles = require("./roles.services");
 const user = require("./user.services");
 const tag = require("./tag.services");
 const likes = require("./likes.services");
+const comments = require("./comments.services");
 
-module.exports = { auth, post, roles, user, tag, likes };
+module.exports = { auth, post, roles, user, tag, likes, comments };
