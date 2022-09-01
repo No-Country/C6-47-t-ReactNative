@@ -41,6 +41,9 @@ const getObjects = async (page, size) => {
     {
       model: Comment,
       as: "comments",
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "deletedAt", "postId", "userId"],
+      },
     },
   ];
   const exclude = ["createdAt", "updatedAt", "deletedAt", "userId", "tagId"];
