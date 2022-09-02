@@ -13,7 +13,7 @@ export default function Detail({ route, navigation }) {
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
   const postId = useSelector((state) => state.posts.postId)
-  console.log(loading)
+  console.log(post)
 
   // const dispatch = useDispatch()
 
@@ -36,10 +36,12 @@ export default function Detail({ route, navigation }) {
           {loading ? (
             <LoaderComponent />
           ) : (
-            post && (
+            post.id && (
               <View style={detailStyle.postView}>
                 <Text style={detailStyle.title}>{post.title}</Text>
-                <Button style={detailStyle.button}><Text style={detailStyle.buttonText}>{post.tag.name}</Text></Button>
+                <Button style={detailStyle.button}>
+                  <Text style={detailStyle.buttonText}>{post.tag.name}</Text>
+                </Button>
                 <Image
                   style={detailStyle.image}
                   source={{
@@ -52,7 +54,10 @@ export default function Detail({ route, navigation }) {
                   <Text style={detailStyle.username}>{user.username}</Text>
                 </Text>
                 <Text style={detailStyle.likes}>
-                  <TextInput.Icon name="arrow-up-bold-outline" style={detailStyle.likesArrow} />
+                  <TextInput.Icon
+                    name="arrow-up-bold-outline"
+                    style={detailStyle.likesArrow}
+                  />
                   {post.likesCount}
                 </Text>
                 <Text style={detailStyle.commentContainer}>Comentarios:</Text>
