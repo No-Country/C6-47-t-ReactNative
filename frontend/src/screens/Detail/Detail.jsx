@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Image, SafeAreaView, ScrollView, View } from 'react-native'
 import { detailStyle } from './Detail.style'
 import { HeaderComponent } from '../../components/header/header.component'
-import { FAB, Text, TextInput, Button } from 'react-native-paper'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchPostsById } from '../../features/posts/postsSlice'
+import { Text, TextInput, Button } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Detail({ route, navigation }) {
@@ -13,16 +12,6 @@ export default function Detail({ route, navigation }) {
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
   const postId = useSelector((state) => state.posts.postId)
-  console.log(post)
-
-  // const dispatch = useDispatch()
-
-  // const [searchQuery, setSearchQuery] = React.useState('')
-  // const onChangeSearch = (query) => setSearchQuery(query)
-
-  // useEffect(() => {
-  //   dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
-  // }, [])
 
   const navigateHome = () => {
     navigation.navigate('Create')

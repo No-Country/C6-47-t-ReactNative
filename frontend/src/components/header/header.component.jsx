@@ -1,8 +1,7 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
-import { add_postId, fetchPostsById } from '../../features/posts/postsSlice'
-import { headerStyle } from './header.style'
+import { add_postId } from '../../features/posts/postsSlice'
 
 export const HeaderComponent = ({ title, navigation }) => {
   const dispatch = useDispatch()

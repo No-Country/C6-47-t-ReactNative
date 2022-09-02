@@ -24,15 +24,7 @@ export default function Register({ navigation }) {
   const [loginError, setLoginError] = useState('')
   const [phoneError, setPhoneError] = useState('')
 
-
   const api = useAxios()
-  
-  //let open = false
-
-  //const openEye = function (e) {
-  //  open = !open
-  //  console.log(open)
-  //}
 
   const handleEmailInput = function (e) {
     setEmailError(validateEmail(e))
@@ -57,14 +49,7 @@ export default function Register({ navigation }) {
   const register = () => {
     try {
       if (email && password && !emailError && !passError && !passCheckError) {
-        // TODO <<<<< Agregar validación de username
         setLoginError('')
-        // axios
-        //   .post(
-        //     'http://localhost:8080/register',
-        //     { username, email, password },
-        //     { withCredentials: true },
-        //   )
         api.post('/register', { username, email, password }).then((res) => {
           console.log(res.data)
           navigation.navigate('Login')

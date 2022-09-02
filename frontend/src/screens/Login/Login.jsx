@@ -1,17 +1,12 @@
 import * as React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import { SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  add_access_token,
-  add_refresh_token,
-  fetchTokens
-} from '../../features/user/userSlice'
+import { fetchTokens } from '../../features/user/userSlice'
 import { useAxios } from '../../utils/customHooks/useAxios'
-import { changeCurrentPage, setLoading } from '../../features/posts/postsSlice'
+import { changeCurrentPage } from '../../features/posts/postsSlice'
 
 import validateEmail from '../../utils/validators/validateEmail'
 
@@ -28,9 +23,6 @@ export function validatePass(pass) {
 }
 
 export default function Login({ navigation }) {
-  const access_token = useSelector((state) => state.user.access_token)
-  const refresh_token = useSelector((state) => state.user.refresh_token)
-
   const dispatch = useDispatch()
 
   const api = useAxios()

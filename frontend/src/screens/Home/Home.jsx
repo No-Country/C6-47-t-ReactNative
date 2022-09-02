@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
-import { FAB, Searchbar, Text } from 'react-native-paper'
+import { FAB, Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeCurrentPage, fetchPosts } from '../../features/posts/postsSlice'
+import { changeCurrentPage } from '../../features/posts/postsSlice'
 import { CardComponent } from '../../components/card/card.component'
 import { HeaderComponent } from '../../components/header/header.component'
 import { LoaderComponent } from '../../components/loader/loader.component'
@@ -15,14 +15,9 @@ export default function Home({ navigation }) {
   const postCount = useSelector((state) => state.posts.postCount)
   const loading = useSelector((state) => state.posts.loading)
   const currentPage = useSelector((state) => state.posts.currentPage)
-  // const [currentPage, setCurrentPage] = useState(0)
 
   const [searchQuery, setSearchQuery] = React.useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
-
-  // useEffect(() => {
-  //   dispatch(fetchPosts(currentPage)) // Este es el dispatch que hago para traer todos los posts
-  // }, [currentPage])
 
   const navigateHome = () => {
     navigation.navigate('Create')
