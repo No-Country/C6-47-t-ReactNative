@@ -6,7 +6,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const resp = await Roles.getById(id);
+  const include = [];
+  const exclude = ["createdAt", "updatedAt", "deletedAt"];
+  const resp = await Roles.getById(id, include, exclude);
   if (!resp) return { statusCode: 404, error: "Role not found." };
   else return { statusCode: 200, roles: resp.dataValues };
 };

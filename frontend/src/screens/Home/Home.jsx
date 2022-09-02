@@ -1,54 +1,89 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
-import { FAB, Searchbar, Title } from 'react-native-paper'
+import { FAB, Searchbar, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPosts, fetchPostsById } from '../../features/posts/postsSlice'
+import { fetchPosts } from '../../features/posts/postsSlice'
 import { CardComponent } from '../../components/card/card.component'
 import { HeaderComponent } from '../../components/header/header.component'
+import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch()
+
   const posts = useSelector((state) => state.posts.posts)
-  const users = useSelector((state) => state.users.users)
+  const postCount = useSelector((state) => state.posts.postCount)
+  const loading = useSelector((state) => state.posts.loading)
+  const [currentPage, setCurrentPage] = useState(0)
+
   const [searchQuery, setSearchQuery] = React.useState('')
   const onChangeSearch = (query) => setSearchQuery(query)
 
   useEffect(() => {
-    dispatch(fetchPosts()) // Este es el dispatch que hago para traer todos los posts
-    //dispatch(fetchPostsById(100)) // Este es el dispatch que hago para traer un post especifico
-  }, [])
+    dispatch(fetchPosts(currentPage)) // Este es el dispatch que hago para traer todos los posts
+  }, [currentPage])
 
   const navigateHome = () => {
     navigation.navigate('Create')
   }
-
+  
   return (
     <SafeAreaView style={homeStyle.content}>
       <View style={{ flex: 1 }}>
+        <HeaderComponent navigation={navigation} title="Home" />
+        <Searchbar
+          style={homeStyle.searchBar}
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+        />
+        <Text>
+          Current page: {currentPage} Cantidad de posts: {postCount}
+        </Text>
         <ScrollView contentContainerStyle={homeStyle.view}>
-          <HeaderComponent navigation={navigation} title="Home" />
-          <Searchbar
-            style={homeStyle.searchBar}
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-          {posts &&
+          {loading ? (
+            <LoaderComponent />
+          ) : (
+            posts &&
             posts.map((post) => (
               <CardComponent
-                key={post.postId}
-                body={post.body}
+                key={post.id}
+                body={post.content}
                 comments={post.comments}
-                image={post.image}
-                postId={post.postId}
+                image={post.mediaURL}
+                postId={post.id}
                 title={post.title}
-                userId={post.userId}
+                user={post.user}
+                tag={post.tag}
                 style={homeStyle.card}
+                likesCount={post.likesCount}
               />
-            ))}
+            ))
+          )}
         </ScrollView>
       </View>
+      {currentPage !== 0 ? (
+        <FAB
+          style={homeStyle.fabPrev}
+          small
+          icon="arrow-left"
+          onPress={() => {
+            if (currentPage > 0) setCurrentPage(currentPage - 1)
+          }}
+        />
+      ) : null}
+      {currentPage <= Math.floor(postCount / 5) - 1 ? (
+        <FAB
+          style={homeStyle.fabNext}
+          small
+          icon="arrow-right"
+          onPress={() => {
+            if (currentPage < Math.floor(postCount / 5))
+              setCurrentPage(currentPage + 1)
+          }}
+        />
+      ) : null}
+
       <FAB style={homeStyle.fab} icon="plus" onPress={navigateHome} />
     </SafeAreaView>
   )

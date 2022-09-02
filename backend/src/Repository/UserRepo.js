@@ -24,7 +24,7 @@ class UserRepository extends Repository {
         include: [
           {
             model: Roles,
-            as: "Role",
+            as: "role",
           },
         ],
       });

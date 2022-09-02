@@ -17,8 +17,15 @@ module.exports = {
       mediaURL: {
         type: Sequelize.STRING,
       },
-      likes: {
+      likesCount: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      commentsCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

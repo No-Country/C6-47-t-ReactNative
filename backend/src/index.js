@@ -25,7 +25,14 @@ require("./utils/initialSetup");
 require("./middleware/auth");
 app.use(express.json());
 app.use(cors({ credentials: true }));
-app.use([routers.auth, routers.post, routers.user]);
+app.use([
+  routers.auth,
+  routers.post,
+  routers.user,
+  routers.likes,
+  routers.tag,
+  routers.comment,
+]);
 
 sequelize
   .authenticate()

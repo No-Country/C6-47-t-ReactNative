@@ -1,37 +1,33 @@
 import * as React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
-import { Alert, SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
-
-export function validateEmail(email) {
-  let emailError = ''
-
-  if (!email) {
-    emailError = 'El email es necesario'
-  } else if (!/\S+@\S+\.\S+/.test(email)) {
-    emailError = 'Email invalido'
-  }
-
-  return emailError
-}
+import { useDispatch, useSelector } from 'react-redux'
+import { add_access_token, add_refresh_token } from '../../features/user/userSlice'
+import validateEmail from '../../utils/validators/validateEmail'
 
 export function validatePass(pass) {
   let passError = ''
-
+  
   if (!pass) {
-    passError = 'El password es necesario'
+    passError = ''
   } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
-    passError = 'El password es invalido.'
+    passError = 'Invalid password'
   }
 
   return passError
 }
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const access_token = useSelector((state) => state.user.access_token);
+  const refresh_token = useSelector((state) => state.user.refresh_token);
+
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('ezegeek@gmail.com')
+  const [password, setPassword] = useState('H3adsh0t')
 
   const [emailError, setEmailError] = useState('')
   const [passError, setPassError] = useState('')
@@ -57,27 +53,28 @@ export default function Login({ navigation }) {
           .post(
             'http://186.182.43.178:8080/login',
             { username: email, password }, // TODO <<-- Cambiar campo de email a username
-           
             {
               withCredentials: true,
             }
           )
           .then((res) => {
-            //console.log('entre al res')
-            //console.log(res.data.tokens) // TODO <<-- Guardar tokens en store de redux. El refresh_token es el que tiene que guardarse en "localstorage", no se como se llamaría esta función acá en native
+            // Almacenamos los tokens en el slice tokens
+            dispatch(add_access_token(res.data.tokens.access_token));
+            dispatch(add_refresh_token(res.data.tokens.refresh_token));
+            // Luego de guardalos navega a "Home"
             navigation.navigate('Home')
           })
           .catch((err) => {
-            //console.log(err.response.data.messagE)
-            setLoginError(err.response.data.messagE);
+            //console.log(err.response.data.message)
+            setLoginError(err.response.data.message);
           })
           //navigation.navigate('Home')
 
       } else {
-        setLoginError('Ingrese email y contraseña por favor.')
+        setLoginError('Please provide email and password to login')
       }
     } catch (error) {
-      setLoginError('Error inesperado')
+      setLoginError('Unexpected error. Contact the administrator')
     }
   }
 
@@ -116,7 +113,7 @@ export default function Login({ navigation }) {
             >
               Login
             </Button>
-            {loginError ? <Text>Error: {loginError}</Text> : null}
+            { loginError ? <Text>Error: {loginError}</Text> : null}
             <Button onPress={navigateRegister} style={loginStyle.cardButton}>
               Register
             </Button>

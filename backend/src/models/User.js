@@ -10,12 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Post, { foreignKey: "id" });
-      User.belongsTo(models.Roles, { foreignKey: "roleId" });
-      // User.belongsToMany(models.Post, {
-      //   through: { model: models.Likes, unique: false },
-      //   as: "postsLiked",
-      //   foreignKey: "userId",
-      // });
+      User.belongsTo(models.Roles, { as: "role", foreignKey: "roleId" });
     }
   }
   User.init(
@@ -25,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       // birth_date: DataTypes.STRING,
       refresh_token_hash: DataTypes.STRING(64),
-      // postId: DataTypes.INTEGER,
-      // tagsId: DataTypes.INTEGER,
       // userLikes: DataTypes.INTEGER,
       // userFollows: DataTypes.INTEGER,
       // userFollowers: DataTypes.INTEGER,

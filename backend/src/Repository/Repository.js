@@ -1,5 +1,5 @@
 const { sequelizeErrorParser } = require("../utils/util");
-const { Likes } = require("../models");
+
 class Repository {
   getAll = async () => {
     return await this.model.findAll({
@@ -12,29 +12,37 @@ class Repository {
     });
   };
 
-  getObjects = async (page, size) => {
+  getObjects = async (
+    page = 0,
+    size = 5,
+    exclude = ["createdAt", "updatedAt", "deletedAt"],
+    include
+  ) => {
     try {
       return await this.model.findAndCountAll({
         where: { deletedAt: null },
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
+          exclude: exclude,
         },
-        raw: true,
+        // raw: true,
         order: [["id", "DESC"]],
         limit: size,
         offset: page * size,
+        include: include,
       });
     } catch (err) {
       return { error: sequelizeErrorParser(err) };
     }
   };
 
-  getById = async (id) => {
+  getById = async (id, include, exclude) => {
     try {
       return await this.model.findByPk(id, {
         attributes: {
-          exclude: ["createdAt", "updatedAt", "deletedAt", "password_hash"],
+          exclude: exclude,
+          // ["createdAt", "updatedAt", "deletedAt", "password_hash"]
         },
+        include: include,
       });
     } catch (err) {
       return { error: sequelizeErrorParser(err) };

@@ -6,4 +6,8 @@ const getByName = async (tag) => {
   return await Tag.getByName(tag);
 };
 
-module.exports = { getByName };
+const getTags = async () => {
+  return await Tag.getObjects(0, 20);
+};
+
+module.exports = { getByName, getTags };
