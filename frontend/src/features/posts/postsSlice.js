@@ -51,6 +51,14 @@ export const fetchPostsById = createAsyncThunk(
   }
 )
 
+export const setLoading = createAsyncThunk(
+  'post/setLoading',
+  async (payload, { rejectWithValue }) => {
+    if (payload) return payload
+    return rejectWithValue(payload)
+  }
+)
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -60,9 +68,28 @@ const postsSlice = createSlice({
         ...state,
         postId: action.payload
       }
+    },
+    changeCurrentPage(state, action) {
+      console.log(action)
+      return {
+        ...state,
+        currentPage: action.payload
+      }
     }
   },
   extraReducers: (builder) => {
+    builder.addCase(setLoading.pending, (state) => {
+      state.loading = true
+    })
+
+    builder.addCase(setLoading.fulfilled, (state, action) => {
+      state.loading = action.payload
+    })
+
+    builder.addCase(setLoading.rejected, (state, action) => {
+      state.loading = true
+    })
+
     builder.addCase(fetchPostsById.pending, (state) => {
       state.loading = true
     })
@@ -82,12 +109,14 @@ const postsSlice = createSlice({
     builder.addCase(fetchPosts.pending, (state) => {
       state.loading = true
     })
+
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.loading = false
       state.posts = action.payload.rows
       state.postCount = action.payload.count
       state.error = ''
     })
+
     builder.addCase(fetchPosts.rejected, (state, action) => {
       state.loading = false
       state.posts = []
@@ -95,5 +124,5 @@ const postsSlice = createSlice({
     })
   }
 })
-export const { add_postId } = postsSlice.actions
+export const { add_postId, changeCurrentPage } = postsSlice.actions
 export default postsSlice.reducer

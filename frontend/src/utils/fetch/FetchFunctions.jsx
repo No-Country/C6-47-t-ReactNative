@@ -30,10 +30,11 @@ function FetchFunctions({ children }) {
 
   useEffect(() => {
     try {
-      if (postId == null) return
-      api.get(`/post/${postId}`).then((res) => {
-        dispatch(fetchPostsById(res.data))
-      })
+      if (postId == null) dispatch(fetchPostsById(null))
+      else
+        api.get(`/post/${postId}`).then((res) => {
+          dispatch(fetchPostsById(res.data))
+        })
     } catch (error) {
       dispatch(fetchPostsById(error))
     }

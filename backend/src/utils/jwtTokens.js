@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const getTokens = async (user) => {
   const payload = { ...user };
   const [access_token, refresh_token] = await Promise.all([
-    jwt.sign(payload, config.JWT_SECRET, { expiresIn: "3s" }),
+    jwt.sign(payload, config.JWT_SECRET, { expiresIn: "20m" }),
     jwt.sign({ id: payload.id }, config.JWT_REFRESH_SECRET, {
       expiresIn: "15d",
     }),

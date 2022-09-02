@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { useDispatch, useSelector } from 'react-redux'
-import { changeLoading, setLoading } from '../posts/postsSlice'
 
 const initialState = {
   access_token: '',

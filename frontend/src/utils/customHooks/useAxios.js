@@ -7,6 +7,7 @@ import {
   add_refresh_token,
   fetchTokens
 } from '../../features/user/userSlice'
+import { setLoading } from '../../features/posts/postsSlice'
 
 const baseURL = 'http://localhost:8080'
 
@@ -31,6 +32,8 @@ export const useAxios = () => {
       const isExpired = dayjs.unix(tokenDecoded.exp).diff(dayjs()) < 1
 
       if (!isExpired) return req
+
+      dispatch(setLoading())
 
       const res = await axios.post(
         `${baseURL}/refresh`,

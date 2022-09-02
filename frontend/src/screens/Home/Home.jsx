@@ -3,13 +3,13 @@ import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
 import { FAB, Searchbar, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchPosts } from '../../features/posts/postsSlice'
+import { changeCurrentPage, fetchPosts } from '../../features/posts/postsSlice'
 import { CardComponent } from '../../components/card/card.component'
 import { HeaderComponent } from '../../components/header/header.component'
 import { LoaderComponent } from '../../components/loader/loader.component'
 
 export default function Home({ navigation }) {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const posts = useSelector((state) => state.posts.posts)
   const postCount = useSelector((state) => state.posts.postCount)
@@ -67,7 +67,10 @@ export default function Home({ navigation }) {
           small
           icon="arrow-left"
           onPress={() => {
-            if (currentPage > 0) setCurrentPage(currentPage - 1)
+            if (currentPage > 0) {
+              // setCurrentPage(currentPage - 1)
+              dispatch(changeCurrentPage(currentPage - 1))
+            }
           }}
         />
       ) : null}
@@ -78,7 +81,8 @@ export default function Home({ navigation }) {
           icon="arrow-right"
           onPress={() => {
             if (currentPage < Math.floor(postCount / 5))
-              setCurrentPage(currentPage + 1)
+              // setCurrentPage(currentPage + 1)
+              dispatch(changeCurrentPage(currentPage + 1))
           }}
         />
       ) : null}
