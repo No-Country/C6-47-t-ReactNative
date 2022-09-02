@@ -33,7 +33,7 @@ export const CardComponent = ({
             <Text style={cardStyle.body}>{ellipsify(body)}</Text>
             <Paragraph style={cardStyle.paragraph}></Paragraph>
             <Paragraph style={cardStyle.paragraph}>
-              {comments 
+              {comments.length > 0 
               ? <Text>{comments.length} comentarios.</Text>
               : <Text> Todavía no hay comentarios.</Text>}
             </Paragraph>

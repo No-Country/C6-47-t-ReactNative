@@ -51,5 +51,15 @@ export const detailStyle = StyleSheet.create({
   },
   likesArrow: {
     paddingRight: 10,
+  },
+  button: {
+    width: '35%',
+    borderRadius: 10,
+    backgroundColor: '#ffff8d',
+    marginTop: 10
+  },
+  buttonText: {
+    color: '#010A26',
+    fontSize: 10
   }
 })
