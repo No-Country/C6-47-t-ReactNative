@@ -16,13 +16,16 @@ function FetchFunctions({ children }) {
   const postCount = useSelector((state) => state.posts.postCount)
   const loading = useSelector((state) => state.posts.loading)
   const currentPage = useSelector((state) => state.posts.currentPage)
+  const access_token = useSelector((state) => state.user.access_token)
   const postId = useSelector((state) => state.posts.postId)
 
   useEffect(() => {
     try {
-      api.get(`/post?page=${currentPage}`).then((res) => {
-        dispatch(fetchPosts(res.data))
-      })
+      if (currentPage == null) return
+      else
+        api.get(`/post?page=${currentPage}`).then((res) => {
+          dispatch(fetchPosts(res.data))
+        })
     } catch (error) {
       dispatch(fetchPosts(error))
     }

@@ -9,7 +9,7 @@ import {
 } from '../../features/user/userSlice'
 import { setLoading } from '../../features/posts/postsSlice'
 
-const baseURL = 'http://localhost:8080'
+const baseURL = 'http://186.182.43.178:8080'
 
 export const useAxios = () => {
   const access_token = useSelector((state) => state.user.access_token)
@@ -25,6 +25,7 @@ export const useAxios = () => {
   })
 
   axiosInstance.interceptors.request.use(async (req) => {
+    dispatch(setLoading(true))
     if (access_token) {
       req.headers['x-access-token'] = access_token
 
@@ -32,8 +33,6 @@ export const useAxios = () => {
       const isExpired = dayjs.unix(tokenDecoded.exp).diff(dayjs()) < 1
 
       if (!isExpired) return req
-
-      dispatch(setLoading())
 
       const res = await axios.post(
         `${baseURL}/refresh`,

@@ -7,7 +7,6 @@ import { headerStyle } from './header.style'
 export const HeaderComponent = ({ title, navigation }) => {
   const dispatch = useDispatch()
   const setPostNull = () => {
-    // dispatch(fetchPostsById(null))
     dispatch(add_postId(null))
   }
   return (
