@@ -23,8 +23,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -82,11 +80,17 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project and the Team
-* Julian Yachelini - Backend Dev [![LinkedIn][linkedin-shield]][linkedin-url-yache]
-* Francisco Nanoia - Backend Dev [![LinkedIn][linkedin-shield]][linkedin-url-fran]
-* Angelo Montero - QA and Testing [![LinkedIn][linkedin-shield]][linkedin-url-angel]
-* Ezequiel Sanchez - Frontend Dev [![LinkedIn][linkedin-shield]][linkedin-url-eze]
+* Julian Yachelini - Backend Dev 
+<br>[![LinkedIn][linkedin-shield]][linkedin-url-yache]  [![GitHub][github-shield]][github-url-yache]
 
+* Francisco Nanoia - Backend Dev 
+<br>[![LinkedIn][linkedin-shield]][linkedin-url-fran]  [![GitHub][github-shield]][github-url-fran]
+
+* Angelo Montero - QA and Testing 
+<br>[![LinkedIn][linkedin-shield]][linkedin-url-angel]  [![GitHub][github-shield]][github-url-angel]
+
+* Ezequiel Sanchez - Frontend Dev 
+<br>[![LinkedIn][linkedin-shield]][linkedin-url-eze]  [![GitHub][github-shield]][github-url-eze]
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
@@ -241,6 +245,13 @@ Project Link: [https://github.com/No-Country/C6-47-t-ReactNative](https://github
 [linkedin-url-angel]: https://linkedin.com/in/angelo-montero-ba4486239
 [linkedin-url-eze]: https://linkedin.com/in/ezequiel-sanchez-dev
 
+[github-shield]: https://img.shields.io/badge/Github-61DAFB.svg?style=for-the-badge&logo=github&logoColor=FFFFFF
+[github-url-yache]: https://github.com/fnanoia
+[github-url-fran]: https://github.com/fnanoia
+[github-url-angel]: https://github.com/fnanoia
+[github-url-eze]: https://github.com/GeekyBear
+
+
 [product-screenshot]: images/screenshot.png
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
@@ -249,3 +260,5 @@ Project Link: [https://github.com/No-Country/C6-47-t-ReactNative](https://github
 [MySql-url]: https://www.mysql.com/
 [Redux.js]: https://img.shields.io/badge/Redux-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [Redux-url]: https://redux.js.org/
+
+
