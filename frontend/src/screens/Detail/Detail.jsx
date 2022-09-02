@@ -12,15 +12,16 @@ export default function Detail({ route, navigation }) {
 
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
+  const postId = useSelector((state) => state.posts.postId)
 
   const dispatch = useDispatch()
 
   // const [searchQuery, setSearchQuery] = React.useState('')
   // const onChangeSearch = (query) => setSearchQuery(query)
 
-  useEffect(() => {
-    dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchPostsById(id)) // Este es el dispatch que hago para traer un post especifico
+  // }, [])
 
   const navigateHome = () => {
     navigation.navigate('Create')

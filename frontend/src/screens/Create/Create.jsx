@@ -5,18 +5,23 @@ import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import { useAxios } from '../../utils/customHooks/useAxios'
 
 export default function Create({ navigation }) {
-  const access_token = useSelector((state) => state.user.access_token);
-  const refresh_token = useSelector((state) => state.user.refresh_token);
+  const access_token = useSelector((state) => state.user.access_token)
+  const refresh_token = useSelector((state) => state.user.refresh_token)
+
+  const api = useAxios()
 
   const [title, setTitle] = useState('Post de ejemplo')
   const [content, setContent] = useState('Contenido de ejemplo')
   const [tagId, setTagId] = useState('1')
   const [mediaURL, setMediaURL] = useState('https://picsum.photos/200')
+
   const [createError, setCreateError] = useState('')
 
   let userId = 1;
+
 
   const createPost = () => {
     try {
@@ -27,22 +32,24 @@ export default function Create({ navigation }) {
 
       if (title && content && tagId && mediaURL) {
         // TODO <<<<< Agregar validación de username
+        //setLoginError('')
+        // axios
+        //   .post(
+        //     'http://186.182.43.178:8080/post',
+        //     { userId, title, content, tagId, mediaURL },
+        //     {
+        //       withCredentials: true,
+        //       headers: { "x-access-token": access_token }
+        //     }
+        //   )
         setCreateError('')
-
-        axios
-          .post(
-            'http://186.182.43.178:8080/post',
-            { userId, title, content, tagId, mediaURL },
-            { 
-              withCredentials: true,
-              headers: { "x-access-token": access_token }
-            }
-          )
+        api
+          .post('/post', { userId, title, content, tagId, mediaURL })
           .then((res) => {
             console.log(res.data)
             navigation.navigate('Home')
           })
-          .catch(err => console.log(err.response))
+          .catch((err) => console.log(err.response))
       } else {
         Alert.alert('All fields are necesary')
         //setLoginError('Ingrese todos los campos por favor.')

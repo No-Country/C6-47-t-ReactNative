@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
+import { useAxios } from '../../utils/customHooks/useAxios'
 import handleCheckPass from '../../utils/validators/validateCheckPass'
 import validateEmail from '../../utils/validators/validateEmail'
 import validatePass from '../../utils/validators/validatePass'
@@ -23,12 +24,15 @@ export default function Register({ navigation }) {
   const [loginError, setLoginError] = useState('')
   const [phoneError, setPhoneError] = useState('')
 
-  let open = false
 
-  const openEye = function (e) {
-    open = !open
-    console.log(open)
-  }
+  const api = useAxios()
+  
+  //let open = false
+
+  //const openEye = function (e) {
+  //  open = !open
+  //  console.log(open)
+  //}
 
   const handleEmailInput = function (e) {
     setEmailError(validateEmail(e))
@@ -55,16 +59,16 @@ export default function Register({ navigation }) {
       if (email && password && !emailError && !passError && !passCheckError) {
         // TODO <<<<< Agregar validación de username
         setLoginError('')
-        axios
-          .post(
-            'http://localhost:8080/register',
-            { username, email, password },
-            { withCredentials: true }
-          )
-          .then((res) => {
-            console.log(res.data)
-            navigation.navigate('Login')
-          })
+        // axios
+        //   .post(
+        //     'http://localhost:8080/register',
+        //     { username, email, password },
+        //     { withCredentials: true },
+        //   )
+        api.post('/register', { username, email, password }).then((res) => {
+          console.log(res.data)
+          navigation.navigate('Login')
+        })
       } else {
         setLoginError('Ingrese todos los campos por favor.')
       }
