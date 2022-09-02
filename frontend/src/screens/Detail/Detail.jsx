@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Image, SafeAreaView, ScrollView, View } from 'react-native'
 import { detailStyle } from './Detail.style'
 import { HeaderComponent } from '../../components/header/header.component'
-import { FAB, Text, TextInput } from 'react-native-paper'
+import { FAB, Text, TextInput, Button } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchPostsById } from '../../features/posts/postsSlice'
 import { LoaderComponent } from '../../components/loader/loader.component'
@@ -37,9 +37,7 @@ export default function Detail({ route, navigation }) {
             post && (
               <View style={detailStyle.postView}>
                 <Text style={detailStyle.title}>{post.title}</Text>
-                <Text style={detailStyle.tagId}>
-                  Lista de tags: {post.tagId}
-                </Text>
+                <Button style={detailStyle.button}><Text style={detailStyle.buttonText}>{post.tag.name}</Text></Button>
                 <Image
                   style={detailStyle.image}
                   source={{

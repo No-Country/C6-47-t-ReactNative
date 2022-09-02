@@ -16,7 +16,7 @@ const initialState = {
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',
   async (payload, { rejectWithValue }) => {
-    console.log('mi payload: ',payload)
+    //console.log('mi payload: ',payload)
     try {
       const response = await axios
         .get(`http://186.182.43.178:8080/post?page=${payload}`) // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080

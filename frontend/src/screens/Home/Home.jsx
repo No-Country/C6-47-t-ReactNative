@@ -37,9 +37,9 @@ export default function Home({ navigation }) {
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
-        <Text>
+        {/* <Text>
           Current page: {currentPage} Cantidad de posts: {postCount}
-        </Text>
+        </Text> */}
         <ScrollView contentContainerStyle={homeStyle.view}>
           {loading ? (
             <LoaderComponent />
