@@ -7,7 +7,7 @@ const getAll = async () => {
   return await Post.getAll();
 };
 
-const getObjects = async (page, size) => {
+const getObjects = async (filter, page, size) => {
   const include = [
     {
       model: User,
@@ -47,7 +47,7 @@ const getObjects = async (page, size) => {
     },
   ];
   const exclude = ["createdAt", "updatedAt", "deletedAt", "userId", "tagId"];
-  return await Post.getObjects(page, size, exclude, include);
+  return await Post.getObjects(filter, page, size, exclude, include);
 };
 
 const getById = async (id) => {

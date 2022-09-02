@@ -1,4 +1,5 @@
 const services = require("../services");
+const sequelize = require("sequelize");
 
 const getAll = async (req, res) => {
   // Example url GET = http://localhost:8080/post
@@ -8,27 +9,49 @@ const getAll = async (req, res) => {
 const getObjects = async (req, res) => {
   //Example url GET = http://localhost:8080/post?size=1&page=0&filter=example
   //Testear con query parameters: "page", "size", "filter" (OPCIONALES)
+
+  let filter = {};
+  let page = 0;
+  let size = 5;
+
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
 
-  let page = 0;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
     page = pageAsNumber;
   }
 
-  let size = 5;
   if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0) {
     size = sizeAsNumber;
   }
 
-  const queryFilter = req.query.filter;
+  const tagFilter = req.query.tag;
+  const wordFilter = req.query.word;
 
-  let word = queryFilter;
-  if (!queryFilter) {
-    word = " ";
+  if (wordFilter && tagFilter) {
+    const searchTag = await services.tag.getByName(tagFilter);
+    filter = {
+      deletedAt: null,
+      tagId: searchTag.id,
+      [sequelize.Op.or]: [
+        { title: { [sequelize.Op.substring]: wordFilter } },
+        { content: { [sequelize.Op.substring]: wordFilter } },
+      ],
+    };
+  } else if (tagFilter) {
+    const searchTag = await services.tag.getByName(tagFilter);
+    filter = { deletedAt: null, tagId: searchTag.id };
+  } else if (wordFilter) {
+    filter = {
+      deletedAt: null,
+      [sequelize.Op.or]: [
+        { title: { [sequelize.Op.substring]: wordFilter } },
+        { content: { [sequelize.Op.substring]: wordFilter } },
+      ],
+    };
   }
 
-  res.json(await services.post.getObjects(page, size, word));
+  res.json(await services.post.getObjects(filter, page, size));
 };
 
 const getById = async (req, res) => {

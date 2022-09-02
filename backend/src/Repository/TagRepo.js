@@ -15,6 +15,7 @@ class TagRepository extends Repository {
         attributes: {
           exclude: ["createdAt", "updatedAt", "deletedAt"],
         },
+        raw: true,
       });
     } catch (error) {
       return { error: sequelizeErrorParser(error) };
