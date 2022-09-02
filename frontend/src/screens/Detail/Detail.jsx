@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Image, SafeAreaView, ScrollView, View } from 'react-native'
 import { detailStyle } from './Detail.style'
 import { HeaderComponent } from '../../components/header/header.component'
-import { FAB, Text } from 'react-native-paper'
+import { FAB, Text, TextInput, Button } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchPostsById } from '../../features/posts/postsSlice'
 import { LoaderComponent } from '../../components/loader/loader.component'
@@ -38,9 +38,7 @@ export default function Detail({ route, navigation }) {
             post && (
               <View style={detailStyle.postView}>
                 <Text style={detailStyle.title}>{post.title}</Text>
-                <Text style={detailStyle.tagId}>
-                  Lista de tags: {post.tagId}
-                </Text>
+                <Button style={detailStyle.button}><Text style={detailStyle.buttonText}>{post.tag.name}</Text></Button>
                 <Image
                   style={detailStyle.image}
                   source={{
@@ -52,7 +50,18 @@ export default function Detail({ route, navigation }) {
                   Created by{' '}
                   <Text style={detailStyle.username}>{user.username}</Text>
                 </Text>
-                <Text style={detailStyle.likes}>likes: {post.likes}</Text>
+                <Text style={detailStyle.likes}>
+                  <TextInput.Icon name="arrow-up-bold-outline" style={detailStyle.likesArrow} />
+                  {post.likesCount}
+                </Text>
+                <Text style={detailStyle.commentContainer}>Comentarios:</Text>
+                {post.comments
+                  ? post.comments.map((comment) => (
+                      <Text key={comment.id} style={detailStyle.comment}>
+                        {comment.content}
+                      </Text>
+                    ))
+                  : null}
               </View>
             )
           )}

@@ -17,10 +17,19 @@ export default function Create({ navigation }) {
   const [content, setContent] = useState('Contenido de ejemplo')
   const [tagId, setTagId] = useState('1')
   const [mediaURL, setMediaURL] = useState('https://picsum.photos/200')
-  let userId = 1
+
+  const [createError, setCreateError] = useState('')
+
+  let userId = 1;
+
 
   const createPost = () => {
     try {
+      if(!title) return Alert.alert('Title is empty')
+      if(!content) return Alert.alert('Content is empty')
+      if(!tagId) return Alert.alert('tagId is empty')
+      if(!mediaURL) return Alert.alert('mediaURL is empty')
+
       if (title && content && tagId && mediaURL) {
         // TODO <<<<< Agregar validación de username
         //setLoginError('')
@@ -33,6 +42,7 @@ export default function Create({ navigation }) {
         //       headers: { "x-access-token": access_token }
         //     }
         //   )
+        setCreateError('')
         api
           .post('/post', { userId, title, content, tagId, mediaURL })
           .then((res) => {
@@ -41,12 +51,12 @@ export default function Create({ navigation }) {
           })
           .catch((err) => console.log(err.response))
       } else {
-        Alert.alert('ingrese todos los campos por favor')
+        Alert.alert('All fields are necesary')
         //setLoginError('Ingrese todos los campos por favor.')
       }
     } catch (error) {
       console.log(error)
-      Alert.alert('Error inesperado')
+      Alert.alert('Unexpected error. Call the administrator.')
       //setLoginError('Error inesperado')
     }
   }
@@ -56,10 +66,10 @@ export default function Create({ navigation }) {
       <ScrollView>
         <HeaderComponent navigation={navigation} title="Create Post" />
         <View>
-          <TextInput label="Title" keyboardType="email-address" value={title} />
-          <TextInput label="Content" keyboardType="default" value={content} />
-          <TextInput label="TagId" keyboardType="default" value={tagId} />
-          <TextInput label="MediaURL" keyboardType="default" value={mediaURL} />
+          <TextInput onChangeText={(text) => setTitle(text)} label="Title" keyboardType="email-address" value={title} />
+          <TextInput onChangeText={(text) => setContent(text)} label="Content" keyboardType="default" value={content} />
+          <TextInput onChangeText={(text) => setTagId(text)} label="TagId" keyboardType="default" value={tagId} />
+          <TextInput onChangeText={(text) => setMediaURL(text)} label="MediaURL" keyboardType="default" value={mediaURL} />
           <Button mode="contained" onPress={createPost}>
             Create post
           </Button>

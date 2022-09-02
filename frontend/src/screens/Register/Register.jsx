@@ -12,6 +12,7 @@ import validatePhone from '../../utils/validators/validatePhone'
 import { registerStyle } from './register.style'
 
 export default function Register({ navigation }) {
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
   const [username, setUSername] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -23,7 +24,15 @@ export default function Register({ navigation }) {
   const [loginError, setLoginError] = useState('')
   const [phoneError, setPhoneError] = useState('')
 
+
   const api = useAxios()
+  
+  //let open = false
+
+  //const openEye = function (e) {
+  //  open = !open
+  //  console.log(open)
+  //}
 
   const handleEmailInput = function (e) {
     setEmailError(validateEmail(e))
@@ -84,10 +93,14 @@ export default function Register({ navigation }) {
           <TextInput
             onChangeText={(text) => handlePassInput(text)}
             label="Password"
-            secureTextEntry={true}
+            secureTextEntry={secureTextEntry}
             value={password}
             right={
               <TextInput.Icon
+                onPress={() => {
+                  setSecureTextEntry(!secureTextEntry)
+                  return false
+                }}
                 name="eye-off-outline"
                 color={registerStyle.icon.color}
               />
@@ -97,10 +110,14 @@ export default function Register({ navigation }) {
           <TextInput
             onChangeText={(text) => handleCheckPassInput(password, text)}
             label="Confirm password"
-            secureTextEntry={true}
+            secureTextEntry={secureTextEntry}
             value={checkPass}
             right={
               <TextInput.Icon
+                onPress={() => {
+                  setSecureTextEntry(!secureTextEntry)
+                  return false
+                }}
                 name="eye-off-outline"
                 color={registerStyle.icon.color}
               />

@@ -2,9 +2,9 @@ export default function validateEmail(email) {
   let emailError = ''
 
   if (!email) {
-    emailError = 'El email es necesario'
+    emailError = ''
   } else if (!/\S+@\S+\.\S+/.test(email)) {
-    emailError = 'Email invalido'
+    emailError = 'Invalid email'
   }
 
   return emailError

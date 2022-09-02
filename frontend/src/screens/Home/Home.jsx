@@ -38,9 +38,9 @@ export default function Home({ navigation }) {
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
-        <Text>
+        {/* <Text>
           Current page: {currentPage} Cantidad de posts: {postCount}
-        </Text>
+        </Text> */}
         <ScrollView contentContainerStyle={homeStyle.view}>
           {loading ? (
             <LoaderComponent />
@@ -55,7 +55,9 @@ export default function Home({ navigation }) {
                 postId={post.id}
                 title={post.title}
                 user={post.user}
+                tag={post.tag}
                 style={homeStyle.card}
+                likesCount={post.likesCount}
               />
             ))
           )}

@@ -2,10 +2,10 @@ export default function validatePass(pass) {
   let passError = ''
 
   if (!pass) {
-    passError = 'El password es necesario'
+    passError = ''
   } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
     passError =
-      'El password es invalido. La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. NO puede tener otros símbolos.'
+      'Invalid password. The password must have between 8 to 16 chars. It should have at least a number, a letter in lowercase and at least a cap. It cant have symbols.'
   }
 
   return passError

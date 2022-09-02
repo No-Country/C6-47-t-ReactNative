@@ -39,5 +39,27 @@ export const detailStyle = StyleSheet.create({
   username: {
     fontWeight: 'bold',
     color: '#010A26'
+  },
+  commentContainer: {
+    marginVertical: 10
+  }
+  ,
+  comment: {
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 10
+  },
+  likesArrow: {
+    paddingRight: 10,
+  },
+  button: {
+    width: '35%',
+    borderRadius: 10,
+    backgroundColor: '#ffff8d',
+    marginTop: 10
+  },
+  buttonText: {
+    color: '#010A26',
+    fontSize: 10
   }
 })
