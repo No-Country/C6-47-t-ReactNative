@@ -82,10 +82,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project and the Team
-* Julian Yachelini - Backend Dev
-* Francisco Nanoia - Backend Dev
-* Angelo Montero - QA and Testing
-* Ezequiel Sanchez - Frontend Dev
+* Julian Yachelini - Backend Dev [![LinkedIn][linkedin-shield]][linkedin-url-yache]
+* Francisco Nanoia - Backend Dev [![LinkedIn][linkedin-shield]][linkedin-url-fran]
+* Angelo Montero - QA and Testing [![LinkedIn][linkedin-shield]][linkedin-url-angel]
+* Ezequiel Sanchez - Frontend Dev [![LinkedIn][linkedin-shield]][linkedin-url-eze]
 
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -236,7 +236,11 @@ Project Link: [https://github.com/No-Country/C6-47-t-ReactNative](https://github
 [license-shield]: https://img.shields.io/github/license/No-Country/C6-47-t-ReactNative.svg?style=for-the-badge
 [license-url]: https://github.com/No-Country/C6-47-t-ReactNative/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url-yache]: https://linkedin.com/in/jyachelini
+[linkedin-url-fran]: https://linkedin.com/in/fnanoia
+[linkedin-url-angel]: https://linkedin.com/in/angelo-montero-ba4486239
+[linkedin-url-eze]: https://linkedin.com/in/ezequiel-sanchez-dev
+
 [product-screenshot]: images/screenshot.png
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
