@@ -11,14 +11,13 @@ import {
   fetchTokens
 } from '../../features/user/userSlice'
 import { useAxios } from '../../utils/customHooks/useAxios'
-import { setLoading } from '../../features/posts/postsSlice'
+import { changeCurrentPage, setLoading } from '../../features/posts/postsSlice'
 
 import validateEmail from '../../utils/validators/validateEmail'
 
-
 export function validatePass(pass) {
   let passError = ''
-  
+
   if (!pass) {
     passError = ''
   } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
@@ -56,23 +55,24 @@ export default function Login({ navigation }) {
 
   const login = () => {
     try {
-       if (!emailError && !passError && email && password) {
-       setLoginError('')
-      api
-        .post('/login', { username: email, password })
-        .then((res) => {
-          // Almacenamos los tokens en el slice tokens
-          dispatch(fetchTokens(res.data.tokens))
-          // Luego de guardalos navega a "Home"
-          navigation.navigate('Home')
-        })
-        .catch((err) => {
-          console.log(err)
-          //console.log(err.response.data.message)
-          // setLoginError(err.response.data.message)
-        })
+      if (!emailError && !passError && email && password) {
+        setLoginError('')
+        api
+          .post('/login', { username: email, password })
+          .then((res) => {
+            // Almacenamos los tokens en el slice tokens
+            dispatch(fetchTokens(res.data.tokens))
+            dispatch(changeCurrentPage(0))
+            // Luego de guardalos navega a "Home"
+            navigation.navigate('Home')
+          })
+          .catch((err) => {
+            console.log(err)
+            //console.log(err.response.data.message)
+            // setLoginError(err.response.data.message)
+          })
       } else {
-         setLoginError('Ingrese email y contraseña por favor.')
+        setLoginError('Ingrese email y contraseña por favor.')
       }
     } catch (error) {
       setLoginError('Unexpected error. Contact the administrator')
@@ -114,7 +114,7 @@ export default function Login({ navigation }) {
             >
               Login
             </Button>
-            { loginError ? <Text>Error: {loginError}</Text> : null}
+            {loginError ? <Text>Error: {loginError}</Text> : null}
             <Button onPress={navigateRegister} style={loginStyle.cardButton}>
               Register
             </Button>

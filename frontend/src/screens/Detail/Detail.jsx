@@ -13,8 +13,9 @@ export default function Detail({ route, navigation }) {
   const post = useSelector((state) => state.posts.post)
   const loading = useSelector((state) => state.posts.loading)
   const postId = useSelector((state) => state.posts.postId)
+  console.log(loading)
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   // const [searchQuery, setSearchQuery] = React.useState('')
   // const onChangeSearch = (query) => setSearchQuery(query)

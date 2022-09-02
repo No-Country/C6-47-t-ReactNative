@@ -4,11 +4,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  loading: false,
+  loading: true,
   posts: [],
   post: {},
   postId: null,
-  currentPage: 0,
+  currentPage: null,
   postCount: 0,
   error: ''
 }
