@@ -44,6 +44,7 @@ const getObjects = async (filter, page, size) => {
       attributes: {
         exclude: ["createdAt", "updatedAt", "deletedAt", "postId", "userId"],
       },
+      separate: true,
     },
   ];
   const exclude = ["createdAt", "updatedAt", "deletedAt", "userId", "tagId"];

@@ -20,7 +20,7 @@ class Repository {
     include
   ) => {
     try {
-      return await this.model.findAndCountAll({
+      const objects = await this.model.findAndCountAll({
         where: filter,
         attributes: {
           exclude: exclude,
@@ -30,6 +30,7 @@ class Repository {
         offset: page * size,
         include: include,
       });
+      return objects;
     } catch (err) {
       return { error: sequelizeErrorParser(err) };
     }

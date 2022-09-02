@@ -54,8 +54,17 @@ const getObjects = async (req, res) => {
       ],
     };
   }
+  const { rows, count } = await services.post.getObjects(filter, page, size);
 
-  res.status(200).json(await services.post.getObjects(filter, page, size));
+  console.log(rows.length);
+  console.log(count);
+  res.status(200).json({
+    count,
+    actual_page: page,
+    size,
+    last_page: Math.ceil(size / count - 1),
+    rows,
+  });
 };
 
 const getById = async (req, res) => {
