@@ -16,20 +16,8 @@ const initialState = {
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',
   async (payload, { rejectWithValue }) => {
-    // console.log('mi payload: ', payload)
     if (payload) return payload
     return rejectWithValue(payload)
-    // try {
-    //   const response = await api
-    //     .get(`/post?page=${payload}`) // TODO <<<--- Establecer en un archivo una configuración para guardar la URL base para reciclarlo en todos los request, ejemplo: https://localhost:8080
-    //     .then((res) => res.data)
-    //   return response // Return a value synchronously using Async-await
-    // } catch (err) {
-    //   if (!err.response) {
-    //     throw err
-    //   }
-    //   return rejectWithValue(err.response)
-    // }
   }
 )
 
@@ -38,16 +26,6 @@ export const fetchPostsById = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     if (payload) return payload
     return rejectWithValue(payload)
-    //console.log('my payload: ',payload)
-    // try {
-    //   const response = await api.get('/post/' + payload).then((res) => res.data)
-    //   return response // Return a value synchronously using Async-await
-    // } catch (err) {
-    //   if (!err.response) {
-    //     throw err
-    //   }
-    //   return rejectWithValue(err.response)
-    // }
   }
 )
 

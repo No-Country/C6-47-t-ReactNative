@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchTokens } from '../../features/user/userSlice'
 import { setLoading } from '../../features/posts/postsSlice'
 
-const baseURL = 'http://186.182.43.178:8080'
+const baseURL = 'http://localhost:8080'
 
 export const useAxios = () => {
   const access_token = useSelector((state) => state.user.access_token)
