@@ -25,7 +25,6 @@ class Repository {
         attributes: {
           exclude: exclude,
         },
-        raw: true,
         order: [["id", "DESC"]],
         limit: size,
         offset: page * size,

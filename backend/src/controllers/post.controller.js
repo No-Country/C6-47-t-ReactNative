@@ -27,12 +27,10 @@ const getObjects = async (req, res) => {
 
   const tagFilter = req.query.tag;
   const wordFilter = req.query.word;
-  let postFound = false;
 
   if (wordFilter && tagFilter) {
     const searchTag = await services.tag.getByName(tagFilter);
     if (searchTag) {
-      postFound = true;
       filter = {
         deletedAt: null,
         tagId: searchTag.id,
@@ -45,11 +43,9 @@ const getObjects = async (req, res) => {
   } else if (tagFilter) {
     const searchTag = await services.tag.getByName(tagFilter);
     if (searchTag) {
-      postFound = true;
       filter = { deletedAt: null, tagId: searchTag.id };
     }
   } else if (wordFilter) {
-    postFound = true;
     filter = {
       deletedAt: null,
       [sequelize.Op.or]: [
@@ -59,11 +55,7 @@ const getObjects = async (req, res) => {
     };
   }
 
-  if (postFound) {
-    res.status(200).json(await services.post.getObjects(filter, page, size));
-  } else {
-    res.status(404).json({ error: "Post not found." });
-  }
+  res.status(200).json(await services.post.getObjects(filter, page, size));
 };
 
 const getById = async (req, res) => {
