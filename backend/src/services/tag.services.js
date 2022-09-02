@@ -7,7 +7,7 @@ const getByName = async (tag) => {
 };
 
 const getTags = async () => {
-  return await Tag.getObjects(0, 20);
+  return await Tag.getObjects({ deletedAt: null }, 0, 20);
 };
 
 module.exports = { getByName, getTags };
