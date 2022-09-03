@@ -1,22 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
-import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { useAxios } from '../../utils/customHooks/useAxios'
+import { cardStyle } from '../../components/card/card.style'
 
 export default function Create({ navigation }) {
-  const access_token = useSelector((state) => state.user.access_token)
-  const refresh_token = useSelector((state) => state.user.refresh_token)
-
   const api = useAxios()
 
-  const [title, setTitle] = useState('Post de ejemplo')
-  const [content, setContent] = useState('Contenido de ejemplo')
-  const [tagId, setTagId] = useState('1')
-  const [mediaURL, setMediaURL] = useState('https://picsum.photos/200')
+  const allTags = useSelector((state) => state.posts.allTags)
+  const [title, setTitle] = useState()
+  const [content, setContent] = useState()
+  const [tagId, setTagId] = useState()
+  const [mediaURL, setMediaURL] = useState()
 
   const [createError, setCreateError] = useState('')
 
@@ -48,6 +46,10 @@ export default function Create({ navigation }) {
     }
   }
 
+  const changeTagId = (id) => {
+    setTagId(id)
+  }
+
   return (
     <SafeAreaView style={createStyle.content}>
       <ScrollView>
@@ -65,12 +67,23 @@ export default function Create({ navigation }) {
             keyboardType="default"
             value={content}
           />
-          <TextInput
-            onChangeText={(text) => setTagId(text)}
-            label="TagId"
-            keyboardType="default"
-            value={tagId}
-          />
+          <View>
+            <Text>Tags</Text>
+            {allTags &&
+              allTags.map((tag) => {
+                return (
+                  <Button
+                    style={cardStyle.button}
+                    key={tag.id}
+                    onPress={() => {
+                      changeTagId(tag.id)
+                    }}
+                  >
+                    {tag.name}
+                  </Button>
+                )
+              })}
+          </View>
           <TextInput
             onChangeText={(text) => setMediaURL(text)}
             label="MediaURL"
