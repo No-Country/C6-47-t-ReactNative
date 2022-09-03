@@ -1,5 +1,6 @@
 .env
 
+backend/.git
 
 node_modules/
 .expo/

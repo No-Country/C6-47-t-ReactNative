@@ -5,8 +5,8 @@
     "node": true
   },
   "extends": [
-    "plugin:react/recommended",
     "airbnb",
+    "plugin:react/recommended",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
@@ -21,7 +21,21 @@
   },
   "plugins": ["react", "react-hooks", "prettier", "jsx-a11y"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["arrow-function", "function-declaration"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

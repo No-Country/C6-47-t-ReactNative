@@ -1,10 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit'
-import usersReducer from '../features/users/usersSlice'
-import postsReducer from '../features/posts/postsSlice.js'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-export const store = configureStore({
+import postsReducer from '../features/posts/postsSlice'
+import usersReducer from '../features/users/usersSlice'
+import userReducer from '../features/user/userSlice'
+
+const store = configureStore({
   reducer: {
     users: usersReducer,
-    posts: postsReducer
-  }
+    posts: postsReducer,
+    user: userReducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false
+  })
 })
+
+export default store
