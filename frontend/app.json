@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.devcards.com"
+      "package": "com.devcards.com",
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -79,7 +79,7 @@ export default function Login({ navigation }) {
     <SafeAreaView style={loginStyle.content}>
       <View style={loginStyle.view}>
         <Card>
-          <Card.Title title="Titulo App" titleStyle={loginStyle.cardTitle} />
+          <Card.Title title="4DEVs" titleStyle={loginStyle.cardTitle} />
           <Card.Content>
             <TextInput
               onChangeText={(text) => handleEmailInput(text)}

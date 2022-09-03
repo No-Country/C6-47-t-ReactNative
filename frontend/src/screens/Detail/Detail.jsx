@@ -94,6 +94,14 @@ export default function Detail({ route, navigation }) {
       })
   }
 
+  const deletePost = () => {
+    api
+    .delete(`/post/${postId}`)
+    .then((res) => navigation.navigate('Home')
+    )
+    .catch((error) => console.log(error))
+  }
+
   //post && console.log(post)
   const [visible, setVisible] = React.useState(false)
 
@@ -122,7 +130,7 @@ export default function Detail({ route, navigation }) {
             <Button
               icon="delete-forever"
               style={detailStyle.deleteButtonForever}
-              onPress={showModal}
+              onPress={deletePost}
             >
               Delete forever
             </Button>
