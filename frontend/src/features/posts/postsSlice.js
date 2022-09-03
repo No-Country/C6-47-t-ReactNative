@@ -120,6 +120,13 @@ const postsSlice = createSlice({
         }
       })
       state.post.comments.push({ content })
+    },
+    deleteCurrentPost(state, action) {
+      const postId = action.payload
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id != postId)
+      }
     }
   },
   extraReducers: (builder) => {
@@ -201,6 +208,7 @@ export const {
   changeCurrentTagFilter,
   sumLikesCount,
   restLikescount,
-  setCommentPost
+  setCommentPost,
+  deleteCurrentPost
 } = postsSlice.actions
 export default postsSlice.reducer

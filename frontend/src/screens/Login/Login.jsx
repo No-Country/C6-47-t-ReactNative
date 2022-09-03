@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { SafeAreaView, View } from 'react-native'
+import { Alert, SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,8 +28,8 @@ export default function Login({ navigation }) {
 
   const api = useAxios()
 
-  const [email, setEmail] = useState('ezegeek@gmail.com')
-  const [password, setPassword] = useState('H3adsh0t')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const [emailError, setEmailError] = useState('')
   const [passError, setPassError] = useState('')
@@ -61,6 +61,7 @@ export default function Login({ navigation }) {
           })
           .catch((err) => {
             console.log(err)
+            Alert.alert(err.response.data.message)
             //console.log(err.response.data.message)
             // setLoginError(err.response.data.message)
           })

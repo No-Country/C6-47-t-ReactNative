@@ -8,6 +8,7 @@ import { LoaderComponent } from '../../components/loader/loader.component'
 import { useAxios } from '../../utils/customHooks/useAxios'
 import { Link } from '@react-navigation/native'
 import {
+  deleteCurrentPost,
   restLikescount,
   setCommentPost,
   setLoading,
@@ -90,16 +91,23 @@ export default function Detail({ route, navigation }) {
       })
       .catch((error) => {
         dispatch(setLoading(false))
-        Alert.alert('Unexpected errorrr')
+        Alert.alert('Unexpected error')
       })
   }
 
   const deletePost = () => {
     api
-    .delete(`/post/${postId}`)
-    .then((res) => navigation.navigate('Home')
-    )
-    .catch((error) => console.log(error))
+      .delete(`/post/${postId}`)
+      .then((res) => {
+        navigation.navigate('Home')
+        dispatch(deleteCurrentPost(postId))
+        dispatch(setLoading(false))
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(setLoading(false))
+      })
+      .catch((error) => console.log(error))
   }
 
   //post && console.log(post)
@@ -121,10 +129,15 @@ export default function Detail({ route, navigation }) {
             ¿Are you sure you wan't to delete this post?
           </Text>
           <Text>
-            Alert: This action is irreversible. The post would be launched to a blach hole and will cross to another dimension.
+            Alert: This action is irreversible. The post would be launched to a
+            blach hole and will cross to another dimension.
           </Text>
           <View style={detailStyle.deleteCancelView}>
-            <Button icon="backup-restore" style={detailStyle.cancelButton} onPress={hideModal}>
+            <Button
+              icon="backup-restore"
+              style={detailStyle.cancelButton}
+              onPress={hideModal}
+            >
               Cancel
             </Button>
             <Button

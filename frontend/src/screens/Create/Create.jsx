@@ -3,12 +3,14 @@ import { Alert, SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAxios } from '../../utils/customHooks/useAxios'
 import { cardStyle } from '../../components/card/card.style'
+import { setLoading } from '../../features/posts/postsSlice'
 
 export default function Create({ navigation }) {
   const api = useAxios()
+  const dispatch = useDispatch()
 
   const allTags = useSelector((state) => state.posts.allTags)
   const [title, setTitle] = useState()
@@ -21,20 +23,23 @@ export default function Create({ navigation }) {
   const createPost = () => {
     try {
       if (!title) return Alert.alert('Title is empty')
-      if (title.length < 5) return Alert.alert('Title should have at least 5 characters long')
+      if (title.length < 5)
+        return Alert.alert('Title should have at least 5 characters long')
       if (!content) return Alert.alert('Content is empty')
-      if (content.length < 5) return Alert.alert('Content should have at least 5 characters long')
-      if (!tagId) return Alert.alert('tagId is empty')
+      if (content.length < 5)
+        return Alert.alert('Content should have at least 5 characters long')
+      if (!tagId) return Alert.alert('Please select a tag')
       if (!mediaURL) return Alert.alert('mediaURL is empty')
 
       if (title && content && tagId && mediaURL) {
-        // TODO <<<<< Agregar validación de username
         setCreateError('')
         api
           .post('/post', { title, content, tagId, mediaURL })
           .then((res) => {
             console.log(res.data)
             navigation.navigate('Home')
+            dispatch(setLoading(false))
+            Alert.alert('Post created, please refresh the home page.')
           })
           .catch((err) => console.log(err.response))
       } else {
@@ -70,14 +75,18 @@ export default function Create({ navigation }) {
             value={content}
           />
           <View style={createStyle.tagList}>
-          <Text>Tags</Text>
+            <Text>Tags</Text>
             {allTags &&
               allTags.map((tag) => {
                 return (
                   <Button
-                    style={ tag.id === tagId ? cardStyle.button : cardStyle.buttonPressed }
+                    style={
+                      tag.id === tagId
+                        ? cardStyle.button
+                        : cardStyle.buttonPressed
+                    }
                     key={tag.id}
-                    onPress={() => {                      
+                    onPress={() => {
                       changeTagId(tag.id)
                     }}
                   >

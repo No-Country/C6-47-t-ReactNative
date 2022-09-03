@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { SafeAreaView, ScrollView, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { useAxios } from '../../utils/customHooks/useAxios'
@@ -65,7 +65,8 @@ export default function Register({ navigation }) {
           })
           .catch((err) => {
             console.log(err.response.data.message)
-            setLoginError(err.response.data.message)
+            Alert.alert(err.response.data.message)
+            // setLoginError(err.response.data.message)
           })
       } else {
         setLoginError('Ingrese todos los campos por favor.')
