@@ -103,6 +103,7 @@
 * [![React][React.js]][React-url]
 * [![React][Redux.js]][Redux-url]
 * [![React][MySql]][MySql-url]
+* [![React][Sequelize]][Sequelize-url]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
