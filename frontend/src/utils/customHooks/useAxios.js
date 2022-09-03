@@ -45,6 +45,7 @@ export const useAxios = () => {
 
       req.headers['x-access-token'] = res.data.access_token
     }
+
     console.log(req)
     return req
   })

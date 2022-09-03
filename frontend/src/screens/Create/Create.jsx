@@ -20,8 +20,6 @@ export default function Create({ navigation }) {
 
   const [createError, setCreateError] = useState('')
 
-  let userId = 1
-
   const createPost = () => {
     try {
       if (!title) return Alert.alert('Title is empty')
@@ -33,7 +31,7 @@ export default function Create({ navigation }) {
         // TODO <<<<< Agregar validación de username
         setCreateError('')
         api
-          .post('/post', { userId, title, content, tagId, mediaURL })
+          .post('/post', { title, content, tagId, mediaURL })
           .then((res) => {
             console.log(res.data)
             navigation.navigate('Home')

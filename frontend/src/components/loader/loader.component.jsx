@@ -5,8 +5,8 @@ import { loaderStyle } from './loader.style'
 
 export const LoaderComponent = () => {
   return (
-    <View style={loaderStyle.viewer}>
-        <ActivityIndicator size={'large'} style={loaderStyle.activity} />
+    <View style={loaderStyle.view}>
+      <ActivityIndicator size={'large'} style={loaderStyle.activity} />
     </View>
   )
 }

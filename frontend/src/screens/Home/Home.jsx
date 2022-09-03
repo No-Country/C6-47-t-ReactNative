@@ -1,12 +1,17 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
-import { FAB, Searchbar } from 'react-native-paper'
+import { Button, FAB, Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeCurrentPage } from '../../features/posts/postsSlice'
+import {
+  changeCurrentPage,
+  changeCurrentTagFilter,
+  changeCurrentWordFilter
+} from '../../features/posts/postsSlice'
 import { CardComponent } from '../../components/card/card.component'
 import { HeaderComponent } from '../../components/header/header.component'
 import { LoaderComponent } from '../../components/loader/loader.component'
+import { cardStyle } from '../../components/card/card.style'
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch()
@@ -15,12 +20,30 @@ export default function Home({ navigation }) {
   const postCount = useSelector((state) => state.posts.postCount)
   const loading = useSelector((state) => state.posts.loading)
   const currentPage = useSelector((state) => state.posts.currentPage)
+  const allTags = useSelector((state) => state.posts.allTags)
 
   const [searchQuery, setSearchQuery] = React.useState('')
-  const onChangeSearch = (query) => setSearchQuery(query)
+  const onChangeSearch = (query) => {
+    if (!query) {
+      dispatch(changeCurrentWordFilter(''))
+    }
+    setSearchQuery(query)
+  }
 
   const navigateHome = () => {
     navigation.navigate('Create')
+  }
+
+  const searchPostByWord = () => {
+    dispatch(changeCurrentWordFilter(searchQuery))
+  }
+
+  const searchPostByTag = (tag) => {
+    dispatch(changeCurrentTagFilter(tag))
+  }
+
+  const cancelSearchByTag = () => {
+    dispatch(changeCurrentTagFilter(''))
   }
 
   return (
@@ -32,7 +55,26 @@ export default function Home({ navigation }) {
           placeholder="Search"
           onChangeText={onChangeSearch}
           value={searchQuery}
+          onEndEditing={searchPostByWord}
         />
+        {allTags ? (
+          <>
+            {allTags.map((tag) => {
+              return (
+                <Button
+                  key={tag.id}
+                  style={cardStyle.button}
+                  onPress={() => {
+                    searchPostByTag(tag.name)
+                  }}
+                >
+                  {tag.name}
+                </Button>
+              )
+            })}
+            <Button onPress={cancelSearchByTag}>X</Button>
+          </>
+        ) : null}
         {/* <Text>
           Current page: {currentPage} Cantidad de posts: {postCount}
         </Text> */}

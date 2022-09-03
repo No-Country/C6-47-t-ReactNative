@@ -10,7 +10,10 @@ const initialState = {
   postId: null,
   currentPage: null,
   postCount: 0,
-  error: ''
+  error: '',
+  wordFilter: '',
+  allTags: [],
+  tagFilter: ''
 }
 
 export const fetchPosts = createAsyncThunk(
@@ -29,10 +32,20 @@ export const fetchPostsById = createAsyncThunk(
   }
 )
 
+export const fetchTags = createAsyncThunk(
+  'post/fetchTags',
+  async (payload, { rejectWithValue }) => {
+    if (payload) return payload
+    return rejectWithValue(payload)
+  }
+)
+
 export const setLoading = createAsyncThunk(
   'post/setLoading',
   async (payload, { rejectWithValue }) => {
-    if (payload) return payload
+    if (payload || !payload) {
+      return payload
+    }
     return rejectWithValue(payload)
   }
 )
@@ -48,59 +61,146 @@ const postsSlice = createSlice({
       }
     },
     changeCurrentPage(state, action) {
-      console.log(action)
       return {
         ...state,
         currentPage: action.payload
       }
+    },
+    changeCurrentWordFilter(state, action) {
+      return {
+        ...state,
+        wordFilter: action.payload
+      }
+    },
+    changeCurrentTagFilter(state, action) {
+      return {
+        ...state,
+        tagFilter: action.payload
+      }
+    },
+    sumLikesCount(state, action) {
+      const count = state['post'].likesCount
+      return {
+        ...state,
+        posts: state.posts.map((post, i) => {
+          if (post.id === action.payload) {
+            return {
+              ...post,
+              likesCount: count + 1
+            }
+          } else {
+            return post
+          }
+        }),
+        post: { ...state.post, likesCount: count + 1 }
+      }
+    },
+    restLikescount(state, action) {
+      const count = state['post'].likesCount
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post.id === action.payload) {
+            return {
+              ...post,
+              likesCount: count + -1
+            }
+          } else {
+            return post
+          }
+        }),
+        post: { ...state.post, likesCount: count - 1 }
+      }
+    },
+    setCommentPost(state, action) {
+      const { postId, content } = action.payload
+      state.posts.forEach((post) => {
+        if (post.id === postId) {
+          post.comments.push({ content })
+        }
+      })
+      state.post.comments.push({ content })
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(setLoading.pending, (state) => {
-      state.loading = true
-    })
+    /* setLoading  */
+    builder
+      .addCase(setLoading.pending, (state) => {
+        state.loading = true
+      })
 
-    builder.addCase(setLoading.fulfilled, (state, action) => {
-      state.loading = action.payload
-    })
+      .addCase(setLoading.fulfilled, (state, action) => {
+        state.loading = action.payload
+      })
 
-    builder.addCase(setLoading.rejected, (state, action) => {
-      state.loading = true
-    })
+      .addCase(setLoading.rejected, (state, action) => {
+        state.loading = true
+      })
 
-    builder.addCase(fetchPostsById.pending, (state) => {
-      state.loading = true
-    })
+    /* fetchPostById */
+    builder
+      .addCase(fetchPostsById.pending, (state) => {
+        state.loading = true
+      })
 
-    builder.addCase(fetchPostsById.fulfilled, (state, action) => {
-      state.loading = false
-      state.post = action.payload
-      state.error = ''
-    })
+      .addCase(fetchPostsById.fulfilled, (state, action) => {
+        state.loading = false
+        state.post = action.payload
+        state.error = ''
+      })
 
-    builder.addCase(fetchPostsById.rejected, (state, action) => {
-      state.loading = false
-      state.post = {}
-      state.error = action.error
-    })
+      .addCase(fetchPostsById.rejected, (state, action) => {
+        state.loading = false
+        state.post = {}
+        state.error = action.error
+      })
 
-    builder.addCase(fetchPosts.pending, (state) => {
-      state.loading = true
-    })
+    /* fetchPosts */
+    builder
+      .addCase(fetchPosts.pending, (state) => {
+        state.loading = true
+      })
 
-    builder.addCase(fetchPosts.fulfilled, (state, action) => {
-      state.loading = false
-      state.posts = action.payload.rows
-      state.postCount = action.payload.count
-      state.error = ''
-    })
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.loading = false
+        state.posts = action.payload.rows
+        state.postCount = action.payload.count
+        state.error = ''
+      })
 
-    builder.addCase(fetchPosts.rejected, (state, action) => {
-      state.loading = false
-      state.posts = []
-      state.error = action.error.message
-    })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.loading = false
+        state.posts = []
+        state.error = action.error.message
+      })
+
+    /* fetchTags */
+    builder
+      .addCase(fetchTags.pending, (state) => {
+        state.loading = true
+      })
+
+      .addCase(fetchTags.fulfilled, (state, action) => {
+        state.loading = false
+        state.allTags = action.payload.rows
+        state.error = ''
+      })
+
+      .addCase(fetchTags.rejected, (state, action) => {
+        console.log(action)
+        state.loading = false
+        state.allTags = []
+        state.error = action.error
+      })
   }
 })
-export const { add_postId, changeCurrentPage } = postsSlice.actions
+export const {
+  add_postId,
+  changeCurrentPage,
+  changeCurrentWordFilter,
+  changeCurrentTagFilter,
+  sumLikesCount,
+  restLikescount,
+  setCommentPost
+} = postsSlice.actions
 export default postsSlice.reducer

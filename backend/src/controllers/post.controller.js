@@ -77,7 +77,9 @@ const addPost = async (req, res) => {
   // Example url POST = http://localhost:8080/post <- Need body userId, title & content
   // Falta hacer la verificación de los campos en la solicitud. [Ver ExpressValidator.js]✅
   const postToAdd = req.body;
-  const newPost = await services.post.addPost(postToAdd);
+  const userId = req.userId;
+  console.log(userId);
+  const newPost = await services.post.addPost({ ...postToAdd, userId });
   res.status(200).json({ post: newPost });
 };
 

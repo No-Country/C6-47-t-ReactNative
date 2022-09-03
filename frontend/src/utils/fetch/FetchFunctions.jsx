@@ -1,31 +1,49 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAxios } from '../customHooks/useAxios'
-import { fetchPosts, fetchPostsById } from '../../features/posts/postsSlice'
+import {
+  fetchPosts,
+  fetchPostsById,
+  fetchTags
+} from '../../features/posts/postsSlice'
 
 function FetchFunctions({ children }) {
   const dispatch = useDispatch()
 
   const api = useAxios()
 
-  const posts = useSelector((state) => state.posts.posts)
-  const postCount = useSelector((state) => state.posts.postCount)
-  const loading = useSelector((state) => state.posts.loading)
   const currentPage = useSelector((state) => state.posts.currentPage)
-  const access_token = useSelector((state) => state.user.access_token)
   const postId = useSelector((state) => state.posts.postId)
+  const wordFilter = useSelector((state) => state.posts.wordFilter)
+  const tagFilter = useSelector((state) => state.posts.tagFilter)
+
+  useEffect(() => {
+    try {
+      api.get('/tag').then((res) => {
+        dispatch(fetchTags(res.data))
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
 
   useEffect(() => {
     try {
       if (currentPage == null) return
       else
-        api.get(`/post?page=${currentPage}`).then((res) => {
-          dispatch(fetchPosts(res.data))
-        })
+        api
+          .get(
+            `/post?page=${currentPage}${
+              wordFilter ? `&word=${wordFilter}` : ''
+            }${tagFilter ? `&tag=${tagFilter}` : ''}`
+          )
+          .then((res) => {
+            dispatch(fetchPosts(res.data))
+          })
     } catch (error) {
       dispatch(fetchPosts(error))
     }
-  }, [currentPage])
+  }, [currentPage, wordFilter, tagFilter])
 
   useEffect(() => {
     try {

@@ -13,7 +13,8 @@ export const CardComponent = ({
   postId,
   tag,
   title,
-  user
+  user,
+  likesCount
 }) => {
   const dispatch = useDispatch()
 
@@ -52,6 +53,7 @@ export const CardComponent = ({
               )}
             </Paragraph>
           </Card.Content>
+          <Text style={cardStyle.bottomLine}>Likes: {likesCount}</Text>
           <Text style={cardStyle.bottomLine}>
             Creado por{' '}
             <Text style={{ fontWeight: 'bold', color: 'red' }}>
