@@ -5,16 +5,22 @@ import { add_postId } from '../../features/posts/postsSlice'
 
 export const HeaderComponent = ({ title, navigation }) => {
   const dispatch = useDispatch()
+
   const setPostNull = () => {
     dispatch(add_postId(null))
   }
+
   return (
     <Appbar>
       {title !== 'Home' ? (
         <Appbar.BackAction
           onPress={() => {
             navigation.goBack()
-            setPostNull()
+            if(title !== 'Edit'){
+              setPostNull()
+            } else {
+              console.log('else')
+            }
           }}
         />
       ) : null}

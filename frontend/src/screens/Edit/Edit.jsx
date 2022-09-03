@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert, SafeAreaView, ScrollView, View } from 'react-native'
 import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
+import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { useAxios } from '../../utils/customHooks/useAxios'
-import { cardStyle } from '../../components/card/card.style'
 
-export default function Create({ navigation }) {
+export default function Edit({ route, navigation }) {
+  const postId = useSelector((state) => state.posts.postId)
+  const post = useSelector((state) => state.posts.post)
+
+  const access_token = useSelector((state) => state.user.access_token)
+  const refresh_token = useSelector((state) => state.user.refresh_token)
+  const allTags = useSelector((state) => state.posts.allTags)
+
   const api = useAxios()
 
-  const allTags = useSelector((state) => state.posts.allTags)
-  const [title, setTitle] = useState()
-  const [content, setContent] = useState()
-  const [tagId, setTagId] = useState()
-  const [mediaURL, setMediaURL] = useState()
+  const [title, setTitle] = useState(post.title)
+  const [selectedTag, setSelectedTag] = useState(post.tag.name)
+  const [content, setContent] = useState(post.content)
+  const [tagId, setTagId] = useState(post.tag.name)
+  const [mediaURL, setMediaURL] = useState(post.mediaURL)
 
   const [createError, setCreateError] = useState('')
 
-  const createPost = () => {
+  let userId = 1
+
+  const editPost = () => {
     try {
       if (!title) return Alert.alert('Title is empty')
-      if (title.length < 5) return Alert.alert('Title should have at least 5 characters long')
       if (!content) return Alert.alert('Content is empty')
-      if (content.length < 5) return Alert.alert('Content should have at least 5 characters long')
       if (!tagId) return Alert.alert('tagId is empty')
       if (!mediaURL) return Alert.alert('mediaURL is empty')
 
@@ -31,7 +38,7 @@ export default function Create({ navigation }) {
         // TODO <<<<< Agregar validación de username
         setCreateError('')
         api
-          .post('/post', { title, content, tagId, mediaURL })
+          .post('/post', { userId, title, content, tagId, mediaURL })
           .then((res) => {
             console.log(res.data)
             navigation.navigate('Home')
@@ -48,14 +55,10 @@ export default function Create({ navigation }) {
     }
   }
 
-  const changeTagId = (id) => {
-    setTagId(id)
-  }
-
   return (
     <SafeAreaView style={createStyle.content}>
       <ScrollView>
-        <HeaderComponent navigation={navigation} title="Create Post" />
+        <HeaderComponent navigation={navigation} title="Edit" />
         <View>
           <TextInput
             onChangeText={(text) => setTitle(text)}
@@ -70,21 +73,27 @@ export default function Create({ navigation }) {
             value={content}
           />
           <View style={createStyle.tagList}>
-          <Text>Tags</Text>
-            {allTags &&
-              allTags.map((tag) => {
-                return (
-                  <Button
-                    style={ tag.id === tagId ? cardStyle.button : cardStyle.buttonPressed }
-                    key={tag.id}
-                    onPress={() => {                      
-                      changeTagId(tag.id)
-                    }}
-                  >
-                    {tag.name}
-                  </Button>
-                )
-              })}
+            {allTags ? (
+              <>
+                {allTags.map((tag) => {
+                  return (
+                    <Button
+                      key={tag.id}
+                      style={
+                        tag.name === selectedTag
+                          ? createStyle.buttonTextPressed
+                          : createStyle.buttonText
+                      }
+                      onPress={() => {
+                        setSelectedTag(tag.name)
+                      }}
+                    >
+                      {tag.name}
+                    </Button>
+                  )
+                })}
+              </>
+            ) : null}
           </View>
           <TextInput
             onChangeText={(text) => setMediaURL(text)}
@@ -92,10 +101,13 @@ export default function Create({ navigation }) {
             keyboardType="default"
             value={mediaURL}
           />
-          <Button mode="contained" onPress={createPost}>
+          {/* <Button mode="contained" onPress={createPost}>
             Create post
-          </Button>
+          </Button> */}
         </View>
+        <Button mode="contained" onPress={editPost}>
+          Edit post
+        </Button>
       </ScrollView>
     </SafeAreaView>
   )
