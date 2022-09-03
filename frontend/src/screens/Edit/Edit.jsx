@@ -4,8 +4,9 @@ import { Button, TextInput, Text } from 'react-native-paper'
 import { HeaderComponent } from '../../components/header/header.component'
 import { createStyle } from './create.style'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAxios } from '../../utils/customHooks/useAxios'
+import { changeCurrentPage, setLoading } from '../../features/posts/postsSlice'
 
 export default function Edit({ route, navigation }) {
   const postId = useSelector((state) => state.posts.postId)
@@ -14,8 +15,10 @@ export default function Edit({ route, navigation }) {
   const access_token = useSelector((state) => state.user.access_token)
   const refresh_token = useSelector((state) => state.user.refresh_token)
   const allTags = useSelector((state) => state.posts.allTags)
+  const currentPage = useSelector((state) => state.posts.currentPage)
 
   const api = useAxios()
+  const dispatch = useDispatch()
 
   const [title, setTitle] = useState(post.title)
   const [selectedTag, setSelectedTag] = useState(post.tag.name)
@@ -26,9 +29,8 @@ export default function Edit({ route, navigation }) {
   const [mediaURL, setMediaURL] = useState(post.mediaURL)
 
   const [createError, setCreateError] = useState('')
-  
-  let tagConvert = 0;
 
+  let tagConvert = 0
 
   const editPost = () => {
     try {
@@ -37,19 +39,26 @@ export default function Edit({ route, navigation }) {
       if (!tagId) return Alert.alert('tagId is empty')
       if (!mediaURL) return Alert.alert('mediaURL is empty')
 
-      if(tagId !== 'Javascript') tagConvert = 1;
-      else tagConvert = 2;
+      if (tagId !== 'Javascript') tagConvert = 1
+      else tagConvert = 2
 
       if (title && content && tagId && mediaURL) {
         // TODO <<<<< Agregar validación de username
         setCreateError('')
         api
-          .put(`/post/${post.id}`, { userId, title, content, tagId: tagConvert, mediaURL })
+          .put(`/post/${post.id}`, {
+            userId,
+            title,
+            content,
+            tagId: tagConvert,
+            mediaURL
+          })
           .then((res) => {
-            console.log(post)
-            console.log(res.data)
-            console.log('editado correctamente')
             navigation.navigate('Home')
+            Alert.alert(res.data.message)
+            dispatch(setLoading(false))
+            dispatch(changeCurrentPage(null))
+            dispatch(changeCurrentPage(currentPage))
           })
           .catch((err) => console.log(err.response))
       } else {

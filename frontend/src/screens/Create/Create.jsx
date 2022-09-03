@@ -6,13 +6,14 @@ import { createStyle } from './create.style'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAxios } from '../../utils/customHooks/useAxios'
 import { cardStyle } from '../../components/card/card.style'
-import { setLoading } from '../../features/posts/postsSlice'
+import { changeCurrentPage, setLoading } from '../../features/posts/postsSlice'
 
 export default function Create({ navigation }) {
   const api = useAxios()
   const dispatch = useDispatch()
 
   const allTags = useSelector((state) => state.posts.allTags)
+  const currentPage = useSelector((state) => state.posts.currentPage)
   const [title, setTitle] = useState()
   const [content, setContent] = useState()
   const [tagId, setTagId] = useState()
@@ -39,6 +40,8 @@ export default function Create({ navigation }) {
             console.log(res.data)
             navigation.navigate('Home')
             dispatch(setLoading(false))
+            dispatch(changeCurrentPage(null))
+            dispatch(changeCurrentPage(currentPage))
             Alert.alert('Post created, please refresh the home page.')
           })
           .catch((err) => console.log(err.response))
