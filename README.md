@@ -246,9 +246,9 @@ Project Link: [https://github.com/No-Country/C6-47-t-ReactNative](https://github
 [linkedin-url-eze]: https://linkedin.com/in/ezequiel-sanchez-dev
 
 [github-shield]: https://img.shields.io/badge/Github-61DAFB.svg?style=for-the-badge&logo=github&logoColor=FFFFFF
-[github-url-yache]: https://github.com/fnanoia
+[github-url-yache]: https://github.com/JYachelini
 [github-url-fran]: https://github.com/fnanoia
-[github-url-angel]: https://github.com/fnanoia
+[github-url-angel]: https://github.com/dextr0yer
 [github-url-eze]: https://github.com/GeekyBear
 
 
