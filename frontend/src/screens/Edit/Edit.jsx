@@ -20,12 +20,15 @@ export default function Edit({ route, navigation }) {
   const [title, setTitle] = useState(post.title)
   const [selectedTag, setSelectedTag] = useState(post.tag.name)
   const [content, setContent] = useState(post.content)
+  const [userId, setUserId] = useState(post.user.id)
   const [tagId, setTagId] = useState(post.tag.name)
+
   const [mediaURL, setMediaURL] = useState(post.mediaURL)
 
   const [createError, setCreateError] = useState('')
+  
+  let tagConvert = 0;
 
-  let userId = 1
 
   const editPost = () => {
     try {
@@ -34,13 +37,18 @@ export default function Edit({ route, navigation }) {
       if (!tagId) return Alert.alert('tagId is empty')
       if (!mediaURL) return Alert.alert('mediaURL is empty')
 
+      if(tagId !== 'Javascript') tagConvert = 1;
+      else tagConvert = 2;
+
       if (title && content && tagId && mediaURL) {
         // TODO <<<<< Agregar validación de username
         setCreateError('')
         api
-          .post('/post', { userId, title, content, tagId, mediaURL })
+          .put(`/post/${post.id}`, { userId, title, content, tagId: tagConvert, mediaURL })
           .then((res) => {
+            console.log(post)
             console.log(res.data)
+            console.log('editado correctamente')
             navigation.navigate('Home')
           })
           .catch((err) => console.log(err.response))

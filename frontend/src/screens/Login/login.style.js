@@ -4,11 +4,9 @@ export const loginStyle = StyleSheet.create({
     content: {
         display: 'flex',
         flex: 1,
-        paddingTop: '5%',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        backgroundColor: '#010A26',
     },
     view: {
         width:'80%',
