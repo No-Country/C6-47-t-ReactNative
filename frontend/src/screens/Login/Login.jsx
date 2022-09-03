@@ -9,6 +9,7 @@ import { useAxios } from '../../utils/customHooks/useAxios'
 import { changeCurrentPage } from '../../features/posts/postsSlice'
 
 import validateEmail from '../../utils/validators/validateEmail'
+import validateUsername from '../../utils/validators/validateUsername'
 
 export function validatePass(pass) {
   let passError = ''
@@ -36,7 +37,7 @@ export default function Login({ navigation }) {
   const [loginError, setLoginError] = useState('')
 
   const handleEmailInput = function (e) {
-    setEmailError(validateEmail(e))
+    setEmailError(validateUsername(e))
     setEmail(e)
   }
 
@@ -83,7 +84,7 @@ export default function Login({ navigation }) {
           <Card.Content>
             <TextInput
               onChangeText={(text) => handleEmailInput(text)}
-              label="Email"
+              label="Username"
               // keyboardType="email-address"
               keyboardType="default"
               value={email}

@@ -9,7 +9,7 @@ const register = async (req, res, next) => {
     { session: false },
     async (err, user, info) => {
       if (!user) {
-        return res.json(info);
+        return res.status(401).json(info);
       }
       res.json({
         message: "Signup Successfully",
