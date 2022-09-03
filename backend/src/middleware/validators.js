@@ -29,11 +29,6 @@ const validatorAuth = [
 ];
 
 const validatorAddPost = [
-  check("userId")
-    .exists()
-    .withMessage("Value userId required.")
-    .isNumeric()
-    .withMessage("UserId must be numeric."),
   check("title")
     .exists()
     .withMessage("Value title required.")

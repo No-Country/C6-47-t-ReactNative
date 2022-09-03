@@ -7,4 +7,8 @@ export const createStyle = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  tagList: {
+    justifyContent:'space-between',
+    flexDirection: 'row'
+  }
 })

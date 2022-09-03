@@ -1,16 +1,18 @@
 import * as React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import { SafeAreaView, View } from 'react-native'
 import { Button, Card, Text, TextInput } from 'react-native-paper'
 import { loginStyle } from './login.style'
 import { useDispatch, useSelector } from 'react-redux'
-import { add_access_token, add_refresh_token } from '../../features/user/userSlice'
+import { fetchTokens } from '../../features/user/userSlice'
+import { useAxios } from '../../utils/customHooks/useAxios'
+import { changeCurrentPage } from '../../features/posts/postsSlice'
+
 import validateEmail from '../../utils/validators/validateEmail'
 
 export function validatePass(pass) {
   let passError = ''
-  
+
   if (!pass) {
     passError = ''
   } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{5,16}$/.test(pass)) {
@@ -21,10 +23,9 @@ export function validatePass(pass) {
 }
 
 export default function Login({ navigation }) {
-  const access_token = useSelector((state) => state.user.access_token);
-  const refresh_token = useSelector((state) => state.user.refresh_token);
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
+  const api = useAxios()
 
   const [email, setEmail] = useState('ezegeek@gmail.com')
   const [password, setPassword] = useState('H3adsh0t')
@@ -48,30 +49,22 @@ export default function Login({ navigation }) {
     try {
       if (!emailError && !passError && email && password) {
         setLoginError('')
-        
-        axios
-          .post(
-            'http://186.182.43.178:8080/login',
-            { username: email, password }, // TODO <<-- Cambiar campo de email a username
-            {
-              withCredentials: true,
-            }
-          )
+        api
+          .post('/login', { username: email, password })
           .then((res) => {
             // Almacenamos los tokens en el slice tokens
-            dispatch(add_access_token(res.data.tokens.access_token));
-            dispatch(add_refresh_token(res.data.tokens.refresh_token));
+            dispatch(fetchTokens(res.data.tokens))
+            dispatch(changeCurrentPage(0))
             // Luego de guardalos navega a "Home"
             navigation.navigate('Home')
           })
           .catch((err) => {
+            console.log(err)
             //console.log(err.response.data.message)
-            setLoginError(err.response.data.message);
+            // setLoginError(err.response.data.message)
           })
-          //navigation.navigate('Home')
-
       } else {
-        setLoginError('Please provide email and password to login')
+        setLoginError('Ingrese email y contraseña por favor.')
       }
     } catch (error) {
       setLoginError('Unexpected error. Contact the administrator')
@@ -113,7 +106,7 @@ export default function Login({ navigation }) {
             >
               Login
             </Button>
-            { loginError ? <Text>Error: {loginError}</Text> : null}
+            {loginError ? <Text>Error: {loginError}</Text> : null}
             <Button onPress={navigateRegister} style={loginStyle.cardButton}>
               Register
             </Button>

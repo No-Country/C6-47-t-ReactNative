@@ -1,12 +1,28 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper'
-import { headerStyle } from './header.style'
+import { useDispatch } from 'react-redux'
+import { add_postId } from '../../features/posts/postsSlice'
 
 export const HeaderComponent = ({ title, navigation }) => {
+  const dispatch = useDispatch()
+
+  const setPostNull = () => {
+    dispatch(add_postId(null))
+  }
+
   return (
     <Appbar>
       {title !== 'Home' ? (
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.goBack()
+            if(title !== 'Edit'){
+              setPostNull()
+            } else {
+              console.log('else')
+            }
+          }}
+        />
       ) : null}
       <Appbar.Content title={title} />
     </Appbar>

@@ -26,10 +26,8 @@ const userLikes = async (userId) => {
 
 const userLikeByPostId = async (userId, postId) => {
   const { error, liked } = await Likes.userLikeByPostId(userId, postId);
-  console.log(test);
   if (error) return { statusCode: 500, error: "Internal Server Error" };
-  if (liked) return { statusCode: 200, liked };
-  return { statusCode: 400, liked };
+  return { statusCode: 200, liked };
 };
 
 module.exports = { likePost, dislikePost, userLikes, userLikeByPostId };

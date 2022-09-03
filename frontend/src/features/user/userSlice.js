@@ -1,9 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  access_token: 'axia', 
-  refresh_token: 'gnume'
+  access_token: '',
+  refresh_token: '',
+  loadingTokens: false
 }
+
+export const fetchTokens = createAsyncThunk(
+  'user/fetchTokens',
+  async (payload, { rejectWithValue }) => {
+    if (payload) return payload
+    return rejectWithValue(payload)
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
@@ -21,7 +30,23 @@ const userSlice = createSlice({
         refresh_token: action.payload
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchTokens.pending, (state) => {
+      state.loadingTokens = true
+    })
 
+    builder.addCase(fetchTokens.fulfilled, (state, action) => {
+      state.loadingTokens = false
+      state.access_token = action.payload.access_token
+      state.refresh_token = action.payload.refresh_token
+    })
+
+    builder.addCase(fetchTokens.rejected, (state, action) => {
+      state.loadingTokens = false
+      state.access_token = ''
+      state.refresh_token = ''
+    })
   }
 })
 

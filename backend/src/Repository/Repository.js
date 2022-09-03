@@ -13,23 +13,24 @@ class Repository {
   };
 
   getObjects = async (
+    filter,
     page = 0,
     size = 5,
     exclude = ["createdAt", "updatedAt", "deletedAt"],
     include
   ) => {
     try {
-      return await this.model.findAndCountAll({
-        where: { deletedAt: null },
+      const objects = await this.model.findAndCountAll({
+        where: filter,
         attributes: {
           exclude: exclude,
         },
-        // raw: true,
         order: [["id", "DESC"]],
         limit: size,
         offset: page * size,
         include: include,
       });
+      return objects;
     } catch (err) {
       return { error: sequelizeErrorParser(err) };
     }
