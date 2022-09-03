@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Alert, Image, SafeAreaView, ScrollView, View } from 'react-native'
 import { detailStyle } from './Detail.style'
 import { HeaderComponent } from '../../components/header/header.component'
-import { Text, TextInput, Button } from 'react-native-paper'
+import { Text, TextInput, Button, Portal, Modal } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { LoaderComponent } from '../../components/loader/loader.component'
 import { useAxios } from '../../utils/customHooks/useAxios'
+import { Link } from '@react-navigation/native'
 import {
   restLikescount,
   setCommentPost,
@@ -93,8 +94,41 @@ export default function Detail({ route, navigation }) {
       })
   }
 
+  //post && console.log(post)
+  const [visible, setVisible] = React.useState(false)
+
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+  const containerStyle = { backgroundColor: 'white', padding: 20 }
+
   return (
     <SafeAreaView style={detailStyle.content}>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={containerStyle}
+        >
+          <Text style={detailStyle.textAlert}>
+            ¿Are you sure you wan't to delete this post?
+          </Text>
+          <Text>
+            Alert: This action is irreversible. The post would be launched to a blach hole and will cross to another dimension.
+          </Text>
+          <View style={detailStyle.deleteCancelView}>
+            <Button icon="backup-restore" style={detailStyle.cancelButton} onPress={hideModal}>
+              Cancel
+            </Button>
+            <Button
+              icon="delete-forever"
+              style={detailStyle.deleteButtonForever}
+              onPress={showModal}
+            >
+              Delete forever
+            </Button>
+          </View>
+        </Modal>
+      </Portal>
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={detailStyle.view}>
           <HeaderComponent navigation={navigation} title="Detail" />
@@ -149,6 +183,25 @@ export default function Detail({ route, navigation }) {
                   : null}
               </View>
             )
+          )}
+          {post.id && (
+            <View style={detailStyle.tagList}>
+              <Link to={{ screen: 'Edit', params: { id: postId, user: user } }}>
+                <Button
+                  icon="clipboard-edit-outline"
+                  style={detailStyle.editButton}
+                >
+                  Edit
+                </Button>
+              </Link>
+              <Button
+                icon="delete-forever"
+                style={detailStyle.deleteButton}
+                onPress={showModal}
+              >
+                Delete
+              </Button>
+            </View>
           )}
         </ScrollView>
       </View>

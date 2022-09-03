@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, View } from 'react-native'
 import { homeStyle } from './home.style'
-import { Button, FAB, Searchbar } from 'react-native-paper'
+import { Button, FAB, Searchbar, Text } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   changeCurrentPage,
@@ -17,6 +17,7 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch()
 
   const posts = useSelector((state) => state.posts.posts)
+  const tagFilter = useSelector((state) => state.posts.tagFilter)
   const postCount = useSelector((state) => state.posts.postCount)
   const loading = useSelector((state) => state.posts.loading)
   const currentPage = useSelector((state) => state.posts.currentPage)
@@ -57,24 +58,26 @@ export default function Home({ navigation }) {
           value={searchQuery}
           onEndEditing={searchPostByWord}
         />
-        {allTags ? (
-          <>
-            {allTags.map((tag) => {
-              return (
-                <Button
-                  key={tag.id}
-                  style={cardStyle.button}
-                  onPress={() => {
-                    searchPostByTag(tag.name)
-                  }}
-                >
-                  {tag.name}
-                </Button>
-              )
-            })}
-            <Button onPress={cancelSearchByTag}>X</Button>
-          </>
-        ) : null}
+        <View style={homeStyle.tagList}>
+          {allTags ? (
+            <>
+              {allTags.map((tag) => {
+                return (
+                  <Button
+                    key={tag.id}
+                    style={ tag.name === tagFilter ? homeStyle.buttonTextPressed : homeStyle.buttonText}
+                    onPress={() => {
+                      searchPostByTag(tag.name);
+                    }}
+                  >
+                    {tag.name}
+                  </Button>
+                )
+              })}
+              <Button onPress={cancelSearchByTag} style={homeStyle.close} >X</Button>
+            </>
+          ) : null}
+        </View>
         {/* <Text>
           Current page: {currentPage} Cantidad de posts: {postCount}
         </Text> */}

@@ -47,9 +47,9 @@ export const CardComponent = ({
             <Paragraph style={cardStyle.paragraph}></Paragraph>
             <Paragraph style={cardStyle.paragraph}>
               {comments.length > 0 ? (
-                <Text>{comments.length} comentarios.</Text>
+                <Text>{comments.length} comments.</Text>
               ) : (
-                <Text> Todavía no hay comentarios.</Text>
+                <Text> There is no comments yet</Text>
               )}
             </Paragraph>
           </Card.Content>

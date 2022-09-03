@@ -25,5 +25,11 @@ export const cardStyle = StyleSheet.create({
   buttonText: {
     color: '#010A26',
     fontSize: 10
+  },
+  buttonPressed: {
+    width: '40%',
+    borderRadius: 10,
+    backgroundColor: '#aaaaaa',
+    marginTop: 10
   }
 })
