@@ -260,5 +260,7 @@ Project Link: [https://github.com/No-Country/C6-47-t-ReactNative](https://github
 [MySql-url]: https://www.mysql.com/
 [Redux.js]: https://img.shields.io/badge/Redux-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [Redux-url]: https://redux.js.org/
+[Sequelize]: https://assets.stickpng.com/images/58482ee4cef1014c0b5e4a75.png
+[Sequelize-url]: https://sequelize.org/
 
 
